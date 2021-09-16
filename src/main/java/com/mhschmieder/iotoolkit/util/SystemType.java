@@ -1,4 +1,4 @@
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2020 Mark Schmieder
@@ -24,7 +24,7 @@
  * This file is part of the IoToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * IoToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/iotoolkit
  */

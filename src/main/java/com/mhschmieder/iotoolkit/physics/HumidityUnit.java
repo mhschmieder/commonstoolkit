@@ -28,29 +28,49 @@
  *
  * Project: https://github.com/mhschmieder/iotoolkit
  */
-package com.mhschmieder.iotoolkit.branding;
+package com.mhschmieder.iotoolkit.physics;
 
-public class ProductBranding {
+import java.util.Locale;
 
-    // Declare the fully qualified application name.
-    public String applicationName;
+public enum HumidityUnit {
+    RELATIVE, MOLAR;
 
-    // Declare strings for product name and version, for ongoing reference.
-    public String productName;
-    public String productVersion;
-    public String productVersionProtected;
-    public String revisionDate;
+    public static HumidityUnit abbreviatedValueOf( final String abbreviatedHumidityUnit ) {
+        return ( "%".equalsIgnoreCase( abbreviatedHumidityUnit ) ) //$NON-NLS-1$
+            ? RELATIVE
+            : ( " moles".equalsIgnoreCase( abbreviatedHumidityUnit ) ) //$NON-NLS-1$
+                ? MOLAR
+                : defaultValue();
+    }
 
-    public ProductBranding( final String pApplicationName,
-                            final String pProductName,
-                            final String pProductVersion,
-                            final String pProductVersionProtected,
-                            final String pRevisionDate ) {
-        applicationName = pApplicationName;
-        productName = pProductName;
-        productVersion = pProductVersion;
-        productVersionProtected = pProductVersionProtected;
-        revisionDate = pRevisionDate;
+    public static HumidityUnit canonicalValueOf( final String canonicalHumidityUnit ) {
+        return ( canonicalHumidityUnit != null )
+            ? valueOf( canonicalHumidityUnit.toUpperCase( Locale.ENGLISH ) )
+            : defaultValue();
+    }
+
+    public static HumidityUnit defaultValue() {
+        return RELATIVE;
+    }
+
+    public final String toAbbreviatedString() {
+        switch ( this ) {
+        case RELATIVE:
+            return "%"; //$NON-NLS-1$
+        case MOLAR:
+            return " moles"; //$NON-NLS-1$
+        default:
+            final String errMessage = "Unexpected HumidityUnit " + this; //$NON-NLS-1$
+            throw new IllegalArgumentException( errMessage );
+        }
+    }
+
+    public final String toCanonicalString() {
+        return toString().toLowerCase( Locale.ENGLISH );
+    }
+
+    public final String toPresentationString() {
+        return toAbbreviatedString();
     }
 
 }

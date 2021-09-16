@@ -1,4 +1,4 @@
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2020 Mark Schmieder
@@ -24,12 +24,13 @@
  * This file is part of the IoToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * IoToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/iotoolkit
  */
 package com.mhschmieder.iotoolkit.net;
 
+import com.mhschmieder.iotoolkit.security.ClientType;
 import com.mhschmieder.iotoolkit.util.SystemType;
 
 import java.io.File;
@@ -54,22 +55,46 @@ public final class SessionContext {
     // Cache the user default directory as it is expensive to query.
     public File userHomeDirectory;
 
+    // Keep track of the Client Type for privileges and functionality.
+    public ClientType clientType;
+
     // Cache the local host (client) name.
     public String localHostName;
+
+    // Cache the web host (server) name.
+    public String     webHostName;
+
+    // Cache the URL for local host to web host HTTP requests/responses.
+    public URL        urlHttpServlet;
 
     public SessionContext( final String osNameVerbose,
                            final double screenWidth,
                            final double screenHeight,
                            final Locale locale,
                            final File userHomeDirectory,
-                           final String localHostName ) {
+                           final ClientType clientType,
+                           final String localHostName,
+                           final String webHostName,
+                           final int webServletPort,
+                           final String webServletName ) {
         this.osNameVerbose = osNameVerbose;
         this.systemType = SystemType.valueFromOsName( osNameVerbose );
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.locale = locale;
         this.userHomeDirectory = userHomeDirectory;
+        this.clientType = clientType;
         this.localHostName = localHostName;
-    }
+        this.webHostName = webHostName;
+        this.localHostName = localHostName;
+ 
+        // Compile the URL for local host to web host HTTP requests/responses.
+        // NOTE: We make this here instead of in the invoker, and don't cache
+        // the servlet port or servlet name, because our needs may change and
+        // this is more flexible than doing it outside this constructor and
+        // then throwing away the uncached parameters.
+        urlHttpServlet = NetworkUtilities
+                .getRelativeURL( "http", webHostName, webServletPort, webServletName );
+   }
 
 }

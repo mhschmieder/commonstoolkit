@@ -1,4 +1,4 @@
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2020, 2021 Mark Schmieder
@@ -24,7 +24,7 @@
  * This file is part of the IoToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * IoToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/iotoolkit
  */
@@ -44,8 +44,10 @@ public class ResourceUtilities {
 
     @SuppressWarnings("nls")
     public static ResourceBundle getResourceBundle( final SessionContext sessionContext,
-                                                    final String bundleName ) {
-        final Locale locale = sessionContext.locale; // Locale.forLanguageTag( "en-US" );
+                                                    final String bundleName,
+                                                    final boolean ignoreUserLocale ) {
+        final Locale locale = ignoreUserLocale
+            ? Locale.forLanguageTag( "en-US" ) : sessionContext.locale;
         return ResourceBundle.getBundle( bundleName, locale );
     }
 

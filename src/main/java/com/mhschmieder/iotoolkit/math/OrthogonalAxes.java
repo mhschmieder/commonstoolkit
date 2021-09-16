@@ -28,29 +28,10 @@
  *
  * Project: https://github.com/mhschmieder/iotoolkit
  */
-package com.mhschmieder.iotoolkit.branding;
+package com.mhschmieder.iotoolkit.math;
 
-public class ProductBranding {
-
-    // Declare the fully qualified application name.
-    public String applicationName;
-
-    // Declare strings for product name and version, for ongoing reference.
-    public String productName;
-    public String productVersion;
-    public String productVersionProtected;
-    public String revisionDate;
-
-    public ProductBranding( final String pApplicationName,
-                            final String pProductName,
-                            final String pProductVersion,
-                            final String pProductVersionProtected,
-                            final String pRevisionDate ) {
-        applicationName = pApplicationName;
-        productName = pProductName;
-        productVersion = pProductVersion;
-        productVersionProtected = pProductVersionProtected;
-        revisionDate = pRevisionDate;
-    }
+public enum OrthogonalAxes {
+    XY, XZ, YZ;
 
 }
+

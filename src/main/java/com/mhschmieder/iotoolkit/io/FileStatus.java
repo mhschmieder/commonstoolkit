@@ -1,4 +1,4 @@
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2020, 2021 Mark Schmieder
@@ -24,33 +24,31 @@
  * This file is part of the IoToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * IoToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/iotoolkit
  */
-package com.mhschmieder.iotoolkit.branding;
+package com.mhschmieder.iotoolkit.io;
 
-public class ProductBranding {
-
-    // Declare the fully qualified application name.
-    public String applicationName;
-
-    // Declare strings for product name and version, for ongoing reference.
-    public String productName;
-    public String productVersion;
-    public String productVersionProtected;
-    public String revisionDate;
-
-    public ProductBranding( final String pApplicationName,
-                            final String pProductName,
-                            final String pProductVersion,
-                            final String pProductVersionProtected,
-                            final String pRevisionDate ) {
-        applicationName = pApplicationName;
-        productName = pProductName;
-        productVersion = pProductVersion;
-        productVersionProtected = pProductVersionProtected;
-        revisionDate = pRevisionDate;
-    }
+public enum FileStatus {
+    // NOTE: NOT_OPENED and NOT_SAVED are used to replace the original
+    // file status in order to avoid secondary warning dialogs if an
+    // immediate warning is needed under certain error conditions.
+    CREATED,
+    OUT_OF_MEMORY_ERROR,
+    GRAPHICS_READ_ERROR,
+    GRAPHICS_WRITE_ERROR,
+    READ_ERROR,
+    WRITE_ERROR,
+    CANCELED,
+    CLIENT_INCOMPATIBLE,
+    NOT_OPENED,
+    OPENED,
+    OPENED_FOR_RENAME,
+    LOADED,
+    NOT_SAVED,
+    SAVED,
+    IMPORTED,
+    EXPORTED
 
 }

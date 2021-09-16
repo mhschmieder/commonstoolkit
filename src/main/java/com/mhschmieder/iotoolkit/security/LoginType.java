@@ -28,29 +28,26 @@
  *
  * Project: https://github.com/mhschmieder/iotoolkit
  */
-package com.mhschmieder.iotoolkit.branding;
+package com.mhschmieder.iotoolkit.security;
 
-public class ProductBranding {
+public enum LoginType {
+    SERVER, PROXY;
 
-    // Declare the fully qualified application name.
-    public String applicationName;
+    public static LoginType defaultValue() {
+        return SERVER;
+    }
 
-    // Declare strings for product name and version, for ongoing reference.
-    public String productName;
-    public String productVersion;
-    public String productVersionProtected;
-    public String revisionDate;
-
-    public ProductBranding( final String pApplicationName,
-                            final String pProductName,
-                            final String pProductVersion,
-                            final String pProductVersionProtected,
-                            final String pRevisionDate ) {
-        applicationName = pApplicationName;
-        productName = pProductName;
-        productVersion = pProductVersion;
-        productVersionProtected = pProductVersionProtected;
-        revisionDate = pRevisionDate;
+    public final String toPresentationString() {
+        switch ( this ) {
+        case SERVER:
+            return "Server"; //$NON-NLS-1$
+        case PROXY:
+            return "Proxy"; //$NON-NLS-1$
+        default:
+            final String errMessage = "Unexpected " //$NON-NLS-1$
+                    + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
+            throw new IllegalArgumentException( errMessage );
+        }
     }
 
 }

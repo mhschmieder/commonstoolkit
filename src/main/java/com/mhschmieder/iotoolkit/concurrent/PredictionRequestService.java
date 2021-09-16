@@ -1,4 +1,4 @@
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2020, 2021 Mark Schmieder
@@ -24,33 +24,42 @@
  * This file is part of the IoToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * IoToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/iotoolkit
  */
-package com.mhschmieder.iotoolkit.branding;
+package com.mhschmieder.iotoolkit.concurrent;
 
-public class ProductBranding {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-    // Declare the fully qualified application name.
-    public String applicationName;
+import com.mhschmieder.iotoolkit.net.PredictionServerResponse;
+import com.mhschmieder.iotoolkit.net.SessionContext;
 
-    // Declare strings for product name and version, for ongoing reference.
-    public String productName;
-    public String productVersion;
-    public String productVersionProtected;
-    public String revisionDate;
+import javafx.concurrent.Service;
 
-    public ProductBranding( final String pApplicationName,
-                            final String pProductName,
-                            final String pProductVersion,
-                            final String pProductVersionProtected,
-                            final String pRevisionDate ) {
-        applicationName = pApplicationName;
-        productName = pProductName;
-        productVersion = pProductVersion;
-        productVersionProtected = pProductVersionProtected;
-        revisionDate = pRevisionDate;
+/**
+ * This is a base class for commonality between server prediction requests.
+ */
+public abstract class PredictionRequestService extends Service< PredictionServerResponse > {
+
+    /**
+     * Cache the full Session Context (System Type, Locale, Client Type, etc.).
+     */
+    public SessionContext _sessionContext;
+
+    public PredictionRequestService( final SessionContext sessionContext ) {
+        // Always call the superclass constructor first!
+        super();
+
+        _sessionContext = sessionContext;
+
+        // Set the Service to use a Cached Thread Pool vs. the default daemon,
+        // to protect against run-time cross-threading issues (especially in a
+        // hybrid app), suspended threads, and for better performance.
+        final ExecutorService executorService = Executors.newCachedThreadPool();
+        setExecutor( executorService );
     }
 
 }
+
