@@ -7,4 +7,6 @@ The current code has not been compiled in its present state, so typos may have b
 
 I needed to rush this code onto GitHub as my current job is in a secure environment and can't allow USB thumb drives for quick copies of public open source code. I tried to make sure all the new package names and references are correct, at the very least, and added some comments about potentially decoupling some parts from external dependencies such as JavaFX, Apache Commons, etc.
 
-As the overall file set is still fairly small, I am disinclined to break this up into multiple libraries at the moment, but may rename it to be more general.
+As the overall file set is still fairly small, I am disinclined to break this up into multiple libraries at the moment, but may rename it to be more general, even though the I/O part is still pretty large (though the math and physics part is by now a bit bigger).
+
+Note that some of this code may become unnecessary before long, as there is an existing JSR for Units and Unit Conversion, but I haven't had a chance to re-find it and check its status recently. I also need to add more units than the ones included here, which are the most common ones but aren't complete for all applications.
