@@ -34,4 +34,3 @@ public enum OrthogonalAxes {
     XY, XZ, YZ;
 
 }
-

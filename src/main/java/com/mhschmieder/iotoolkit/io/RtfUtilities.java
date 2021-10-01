@@ -165,7 +165,7 @@ public final class RtfUtilities {
         try ( final InputStream inputStream = RtfUtilities.class
                 .getResourceAsStream( rtfFilename ) ) {
             // Convert the text based file to a standard string message.
-            final String rtfContent = IOUtilities.streamToString( inputStream,
+            final String rtfContent = IoUtilities.streamToString( inputStream,
                                                                   StandardCharsets.UTF_8 );
             final String htmlContent = rtfToHtml( new StringReader( rtfContent ) );
             return htmlContent;

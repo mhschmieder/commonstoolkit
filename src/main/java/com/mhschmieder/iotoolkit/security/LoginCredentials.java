@@ -72,15 +72,15 @@ public class LoginCredentials {
     }
 
     public final Pair< String, String > getLogin() {
-        return _login;
+        return login;
     }
 
     public final String getPassword() {
-        return _login.getValue();
+        return login.getValue();
     }
 
     public final String getUserName() {
-        return _login.getKey();
+        return login.getKey();
     }
 
     public final boolean isValid() {
@@ -95,13 +95,13 @@ public class LoginCredentials {
         setLogin( loginCredentials.getLogin() );
     }
 
-    public final void setLogin( final Pair< String, String > login ) {
-        _login = login;
+    public final void setLogin( final Pair< String, String > pLogin ) {
+        login = pLogin;
     }
 
     public final void setLogin( final String userName, final String password ) {
-        final Pair< String, String > login = new Pair<>( userName, password );
-        setLogin( login );
+        final Pair< String, String > newLogin = new Pair<>( userName, password );
+        setLogin( newLogin );
     }
 
 }

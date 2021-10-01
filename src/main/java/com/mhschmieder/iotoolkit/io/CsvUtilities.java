@@ -52,7 +52,7 @@ import org.apache.commons.io.FilenameUtils;
  *
  * @author Mark Schmieder
  */
-public final class RtfUtilities {
+public final class CsvUtilities {
 
     /**
      * The default constructor is disabled, as this is a static utilities class.

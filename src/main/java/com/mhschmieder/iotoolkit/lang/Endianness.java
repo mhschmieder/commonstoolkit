@@ -37,7 +37,7 @@ package com.mhschmieder.iotoolkit.lang;
  * TODO: Alternatively, replace with Endian utilities in the Apache Commons.
  */
 public class Endianness {
-    
+
     public enum OrdenEndian {
         BIG_ENDIAN, LITTLE_ENDIAN
     }

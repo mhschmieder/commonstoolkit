@@ -35,7 +35,8 @@ package com.mhschmieder.iotoolkit.physics;
  */
 public final class PhysicsConstants {
 
-    // :NOTE: The constructor is disabled, since this is a static utilities class.
+    // :NOTE: The constructor is disabled, since this is a static utilities
+    // class.
     private PhysicsConstants() {}
 
     // //////////////////////////////////////////////////////////////////////////

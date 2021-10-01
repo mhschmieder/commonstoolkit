@@ -69,7 +69,7 @@ public final class LogUtilities {
         final ZonedDateTime dateTime = ZonedDateTime.now();
         final String timeStamp = dateTime.toString();
 
-        sessionLogHeader.append( productBranding.productVersion);
+        sessionLogHeader.append( productBranding.productVersion );
         sessionLogHeader.append( " - Session Log - " ); //$NON-NLS-1$
         sessionLogHeader.append( timeStamp );
         sessionLogHeader.append( System.lineSeparator() );
@@ -96,32 +96,32 @@ public final class LogUtilities {
             final long max = rt.maxMemory();
             final double memoryFactor = 1024d * 1024d * 1024d;
             fmt.format( "Memory Free: %.3f Gb", //$NON-NLS-1$
-                    free / memoryFactor );
+                        free / memoryFactor );
             fmt.format( System.lineSeparator() );
             fmt.format( "Memory Total: %.3f Gb", //$NON-NLS-1$
-                    total / memoryFactor );
+                        total / memoryFactor );
             fmt.format( System.lineSeparator() );
             fmt.format( "Memory Used: %.3f Gb", //$NON-NLS-1$
-                    used / memoryFactor );
+                        used / memoryFactor );
             fmt.format( System.lineSeparator() );
             fmt.format( "Memory Max: %.3f Gb", //$NON-NLS-1$
-                    max / memoryFactor );
+                        max / memoryFactor );
             sessionLogHeader.append( fmt );
 
             final RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
             final Map< String, String > propList = bean.getSystemProperties();
             for ( final Entry< String, String > entry : propList.entrySet() ) {
                 switch ( entry.getKey() ) {
-                    case "gopherProxySet": //$NON-NLS-1$
-                    case "http.nonProxyHosts": //$NON-NLS-1$
-                    case "ftp.nonProxyHosts": //$NON-NLS-1$
-                    case "socksNonProxyHosts": //$NON-NLS-1$
-                    case "user.language": //$NON-NLS-1$
-                        sessionLogHeader.append( System.lineSeparator() );
-                        sessionLogHeader.append( entry );
-                        break;
-                    default:
-                        break;
+                case "gopherProxySet": //$NON-NLS-1$
+                case "http.nonProxyHosts": //$NON-NLS-1$
+                case "ftp.nonProxyHosts": //$NON-NLS-1$
+                case "socksNonProxyHosts": //$NON-NLS-1$
+                case "user.language": //$NON-NLS-1$
+                    sessionLogHeader.append( System.lineSeparator() );
+                    sessionLogHeader.append( entry );
+                    break;
+                default:
+                    break;
                 }
             }
             sessionLogHeader.append( System.lineSeparator() );
@@ -169,10 +169,10 @@ public final class LogUtilities {
         // final LogOutputStream sessionLogOutputStream = new LogOutputStream();
         try {
             final FileOutputStream sessionLogOutputStream =
-                    new FileOutputStream( sessionLogFileName );
+                                                          new FileOutputStream( sessionLogFileName );
             @SuppressWarnings("resource") final PrintStream stdout =
-                    new PrintStream( sessionLogOutputStream,
-                            true );
+                                                                   new PrintStream( sessionLogOutputStream,
+                                                                                    true );
             System.setOut( stdout );
             System.setErr( stdout );
         }

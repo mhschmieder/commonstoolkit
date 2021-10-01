@@ -32,7 +32,7 @@ package com.mhschmieder.iotoolkit.physics;
 
 import java.util.Locale;
 
-import com.mhschmieder.iotoolkit.DistanceUnit;
+import com.mhschmieder.iotoolkit.math.DistanceUnit;
 
 public enum Altitude {
     LOW, MEDIUM, HIGH;

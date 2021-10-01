@@ -536,6 +536,15 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Implements division between two complex numbers, one expressed as as a
      * <tt>Complex</tt> and the other expressed as a pair of <tt>double</tt>s.
+     * 
+     * @param z
+     *            The {@link Complex} number that we will divide
+     * @param x
+     *            The "real" part of the complex number to use as the divisor
+     * @param y
+     *            The "imaginary" part of the complex number to use as the
+     *            divisor
+     * @return The {@link Complex} number that results from the complex division
      */
     public static Complex div( final Complex z, final double x, final double y ) {
         double ratio, scalar, zRe, zIm;
@@ -581,7 +590,6 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * @param z
      *            <tt>Complex</tt> number
      * @return <tt>double</tt> containing the imaginary part of z
-     *         <p>
      * @see Complex#im()
      */
     public static double im( final Complex z ) {
@@ -647,6 +655,9 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Returns the phase of a <tt>Complex</tt> value. Note that this method
      * duplicates the functionality of the <tt>arg</tt> method.
+     * 
+     * @param c
+     *            The {@link Complex} number whose phase we need to calculate
      *
      * @return Phase of <tt>Complex</tt> value in <i> radians</i>
      */
@@ -1006,7 +1017,6 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      *
      * @param z
      *            A <tt>Complex</tt> value
-     *            <p>
      */
     public Complex( final Complex z ) {
         _re = z._re;
@@ -1020,7 +1030,6 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      *
      * @param re
      *            The real number
-     *            <p>
      * @see Complex#complex(double)
      */
     public Complex( final double re ) {
@@ -1036,7 +1045,6 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      *            Real part
      * @param im
      *            Imaginary part
-     *            <p>
      * @see Complex#complex(double, double)
      */
     public Complex( final double re, final double im ) {
@@ -1049,7 +1057,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * <tt>Complex</tt> object.
      *
      * @return <tt>double</tt> containing the absolute value of the
-     *         <tt>Complex</tt number
+     *         <tt>Complex</tt> number
      * @see Complex#abs(Complex)
      * @see Complex#arg()
      * @see Complex#arg(Complex)
@@ -1084,7 +1092,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      *
      * </pre>
      *
-     * @param z2
+     * @param z
      *            A Complex number
      * @return <tt>Complex</tt> sum z1 + z2
      * @see Complex#add(double)
@@ -1104,7 +1112,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * Returns the sum of a <tt>Complex</tt> and a <tt>double</tt> value. To
      * perform z1 + d2, write <tt>z1.add(d2)</tt>.
      *
-     * @param d2
+     * @param d
      *            A <tt>double</tt> value
      * @return <tt>Complex</tt> sum z1 + d2
      * @see Complex#add(Complex)
@@ -1127,7 +1135,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * <tt><b>PI</b></tt>.
      *
      * @return <tt>double</tt> containing the principal angle of the
-     *         <tt>Complex</tt value
+     *         <tt>Complex</tt> value
      * @see Complex#arg(Complex)
      */
     public double arg() {
@@ -1192,7 +1200,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      *
      * </pre>
      *
-     * @param z2
+     * @param z
      *            A Complex number
      * @return <tt>Complex</tt> result of z1 / z2
      * @see Complex#add(Complex)
@@ -1212,7 +1220,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * Returns the division of a <tt>Complex</tt> value by a <tt>double</tt>
      * value. To perform z1 / d2, write <tt>z1.div(d2)</tt>.
      *
-     * @param d2
+     * @param d
      *            A <tt>double</tt> number
      * @return <tt>Complex</tt> result of z1 / d2
      * @see Complex#add(Complex)
@@ -1246,7 +1254,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * takes the form <tt> z1.equals(z2)</tt>. The tolerance for this comparison
      * is scaled automatically based on the sizes of the numbers being compared.
      *
-     * @param z2
+     * @param z
      *            A <tt>Complex</tt> number
      * @return <tt>true</tt> if equal; <tt>false</tt> otherwise
      * @see Complex#equals(Complex,double)
@@ -1268,7 +1276,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * compared to make the tolerance relative to the magnitude of the numbers
      * being compared.
      *
-     * @param z2
+     * @param z
      *            A <tt>Complex</tt> number
      * @param tol
      *            The tolerance with which to compare the two numbers
@@ -1298,7 +1306,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * <tt>double</tt>.
      *
      * @return <tt>double</tt> containing the imaginary part of the
-     *         <tt>Complex</tt object
+     *         <tt>Complex</tt> object
      * @see Complex#im(Complex)
      */
     public double im() {
@@ -1371,7 +1379,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      *
      * </pre>
      *
-     * @param z2
+     * @param z
      *            A Complex number
      * @return <tt>Complex</tt> product z1 * z2
      * @see Complex#add(Complex)
@@ -1391,7 +1399,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * Returns the product of a <tt>Complex</tt> and a <tt>double</tt> value. To
      * perform z1 * d2, write <tt>z1.mul(d2)</tt>.
      *
-     * @param d2
+     * @param d
      *            A <tt>double</tt> value
      * @return <tt>Complex</tt> product z1 * d2
      * @see Complex#add(Complex)
@@ -1430,8 +1438,6 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * Returns the <tt>Complex</tt> base raised to the power of the
      * <tt>Complex</tt> exponent.
      *
-     * @param base
-     *            The <tt>Complex</tt> base value
      * @param exponent
      *            The <tt>Complex</tt> exponent
      * @return <tt>Complex</tt> base raised to the power of the <tt>Complex</tt>
@@ -1481,7 +1487,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Extracts the real part of a <tt>Complex</tt> object as a <tt>double</tt>.
      *
-     * @return <tt>double</tt> containing the real part of the <tt>Complex</tt
+     * @return <tt>double</tt> containing the real part of the <tt>Complex</tt>
      *         object
      * @see Complex#re(Complex)
      */
@@ -1492,6 +1498,9 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Sets a <tt>double</tt> value into the imaginary part of a
      * <tt>Complex</tt> object.
+     * 
+     * @param pIm
+     *            The value to use to set this complex number's imaginary part
      *
      * @see Complex#im()
      * @see Complex#setRe(double)
@@ -1504,6 +1513,9 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Sets a <tt>double</tt> value into the real part of a <tt>Complex</tt>
      * object.
+     * 
+     * @param pRe
+     *            The value to use to set this complex number's real part
      *
      * @see Complex#re()
      * @see Complex#setIm(double)
@@ -1516,6 +1528,13 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Sets two <tt>double</tt> values into the real and imaginary parts of a
      * <tt>Complex</tt> object.
+     * 
+     * @param pRe
+     *            The value to use for setting the real part of this Complex
+     *            number
+     * @param pIm
+     *            The value to use for setting the imaginary part of this
+     *            Complex number
      *
      * @see Complex#re()
      * @see Complex#setRe(double)
@@ -1566,7 +1585,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      *
      * </pre>
      *
-     * @param z2
+     * @param z
      *            A Complex number
      * @return <tt>Complex</tt> difference z1 - z2
      * @see Complex#add(Complex)
@@ -1586,7 +1605,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * Returns the difference between a <tt>Complex</tt> and a <tt>double</tt>
      * value. To perform z1 - d2, write <tt>z1.sub(d2)</tt>.
      *
-     * @param d2
+     * @param d
      *            A <tt>double</tt> value
      * @return <tt>Complex</tt> difference z1 - d2
      * @see Complex#add(Complex)

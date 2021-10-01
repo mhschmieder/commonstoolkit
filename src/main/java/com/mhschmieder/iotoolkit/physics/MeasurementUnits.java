@@ -78,7 +78,20 @@ public final class MeasurementUnits {
               PressureUnit.defaultValue() );
     }
 
-    /** This is the fully qualified constructor. */
+    /**
+     * This is the fully qualified constructor.
+     * 
+     * @param pDistanceUnit
+     *            The Distance Unit to use
+     * @param pAngleUnit
+     *            The Angle Unit to use
+     * @param pWeightUnit
+     *            The Weight Unit to use
+     * @param pTemperatureUnit
+     *            The Temperature Unit to use
+     * @param pPressureUnit
+     *            The Pressure Unit to use
+     */
     public MeasurementUnits( final DistanceUnit pDistanceUnit,
                              final AngleUnit pAngleUnit,
                              final WeightUnit pWeightUnit,
@@ -335,6 +348,17 @@ public final class MeasurementUnits {
     /**
      * Fully qualified pseudo-constructor. Notifies listeners once instead of
      * for each changed property. Used by reset() and updatePreferences().
+     * 
+     * @param pDistanceUnit
+     *            The Distance Unit to use
+     * @param pAngleUnit
+     *            The Angle Unit to use
+     * @param pWeightUnit
+     *            The Weight Unit to use
+     * @param pTemperatureUnit
+     *            The Temperature Unit to use
+     * @param pPressureUnit
+     *            The Pressure Unit to use
      */
     public void setMeasurementUnits( final DistanceUnit pDistanceUnit,
                                      final AngleUnit pAngleUnit,
@@ -350,6 +374,9 @@ public final class MeasurementUnits {
 
     /**
      * Copy pseudo-constructor. Unused at this time (201602).
+     * 
+     * @param pMeasurementUnits
+     *            The Measurement Units to use to set this object
      */
     protected void setMeasurementUnits( final MeasurementUnits pMeasurementUnits ) {
         setMeasurementUnits( pMeasurementUnits.getDistanceUnit(),

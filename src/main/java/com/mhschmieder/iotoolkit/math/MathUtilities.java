@@ -38,7 +38,8 @@ import java.text.ParseException;
  */
 public final class MathUtilities {
 
-    // :NOTE: The constructor is disabled, since this is a static utilities class.
+    // :NOTE: The constructor is disabled, since this is a static utilities
+    // class.
     private MathUtilities() {}
 
     public static String formatAngle( final double angle,

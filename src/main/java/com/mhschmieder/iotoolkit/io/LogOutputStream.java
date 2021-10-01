@@ -44,13 +44,13 @@ import java.util.logging.Logger;
 public class LogOutputStream extends OutputStream {
 
     /** Define a static Logger to log the legacy STDERR/STDOUT messages. */
-    private static Logger      LOGGER                   =
-                                       Logger.getLogger( LogOutputStream.class.getName() );
+    private static Logger      LOGGER                  =
+                                      Logger.getLogger( LogOutputStream.class.getName() );
 
-    private final StringBuffer buffer                   = new StringBuffer();
+    private final StringBuffer buffer                  = new StringBuffer();
 
-    private final char         lineSeparatorEndUnixDos  = 'n';
-    private final char         lineSeparatorEndMac      = 'r';
+    private final char         lineSeparatorEndUnixDos = 'n';
+    private final char         lineSeparatorEndMac     = 'r';
 
     @Override
     public void write( final int b ) throws IOException {
@@ -79,7 +79,7 @@ public class LogOutputStream extends OutputStream {
                 // configure the levels, as that is the default level for
                 // logging. This may not catch all third-party tracing though.
                 LOGGER.info( s.substring( 0,
-                                           s.length() - StringUtilities.LINE_SEPARATOR.length() ) );
+                                          s.length() - StringUtilities.LINE_SEPARATOR.length() ) );
                 buffer.setLength( 0 );
             }
         }

@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.iotoolkit.physics;
 
-import com.meyersound.math.AngleUnit;
-import com.meyersound.math.DistanceUnit;
+import com.mhschmieder.iotoolkit.math.AngleUnit;
+import com.mhschmieder.iotoolkit.math.DistanceUnit;
 
 /**
  * The <code>UnitConversion</code> class is a container for various unit
@@ -39,7 +39,8 @@ import com.meyersound.math.DistanceUnit;
  */
 public final class UnitConversion {
 
-    // :NOTE: The constructor is disabled, since this is a static utilities class.
+    // :NOTE: The constructor is disabled, since this is a static utilities
+    // class.
     private UnitConversion() {}
 
     // //////////////////////////////////////////////////////////////////////////

@@ -47,7 +47,7 @@ public final class StringUtilities {
      * Unix, "\n"; Under macOS, "\r" or maybe "\n" since OS X.
      */
     public static final String                          LINE_SEPARATOR            =
-            System.lineSeparator();
+                                                                       System.lineSeparator();
 
     /**
      * The degree symbol causes problems when entered directly vs. using
@@ -62,9 +62,9 @@ public final class StringUtilities {
     @SuppressWarnings("nls") public static final String DEGREES_FAHRENHEIT_SYMBOL = "\u2109";
     @SuppressWarnings("nls") public static final String DEGREES_KELVIN            = " K";
     @SuppressWarnings("nls") public static final String DEGREES_CELSIUS           =
-            DEGREES_SYMBOL + "C";
+                                                                        DEGREES_SYMBOL + "C";
     @SuppressWarnings("nls") public static final String DEGREES_FAHRENHEIT        =
-            DEGREES_SYMBOL + "F";
+                                                                           DEGREES_SYMBOL + "F";
 
     // This method attaches a "+" sign, if absent. This is often necessary
     // when there is recursion during model/view syncing, as renderers shouldn't
@@ -104,7 +104,7 @@ public final class StringUtilities {
 
         String defaultToNegativeNumberString = numberString;
         final StringBuilder defaultToNegativeNumberStringBuilder =
-                new StringBuilder( defaultToNegativeNumberString );
+                                                                 new StringBuilder( defaultToNegativeNumberString );
         final char[] chars = new char[ 1 ];
 
         // :NOTE: We should never get an exception here as we pre-check for null
@@ -134,17 +134,7 @@ public final class StringUtilities {
      * their corresponding XML entities. This is necessary to allow arbitrary
      * strings to be encoded within XML.
      * <p>
-     * In this method, we make the following translations:
-     *
-     * <pre>
-     *  &amp; becomes &amp;amp;
-     *  " becomes &amp;quot;
-     *  < becomes &amp;lt;
-     *  > becomes &amp;gt;
-     *  newline becomes &amp;#10;
-     *  carriage return becomes $amp;#13;
-     * </pre>
-     *
+     * 
      * @see #unescapeForXML(String)
      * @param string
      *            The string to escape.
@@ -155,6 +145,17 @@ public final class StringUtilities {
         // This method gets called quite a bit when parsing large files, so
         // rather than calling substitute() many times, we combine all the loops
         // in one pass.
+
+        // TODO: Find a way to get this into Javadocs without causing errors
+        //
+        // In this method, we make the following translations:
+        //
+        // &amp; becomes &amp;amp;
+        // " becomes &amp;quot;
+        // < becomes &amp;lt;
+        // > becomes &amp;gt;
+        // newline becomes &amp;#10;
+        // carriage return becomes &amp;#13;
 
         // A different solution might be to scan the string for escaped xml
         // characters and if any are found, then create a StringBuilder and do
@@ -168,38 +169,38 @@ public final class StringUtilities {
         int length = string.length();
         while ( i < length ) {
             switch ( stringBuilder.charAt( i ) ) {
-                case '\n':
-                    stringBuilder.deleteCharAt( i );
-                    stringBuilder.insert( i, "&#10;" );
-                    length += 4;
-                    break;
-                case '\r':
-                    stringBuilder.deleteCharAt( i );
-                    stringBuilder.insert( i, "&#13;" );
-                    length += 4;
-                    break;
-                case '"':
-                    stringBuilder.deleteCharAt( i );
-                    stringBuilder.insert( i, "&quot;" );
-                    length += 5;
-                    break;
-                case '&':
-                    stringBuilder.deleteCharAt( i );
-                    stringBuilder.insert( i, "&amp;" );
-                    length += 4;
-                    break;
-                case '<':
-                    stringBuilder.deleteCharAt( i );
-                    stringBuilder.insert( i, "&lt;" );
-                    length += 3;
-                    break;
-                case '>':
-                    stringBuilder.deleteCharAt( i );
-                    stringBuilder.insert( i, "&gt;" );
-                    length += 3;
-                    break;
-                default:
-                    break;
+            case '\n':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&#10;" );
+                length += 4;
+                break;
+            case '\r':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&#13;" );
+                length += 4;
+                break;
+            case '"':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&quot;" );
+                length += 5;
+                break;
+            case '&':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&amp;" );
+                length += 4;
+                break;
+            case '<':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&lt;" );
+                length += 3;
+                break;
+            case '>':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&gt;" );
+                length += 3;
+                break;
+            default:
+                break;
             }
             i++;
         }
@@ -371,8 +372,8 @@ public final class StringUtilities {
         // the original label should be used as-is (when unique) vs. cases where
         // an appendix is always required.
         final String uniquefierAppendix = ( uniquefierNumber > 0 )
-                ? uniquefierNumberFormat.format( uniquefierNumber )
-                : "";
+            ? uniquefierNumberFormat.format( uniquefierNumber )
+            : "";
         return uniquefierAppendix;
     }
 
@@ -392,6 +393,7 @@ public final class StringUtilities {
      *            is designated for
      * @param numberFormat
      *            The number formatter to apply for the number representation
+     * @return The tool tip text for the provided value range
      */
     public static String getValueRangeTooltipText( final String valueDescriptor,
                                                    final Number minimumValue,
@@ -444,7 +446,7 @@ public final class StringUtilities {
     // :NOTE: This is designed as a generic preparatory task for loading
     // string-based data into a table or possibly a database (e.g. SQL).
     @SuppressWarnings("nls")
-    public static int stringVectorPadToMaxColumn( final Vector<Vector< String >> vector ) {
+    public static int stringVectorPadToMaxColumn( final Vector< Vector< String > > vector ) {
         // Figure out maximum number of columns in a line.
         int maxColumn = 0;
         for ( final Vector< String > line : vector ) {
@@ -557,17 +559,6 @@ public final class StringUtilities {
      * Given a string, replace all the instances of XML entities with their
      * corresponding XML special characters. This is necessary to allow
      * arbitrary strings to be encoded within XML.
-     * <p>
-     * In this method, we make the following translations:
-     *
-     * <pre>
-     *  &amp;amp; becomes &amp
-     *  &amp;quot; becomes "
-     *  &amp;lt; becomes <
-     *  &amp;gt; becomes >
-     *  &amp;#10; becomes newline
-     *  &amp;#13; becomes carriage return
-     * </pre>
      *
      * @see #escapeForXML(String)
      * @param string
@@ -576,6 +567,16 @@ public final class StringUtilities {
      */
     @SuppressWarnings("nls")
     public static String unescapeForXML( final String string ) {
+        // TODO: Find a way to get this into Javadocs without causing errors
+        //
+        // In this method, we make the following translations:
+        //
+        // &amp;amp; becomes &amp
+        // &amp;quot; becomes "
+        // &amp;lt; becomes <
+        // &amp;gt; becomes >
+        // &amp;#10; becomes newline
+        // &amp;#13; becomes carriage return
         String unescapeString = string;
         if ( string.indexOf( '&' ) != -1 ) {
             unescapeString = substitute( unescapeString, "&amp;", "&" );
