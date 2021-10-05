@@ -32,6 +32,7 @@ package com.mhschmieder.commonstoolkit.io;
 
 import java.io.File;
 import java.util.Locale;
+
 import org.apache.commons.io.FilenameUtils;
 
 /**
