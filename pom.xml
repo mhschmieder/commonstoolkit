@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mhschmieder</groupId>
-    <artifactId>iotoolkit</artifactId>
+    <artifactId>commonstoolkit</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>IoToolkit</name>
-    <url>https://github.com/mhschmieder/iotoolkit</url>
+    <name>CommonsToolkit</name>
+    <url>https://github.com/mhschmieder/commonstoolkit</url>
     <description>Utilities and custom classes for Java I/O.</description>
 
     <licenses>
@@ -21,9 +21,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/mhschmieder/iotoolkit</url>
-        <connection>scm:git:git://github.com/mhschmieder/iotoolkit.git</connection>
-        <developerConnection>scm:git:git@github.com:mhschmieder/iotoolkit.git</developerConnection>
+        <url>https://github.com/mhschmieder/commonstoolkit</url>
+        <connection>scm:git:git://github.com/mhschmieder/commonstoolkit.git</connection>
+        <developerConnection>scm:git:git@github.com:mhschmieder/commonstoolkit.git</developerConnection>
     </scm>
 
     <developers>
