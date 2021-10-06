@@ -34,10 +34,9 @@ import java.io.File;
 import java.net.URL;
 import java.util.Locale;
 
-import com.mhschmieder.commonstoolkit.security.ClientType;
 import com.mhschmieder.commonstoolkit.util.SystemType;
 
-public final class SessionContext {
+public class SessionContext {
 
     // Cache the verbose OS Name compounded from system toolkit queries.
     public String     osNameVerbose;
@@ -56,9 +55,6 @@ public final class SessionContext {
     // Cache the user default directory as it is expensive to query.
     public File       userHomeDirectory;
 
-    // Keep track of the Client Type for privileges and functionality.
-    public ClientType clientType;
-
     // Cache the local host (client) name.
     public String     localHostName;
 
@@ -68,12 +64,12 @@ public final class SessionContext {
     // Cache the URL for local host to web host HTTP requests/responses.
     public URL        urlHttpServlet;
 
+    @SuppressWarnings("nls")
     public SessionContext( final String osNameVerbose,
                            final double screenWidth,
                            final double screenHeight,
                            final Locale locale,
                            final File userHomeDirectory,
-                           final ClientType clientType,
                            final String localHostName,
                            final String webHostName,
                            final int webServletPort,
@@ -84,7 +80,6 @@ public final class SessionContext {
         this.screenHeight = screenHeight;
         this.locale = locale;
         this.userHomeDirectory = userHomeDirectory;
-        this.clientType = clientType;
         this.localHostName = localHostName;
         this.webHostName = webHostName;
         this.localHostName = localHostName;
@@ -94,7 +89,7 @@ public final class SessionContext {
         // the servlet port or servlet name, because our needs may change and
         // this is more flexible than doing it outside this constructor and
         // then throwing away the uncached parameters.
-        urlHttpServlet = NetworkUtilities
+        this.urlHttpServlet = NetworkUtilities
                 .getRelativeURL( "http", webHostName, webServletPort, webServletName );
     }
 

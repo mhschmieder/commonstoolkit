@@ -134,7 +134,7 @@ public final class StringUtilities {
      * their corresponding XML entities. This is necessary to allow arbitrary
      * strings to be encoded within XML.
      * <p>
-     * 
+     *
      * @see #unescapeForXML(String)
      * @param string
      *            The string to escape.

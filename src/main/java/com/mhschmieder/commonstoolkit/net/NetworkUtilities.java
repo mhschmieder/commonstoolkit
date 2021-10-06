@@ -42,7 +42,6 @@ import java.net.URLEncoder;
 import java.net.UnknownHostException;
 
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
-import com.mhschmieder.commonstoolkit.security.ClientType;
 import com.mhschmieder.commonstoolkit.security.LoginCredentials;
 import com.mhschmieder.commonstoolkit.security.PredictionLoginCredentials;
 
@@ -60,6 +59,7 @@ public final class NetworkUtilities {
                                                    final String requestType,
                                                    final LoginCredentials loginCredentials,
                                                    final int clientBuildId,
+                                                   final String clientType,
                                                    final SessionContext sessionContext ) {
         try {
             // Encoding format
@@ -77,14 +77,7 @@ public final class NetworkUtilities {
             password_encoded = URLEncoder.encode( password, enc );
             httpURLConnection.setRequestProperty( "password", password_encoded );
 
-            // NOTE: Temporarily hard-wired to PUBLIC due to firewall and
-            // maintenance issues during the Coronavirus pandemic lockdown, for
-            // the CLEARED servers.
-            // httpURLConnection
-            // .setRequestProperty( "clientType",
-            // sessionContext.clientType.toAbbreviatedString() );
-            httpURLConnection.setRequestProperty( "clientType",
-                                                  ClientType.PUBLIC.toAbbreviatedString() );
+            httpURLConnection.setRequestProperty( "clientType", clientType );
             httpURLConnection.setRequestProperty( "client", sessionContext.localHostName );
             httpURLConnection.setRequestProperty( "server", sessionContext.webHostName );
             httpURLConnection.setRequestProperty( "clientOS", sessionContext.osNameVerbose );

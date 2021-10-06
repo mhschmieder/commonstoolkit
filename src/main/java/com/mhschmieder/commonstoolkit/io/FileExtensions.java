@@ -34,7 +34,7 @@ package com.mhschmieder.commonstoolkit.io;
  * {@code FileExtensions} is a static constants class for common file
  * extensions.
  */
-public final class FileExtensions {
+public class FileExtensions {
 
     /**
      * The default constructor is disabled, as this is a static constants class.

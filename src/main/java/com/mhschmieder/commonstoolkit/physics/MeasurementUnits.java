@@ -80,7 +80,7 @@ public final class MeasurementUnits {
 
     /**
      * This is the fully qualified constructor.
-     * 
+     *
      * @param pDistanceUnit
      *            The Distance Unit to use
      * @param pAngleUnit
@@ -348,7 +348,7 @@ public final class MeasurementUnits {
     /**
      * Fully qualified pseudo-constructor. Notifies listeners once instead of
      * for each changed property. Used by reset() and updatePreferences().
-     * 
+     *
      * @param pDistanceUnit
      *            The Distance Unit to use
      * @param pAngleUnit
@@ -374,7 +374,7 @@ public final class MeasurementUnits {
 
     /**
      * Copy pseudo-constructor. Unused at this time (201602).
-     * 
+     *
      * @param pMeasurementUnits
      *            The Measurement Units to use to set this object
      */

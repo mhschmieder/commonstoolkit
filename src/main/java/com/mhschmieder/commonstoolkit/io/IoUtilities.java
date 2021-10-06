@@ -30,16 +30,33 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.SwappedDataInputStream;
 
 /**
  * {@code IoUtilities} is a static utilities class for common I/O functionality
  * that at least wasn't part of Core Java at the time this library was written.
+ * <p>
+ * In particular, this class contains utilities for loading streams and files
+ * into a StringBuilder, which Oracle recommends in place of StringBuffer.
  */
 public final class IoUtilities {
+
+    // :NOTE: We might need to switch this to UTF-8 encoding.
+    @SuppressWarnings("nls") public static final String LATIN_1 = "ISO-8859-1";
 
     /**
      * The default constructor is disabled, as this is a static utilities class.
@@ -60,6 +77,126 @@ public final class IoUtilities {
         final String jarResourceFilename = jarResourceFilenameStringBuilder.toString();
 
         return jarResourceFilename;
+    }
+
+    // Generic method to fetch the contents of a named resource to a string.
+    public static final String getResourceAsString( final String resourceName ) {
+        try ( final InputStream inputStream = IoUtilities.class
+                .getResourceAsStream( resourceName ) ) {
+            // Convert the text file to a standard string message.
+            final String text = IOUtils.toString( inputStream,
+                                                  Charsets.toCharset( StandardCharsets.UTF_8 ) );
+            return text;
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Generalized method to load a float array from a Little Endian Input
+    // Stream to a double array with possible offset and default-fill.
+    // :NOTE: The data array must be pre-allocated, but is filled here.
+    public static final boolean loadIntoDoubleArray( final SwappedDataInputStream inputStream,
+                                                     final double[] data,
+                                                     final int dataOffset,
+                                                     final int numberOfDataPoints,
+                                                     final double defaultValue ) {
+        // Avoid throwing unnecessary exceptions by not attempting to open bad
+        // streams or use unallocated or incorrectly sized data arrays.
+        // :NOTE: We mustn't assume the invoker requires all data to be loaded
+        // when comparing allocated data vector size, so we pick the smallest.
+        if ( ( inputStream == null ) || ( data == null ) ) {
+            return false;
+        }
+
+        final int totalDataLength = dataOffset + numberOfDataPoints;
+        final int dataIndexLast = Math.min( totalDataLength, data.length ) - 1;
+
+        try {
+            // Load data into a double-precision array, pre-filling and/or
+            // post-filling with the supplied default value if there is a data
+            // offset and/or the number of items is less than the data length.
+            int dataIndex = 0;
+            while ( dataIndex < dataOffset ) {
+                data[ dataIndex++ ] = defaultValue;
+            }
+            while ( dataIndex <= dataIndexLast ) {
+                data[ dataIndex++ ] = inputStream.readFloat();
+            }
+            while ( dataIndex < data.length ) {
+                data[ dataIndex++ ] = defaultValue;
+            }
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    // Generic method to load the contents of a reader into a string builder.
+    @SuppressWarnings("nls")
+    public static final boolean loadIntoStringBuilder( final BufferedReader bufferedReader,
+                                                       final StringBuilder stringBuilder ) {
+        try {
+            String line = bufferedReader.readLine();
+            while ( line != null ) {
+                stringBuilder.append( line ).append( "\n" );
+                line = bufferedReader.readLine();
+            }
+            return true;
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Generic method to load the contents of a file into a string builder.
+    public static final boolean loadIntoStringBuilder( final File file,
+                                                       final StringBuilder buffer ) {
+        // Chain a BufferedReader to a FileReader, for better performance.
+        try ( final FileReader fileReader = new FileReader( file );
+                final BufferedReader bufferedReader = new BufferedReader( fileReader ) ) {
+            final boolean fileOpened = loadIntoStringBuilder( bufferedReader, buffer );
+            return fileOpened;
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Generic method to load the contents of an input stream into a string
+    // builder.
+    public static final boolean loadIntoStringBuilder( final InputStream inputStream,
+                                                       final StringBuilder buffer ) {
+        // Chain a BufferedReader to an InputStreamReader, for better
+        // performance.
+        try ( final InputStreamReader inputStreamReader = new InputStreamReader( inputStream,
+                                                                                 LATIN_1 );
+                final BufferedReader bufferedReader = new BufferedReader( inputStreamReader ) ) {
+            final boolean fileOpened = loadIntoStringBuilder( bufferedReader, buffer );
+            return fileOpened;
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Generic method to read an entire text file's contents into a String.
+    public static final String readFile( final String fileName, final Charset encoding ) {
+        try {
+            final byte[] encodedContents = Files.readAllBytes( Paths.get( fileName ) );
+            return encoding.decode( ByteBuffer.wrap( encodedContents ) ).toString();
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**

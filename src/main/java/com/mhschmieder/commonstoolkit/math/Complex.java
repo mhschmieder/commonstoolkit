@@ -536,7 +536,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Implements division between two complex numbers, one expressed as as a
      * <tt>Complex</tt> and the other expressed as a pair of <tt>double</tt>s.
-     * 
+     *
      * @param z
      *            The {@link Complex} number that we will divide
      * @param x
@@ -655,7 +655,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Returns the phase of a <tt>Complex</tt> value. Note that this method
      * duplicates the functionality of the <tt>arg</tt> method.
-     * 
+     *
      * @param c
      *            The {@link Complex} number whose phase we need to calculate
      *
@@ -1498,7 +1498,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Sets a <tt>double</tt> value into the imaginary part of a
      * <tt>Complex</tt> object.
-     * 
+     *
      * @param pIm
      *            The value to use to set this complex number's imaginary part
      *
@@ -1513,7 +1513,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Sets a <tt>double</tt> value into the real part of a <tt>Complex</tt>
      * object.
-     * 
+     *
      * @param pRe
      *            The value to use to set this complex number's real part
      *
@@ -1528,7 +1528,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Sets two <tt>double</tt> values into the real and imaginary parts of a
      * <tt>Complex</tt> object.
-     * 
+     *
      * @param pRe
      *            The value to use for setting the real part of this Complex
      *            number

@@ -48,6 +48,9 @@ public final class AuthorizationRequestTask extends Task< AuthorizationServerRes
     /** Cache the Build ID passed in by the client application. */
     protected int              _clientBuildId;
 
+    /** Cache the Client Type passed in by the client application. */
+    protected String           _clientType;
+
     /**
      * Cache the full Session Context (System Type, Locale, Client Type, etc.).
      */
@@ -55,12 +58,14 @@ public final class AuthorizationRequestTask extends Task< AuthorizationServerRes
 
     public AuthorizationRequestTask( final LoginCredentials loginCredentials,
                                      final int clientBuildId,
+                                     final String clientType,
                                      final SessionContext sessionContext ) {
         // Always call the super-constructor first!
         super();
 
         _loginCredentials = loginCredentials;
         _clientBuildId = clientBuildId;
+        _clientType = clientType;
         _sessionContext = sessionContext;
     }
 
@@ -88,6 +93,7 @@ public final class AuthorizationRequestTask extends Task< AuthorizationServerRes
                                                      "AuthorizeUser", //$NON-NLS-1$
                                                      _loginCredentials,
                                                      _clientBuildId,
+                                                     _clientType,
                                                      _sessionContext );
 
         // Request a user authorization based on Login Credentials.

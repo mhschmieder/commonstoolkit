@@ -52,17 +52,22 @@ public final class AuthorizationRequestService extends Service< AuthorizationSer
     /** Cache the Build ID passed in by the client application. */
     protected int                              _clientBuildId;
 
+    /** Cache the Client Type passed in by the client application. */
+    protected String                           _clientType;
+
     /**
      * Cache the full Session Context (System Type, Locale, Client Type, etc.).
      */
     public SessionContext                      _sessionContext;
 
     public AuthorizationRequestService( final int clientBuildId,
+                                        final String clientType,
                                         final SessionContext sessionContext ) {
         // Always call the superclass constructor first!
         super();
 
         _clientBuildId = clientBuildId;
+        _clientType = clientType;
         _sessionContext = sessionContext;
 
         _loginCredentials = new LoginCredentials();
@@ -83,6 +88,7 @@ public final class AuthorizationRequestService extends Service< AuthorizationSer
         final AuthorizationRequestTask authorizationrequestTask =
                                                                 new AuthorizationRequestTask( _loginCredentials,
                                                                                               _clientBuildId,
+                                                                                              _clientType,
                                                                                               _sessionContext );
 
         return authorizationrequestTask;

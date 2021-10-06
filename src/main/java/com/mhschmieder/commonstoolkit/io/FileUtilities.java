@@ -49,7 +49,7 @@ public final class FileUtilities {
 
     /**
      * Return the extension portion of the file's name, in lower case.
-     * 
+     *
      * @param file
      *            The file whose extension we need
      * @return The extension of the provided file
@@ -65,7 +65,7 @@ public final class FileUtilities {
 
     /**
      * Return the extension portion of the filename, in lower case.
-     * 
+     *
      * @param filename
      *            The name of the file whose extension we need
      * @return The extension of the file associated with the provided filename

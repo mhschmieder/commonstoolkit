@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.commonstoolkit.security;
 
+// TODO: Review this carefully, and possibly split into three categories based
+// on typical ways that stuff is classified as unclassified, secret, top secret.
 public enum ClientType {
     PUBLIC, CLEARED;
 
