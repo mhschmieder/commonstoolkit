@@ -30,41 +30,37 @@
  */
 package com.mhschmieder.commonstoolkit.security;
 
-// TODO: Review this carefully, and possibly split into three categories based
-// on typical ways that stuff is classified as unclassified, secret, top secret.
-public enum ClientType {
-    PUBLIC, CLEARED;
+public enum ClassificationLevel {
+    UNCLASSIFIED, CONFIDENTIAL, SECRET, TOP_SECRET;
 
     @SuppressWarnings("nls")
-    public static ClientType abbreviatedValueOf( final String clientType ) {
-        return "public".equalsIgnoreCase( clientType )
-            ? PUBLIC
-            : "cleared".equalsIgnoreCase( clientType ) ? CLEARED : defaultValue();
+    public static ClassificationLevel abbreviatedValueOf( final String clientType ) {
+        return "unclassified".equalsIgnoreCase( clientType )
+            ? UNCLASSIFIED
+            : "confidential".equalsIgnoreCase( clientType )
+                ? CONFIDENTIAL
+                : "secret".equalsIgnoreCase( clientType )
+                    ? SECRET
+                    : ( "top secret".equalsIgnoreCase( clientType )
+                            || "top_secret".equalsIgnoreCase( clientType ) )
+                                ? TOP_SECRET
+                                : defaultValue();
     }
 
-    public static ClientType defaultValue() {
-        return PUBLIC;
+    public static ClassificationLevel defaultValue() {
+        return UNCLASSIFIED;
     }
 
     public final String toAbbreviatedString() {
         switch ( this ) {
-        case PUBLIC:
-            return "public"; //$NON-NLS-1$
-        case CLEARED:
-            return "cleared"; //$NON-NLS-1$
-        default:
-            final String errMessage = "Unexpected " //$NON-NLS-1$
-                    + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
-            throw new IllegalArgumentException( errMessage );
-        }
-    }
-
-    public final String toBrandingString() {
-        switch ( this ) {
-        case PUBLIC:
-            return "Public"; //$NON-NLS-1$
-        case CLEARED:
-            return "Cleared"; //$NON-NLS-1$
+        case UNCLASSIFIED:
+            return "unclassified"; //$NON-NLS-1$
+        case CONFIDENTIAL:
+            return "confidential"; //$NON-NLS-1$
+        case SECRET:
+            return "secret"; //$NON-NLS-1$
+        case TOP_SECRET:
+            return "top secret"; //$NON-NLS-1$
         default:
             final String errMessage = "Unexpected " //$NON-NLS-1$
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
@@ -74,10 +70,14 @@ public enum ClientType {
 
     public final String toPresentationString() {
         switch ( this ) {
-        case PUBLIC:
-            return "PUBLIC"; //$NON-NLS-1$
-        case CLEARED:
-            return "CLEARED"; //$NON-NLS-1$
+        case UNCLASSIFIED:
+            return "Unclassified"; //$NON-NLS-1$
+        case CONFIDENTIAL:
+            return "Confidential"; //$NON-NLS-1$
+        case SECRET:
+            return "Secret"; //$NON-NLS-1$
+        case TOP_SECRET:
+            return "Top Secret"; //$NON-NLS-1$
         default:
             final String errMessage = "Unexpected " //$NON-NLS-1$
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$

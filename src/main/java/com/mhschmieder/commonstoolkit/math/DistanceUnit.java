@@ -39,7 +39,7 @@ import java.util.Locale;
  * units not initialized within the client code.
  */
 public enum DistanceUnit {
-    UNITLESS, METERS, CENTIMETERS, MILLIMETERS, FEET, INCHES;
+    UNITLESS, METERS, CENTIMETERS, MILLIMETERS, YARDS, FEET, INCHES;
 
     @SuppressWarnings("nls")
     public static DistanceUnit abbreviatedValueOf( final String abbreviatedDistanceUnit ) {
@@ -49,13 +49,15 @@ public enum DistanceUnit {
                 ? CENTIMETERS
                 : ( " mm".equalsIgnoreCase( abbreviatedDistanceUnit ) )
                     ? MILLIMETERS
-                    : ( " ft".equalsIgnoreCase( abbreviatedDistanceUnit ) )
-                        ? FEET
-                        : ( " in".equalsIgnoreCase( abbreviatedDistanceUnit ) )
-                            ? INCHES
-                            : ( "".equalsIgnoreCase( abbreviatedDistanceUnit ) )
-                                ? UNITLESS
-                                : UNITLESS;
+                    : ( " yd".equalsIgnoreCase( abbreviatedDistanceUnit ) )
+                        ? YARDS
+                        : ( " ft".equalsIgnoreCase( abbreviatedDistanceUnit ) )
+                            ? FEET
+                            : ( " in".equalsIgnoreCase( abbreviatedDistanceUnit ) )
+                                ? INCHES
+                                : ( "".equalsIgnoreCase( abbreviatedDistanceUnit ) )
+                                    ? UNITLESS
+                                    : UNITLESS;
     }
 
     public static DistanceUnit canonicalValueOf( final String canonicalDistanceUnit ) {
@@ -77,6 +79,8 @@ public enum DistanceUnit {
             return " cm";
         case MILLIMETERS:
             return " mm";
+        case YARDS:
+            return " yd";
         case FEET:
             return " ft";
         case INCHES:

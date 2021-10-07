@@ -51,10 +51,21 @@ public final class UnitConversion {
     // NOTE: The drawback to this approach is making them private, inaccessible
     // for tight-loop usage or for usage as scale factors in an affine transform
     // matrix. This needs further investigation.
+    public static final double           YARDS_TO_FEET_RATIO              = 3d;
+
+    public static final double           FEET_TO_YARDS_RATIO              =
+                                                             1d / YARDS_TO_FEET_RATIO;
+
     public static final double           FEET_TO_INCHES_RATIO             = 12d;
 
     public static final double           INCHES_TO_FEET_RATIO             =
                                                               1d / FEET_TO_INCHES_RATIO;
+
+    public static final double           YARDS_TO_INCHES_RATIO            = YARDS_TO_FEET_RATIO
+            * FEET_TO_INCHES_RATIO;
+
+    public static final double           INCHES_TO_YARDS_RATIO            =
+                                                               1d / YARDS_TO_INCHES_RATIO;
 
     public static final double           METERS_TO_INCHES_RATIO           = 39.37007874d;
 
@@ -90,6 +101,24 @@ public final class UnitConversion {
 
     public static final double           MILLIMETERS_TO_FEET_RATIO        =
                                                                    0.001d * METERS_TO_FEET_RATIO;
+
+    public static final double           YARDS_TO_METERS_RATIO            = YARDS_TO_INCHES_RATIO
+            * INCHES_TO_METERS_RATIO;
+
+    public static final double           YARDS_TO_CENTIMETERS_RATIO       =
+                                                                    100d * YARDS_TO_METERS_RATIO;
+
+    public static final double           YARDS_TO_MILLIMETERS_RATIO       =
+                                                                    1000d * YARDS_TO_METERS_RATIO;
+
+    public static final double           METERS_TO_YARDS_RATIO            =
+                                                               1d / YARDS_TO_METERS_RATIO;
+
+    public static final double           CENTIMETERS_TO_YARDS_RATIO       =
+                                                                    0.01d * METERS_TO_YARDS_RATIO;
+
+    public static final double           MILLIMETERS_TO_YARDS_RATIO       =
+                                                                    0.001d * METERS_TO_YARDS_RATIO;
 
     public static final double           POUNDS_TO_OUNCES_RATIO           = 16d;
 
@@ -226,6 +255,10 @@ public final class UnitConversion {
         return lengthCentimeters * CENTIMETERS_TO_INCHES_RATIO;
     }
 
+    public static double centimetersToYards( final double lengthCentimeters ) {
+        return lengthCentimeters * CENTIMETERS_TO_YARDS_RATIO;
+    }
+
     // TODO: Use switch statements instead.
     public static double convertAngle( final double angle,
                                        final AngleUnit angleUnitOld,
@@ -272,6 +305,9 @@ public final class UnitConversion {
             case MILLIMETERS:
                 distanceConverted = distance * 1000.0;
                 break;
+            case YARDS:
+                distanceConverted = metersToYards( distance );
+                break;
             case FEET:
                 distanceConverted = metersToFeet( distance );
                 break;
@@ -293,6 +329,9 @@ public final class UnitConversion {
                 break;
             case MILLIMETERS:
                 distanceConverted = distance * 10.0;
+                break;
+            case YARDS:
+                distanceConverted = centimetersToYards( distance );
                 break;
             case FEET:
                 distanceConverted = centimetersToFeet( distance );
@@ -316,11 +355,39 @@ public final class UnitConversion {
                 break;
             case MILLIMETERS:
                 break;
+            case YARDS:
+                distanceConverted = millimetersToYards( distance );
+                break;
             case FEET:
                 distanceConverted = millimetersToFeet( distance );
                 break;
             case INCHES:
                 distanceConverted = millimetersToInches( distance );
+                break;
+            case UNITLESS:
+                break;
+            default:
+                break;
+            }
+            break;
+        case YARDS:
+            switch ( distanceUnitNew ) {
+            case METERS:
+                distanceConverted = yardsToMeters( distance );
+                break;
+            case CENTIMETERS:
+                distanceConverted = yardsToCentimeters( distance );
+                break;
+            case MILLIMETERS:
+                distanceConverted = yardsToMillimeters( distance );
+                break;
+            case YARDS:
+                break;
+            case FEET:
+                distanceConverted = yardsToFeet( distance );
+                break;
+            case INCHES:
+                distanceConverted = yardsToInches( distance );
                 break;
             case UNITLESS:
                 break;
@@ -338,6 +405,9 @@ public final class UnitConversion {
                 break;
             case MILLIMETERS:
                 distanceConverted = feetToMillimeters( distance );
+                break;
+            case YARDS:
+                distanceConverted = feetToYards( distance );
                 break;
             case FEET:
                 break;
@@ -360,6 +430,9 @@ public final class UnitConversion {
                 break;
             case MILLIMETERS:
                 distanceConverted = inchesToMillimeters( distance );
+                break;
+            case YARDS:
+                distanceConverted = inchesToYards( distance );
                 break;
             case FEET:
                 distanceConverted = inchesToFeet( distance );
@@ -589,6 +662,10 @@ public final class UnitConversion {
         return lengthFeet * FEET_TO_MILLIMETERS_RATIO;
     }
 
+    public static double feetToYards( final double lengthFeet ) {
+        return lengthFeet * FEET_TO_YARDS_RATIO;
+    }
+
     public static double gramsToOunces( final double weightGrams ) {
         return weightGrams * GRAMS_TO_OUNCES_RATIO;
     }
@@ -611,6 +688,10 @@ public final class UnitConversion {
 
     public static double inchesToMillimeters( final double lengthInches ) {
         return lengthInches * INCHES_TO_MILLIMETERS_RATIO;
+    }
+
+    public static double inchesToYards( final double lengthInches ) {
+        return lengthInches * INCHES_TO_YARDS_RATIO;
     }
 
     public static double kelvinToCelsius( final double temperatureKelvin ) {
@@ -649,6 +730,10 @@ public final class UnitConversion {
         return lengthMeters * METERS_TO_INCHES_RATIO;
     }
 
+    public static double metersToYards( final double lengthMeters ) {
+        return lengthMeters * METERS_TO_YARDS_RATIO;
+    }
+
     public static double metricTonsToOunces( final double weightMetricTons ) {
         return weightMetricTons * METRIC_TONS_TO_OUNCES_RATIO;
     }
@@ -675,6 +760,10 @@ public final class UnitConversion {
 
     public static double millimetersToInches( final double lengthMillimeters ) {
         return lengthMillimeters * MILLIMETERS_TO_INCHES_RATIO;
+    }
+
+    public static double millimetersToYards( final double lengthMillimeters ) {
+        return lengthMillimeters * MILLIMETERS_TO_YARDS_RATIO;
     }
 
     public static double newtonsToPoundForce( final double newtons ) {
@@ -727,6 +816,26 @@ public final class UnitConversion {
 
     public static double poundsToOunces( final double weightPounds ) {
         return weightPounds * POUNDS_TO_OUNCES_RATIO;
+    }
+
+    public static double yardsToCentimeters( final double lengthYards ) {
+        return lengthYards * YARDS_TO_CENTIMETERS_RATIO;
+    }
+
+    public static double yardsToFeet( final double lengthYards ) {
+        return lengthYards * YARDS_TO_FEET_RATIO;
+    }
+
+    public static double yardsToInches( final double lengthYards ) {
+        return lengthYards * YARDS_TO_INCHES_RATIO;
+    }
+
+    public static double yardsToMeters( final double lengthYards ) {
+        return lengthYards * YARDS_TO_METERS_RATIO;
+    }
+
+    public static double yardsToMillimeters( final double lengthYards ) {
+        return lengthYards * YARDS_TO_MILLIMETERS_RATIO;
     }
 
 }
