@@ -80,7 +80,7 @@ public final class IoUtilities {
     }
 
     // Generic method to fetch the contents of a named resource to a string.
-    public static final String getResourceAsString( final String resourceName ) {
+    public static String getResourceAsString( final String resourceName ) {
         try ( final InputStream inputStream = IoUtilities.class
                 .getResourceAsStream( resourceName ) ) {
             // Convert the text file to a standard string message.
@@ -97,11 +97,11 @@ public final class IoUtilities {
     // Generalized method to load a float array from a Little Endian Input
     // Stream to a double array with possible offset and default-fill.
     // :NOTE: The data array must be pre-allocated, but is filled here.
-    public static final boolean loadIntoDoubleArray( final SwappedDataInputStream inputStream,
-                                                     final double[] data,
-                                                     final int dataOffset,
-                                                     final int numberOfDataPoints,
-                                                     final double defaultValue ) {
+    public static boolean loadIntoDoubleArray( final SwappedDataInputStream inputStream,
+                                               final double[] data,
+                                               final int dataOffset,
+                                               final int numberOfDataPoints,
+                                               final double defaultValue ) {
         // Avoid throwing unnecessary exceptions by not attempting to open bad
         // streams or use unallocated or incorrectly sized data arrays.
         // :NOTE: We mustn't assume the invoker requires all data to be loaded
@@ -138,8 +138,8 @@ public final class IoUtilities {
 
     // Generic method to load the contents of a reader into a string builder.
     @SuppressWarnings("nls")
-    public static final boolean loadIntoStringBuilder( final BufferedReader bufferedReader,
-                                                       final StringBuilder stringBuilder ) {
+    public static boolean loadIntoStringBuilder( final BufferedReader bufferedReader,
+                                                 final StringBuilder stringBuilder ) {
         try {
             String line = bufferedReader.readLine();
             while ( line != null ) {
@@ -155,8 +155,7 @@ public final class IoUtilities {
     }
 
     // Generic method to load the contents of a file into a string builder.
-    public static final boolean loadIntoStringBuilder( final File file,
-                                                       final StringBuilder buffer ) {
+    public static boolean loadIntoStringBuilder( final File file, final StringBuilder buffer ) {
         // Chain a BufferedReader to a FileReader, for better performance.
         try ( final FileReader fileReader = new FileReader( file );
                 final BufferedReader bufferedReader = new BufferedReader( fileReader ) ) {
@@ -171,8 +170,8 @@ public final class IoUtilities {
 
     // Generic method to load the contents of an input stream into a string
     // builder.
-    public static final boolean loadIntoStringBuilder( final InputStream inputStream,
-                                                       final StringBuilder buffer ) {
+    public static boolean loadIntoStringBuilder( final InputStream inputStream,
+                                                 final StringBuilder buffer ) {
         // Chain a BufferedReader to an InputStreamReader, for better
         // performance.
         try ( final InputStreamReader inputStreamReader = new InputStreamReader( inputStream,
@@ -188,7 +187,7 @@ public final class IoUtilities {
     }
 
     // Generic method to read an entire text file's contents into a String.
-    public static final String readFile( final String fileName, final Charset encoding ) {
+    public static String readFile( final String fileName, final Charset encoding ) {
         try {
             final byte[] encodedContents = Files.readAllBytes( Paths.get( fileName ) );
             return encoding.decode( ByteBuffer.wrap( encodedContents ) ).toString();

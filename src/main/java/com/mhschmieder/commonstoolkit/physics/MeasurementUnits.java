@@ -30,9 +30,6 @@
  */
 package com.mhschmieder.commonstoolkit.physics;
 
-import com.mhschmieder.commonstoolkit.math.AngleUnit;
-import com.mhschmieder.commonstoolkit.math.DistanceUnit;
-
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

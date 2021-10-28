@@ -33,6 +33,8 @@ package com.mhschmieder.commonstoolkit.math;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
+import com.mhschmieder.commonstoolkit.physics.AngleUnit;
+
 /**
  * Utility methods for math; primarily consisting of mappers and formatters.
  */

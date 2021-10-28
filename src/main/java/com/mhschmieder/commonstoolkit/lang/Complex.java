@@ -28,7 +28,10 @@
  *
  * Project: https://github.com/mhschmieder/commonstoolkit
  */
-package com.mhschmieder.commonstoolkit.math;
+package com.mhschmieder.commonstoolkit.lang;
+
+import com.mhschmieder.commonstoolkit.math.MathConstants;
+import com.mhschmieder.commonstoolkit.math.MathExt;
 
 /**
  * The class <code>Complex</code> defines a complex data type, and implements

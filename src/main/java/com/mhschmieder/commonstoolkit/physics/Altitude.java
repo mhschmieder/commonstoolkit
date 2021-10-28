@@ -32,8 +32,6 @@ package com.mhschmieder.commonstoolkit.physics;
 
 import java.util.Locale;
 
-import com.mhschmieder.commonstoolkit.math.DistanceUnit;
-
 public enum Altitude {
     LOW, MEDIUM, HIGH;
 

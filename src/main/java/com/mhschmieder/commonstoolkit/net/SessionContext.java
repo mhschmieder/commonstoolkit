@@ -75,7 +75,7 @@ public class SessionContext {
                            final int webServletPort,
                            final String webServletName ) {
         this.osNameVerbose = osNameVerbose;
-        this.systemType = SystemType.valueFromOsName( osNameVerbose );
+        systemType = SystemType.valueFromOsName( osNameVerbose );
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.locale = locale;
@@ -89,7 +89,7 @@ public class SessionContext {
         // the servlet port or servlet name, because our needs may change and
         // this is more flexible than doing it outside this constructor and
         // then throwing away the uncached parameters.
-        this.urlHttpServlet = NetworkUtilities
+        urlHttpServlet = NetworkUtilities
                 .getRelativeURL( "http", webHostName, webServletPort, webServletName );
     }
 

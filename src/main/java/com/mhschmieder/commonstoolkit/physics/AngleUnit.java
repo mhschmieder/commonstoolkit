@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/commonstoolkit
  */
-package com.mhschmieder.commonstoolkit.math;
+package com.mhschmieder.commonstoolkit.physics;
 
 import java.util.Locale;
 

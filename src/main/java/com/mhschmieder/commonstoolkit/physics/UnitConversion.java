@@ -30,9 +30,6 @@
  */
 package com.mhschmieder.commonstoolkit.physics;
 
-import com.mhschmieder.commonstoolkit.math.AngleUnit;
-import com.mhschmieder.commonstoolkit.math.DistanceUnit;
-
 /**
  * The <code>UnitConversion</code> class is a container for various unit
  * conversions between common units of measurement.
