@@ -43,12 +43,13 @@ import org.apache.commons.math3.util.Precision;
  * from the once-free JNL from VisualNumerics, the Math1 class from
  * "Java for Engineers and Scientists" (Stephen J. Chapman, Prentice-Hall), and
  * the Math2 class from "Technical Java" (Grant Palmer, Prentice-Hall), along
- * with the MathUtilities class from PtPlot.
+ * with the PhysicsUtilities class from PtPlot.
  */
 public final class MathExt {
 
-    // NOTE: The constructor is private, since this class only contains static
-    // methods and therefore should not be instantiated.
+    /**
+     * The default constructor is disabled, as this is a static utilities class.
+     */
     private MathExt() {}
 
     // Reference for random number generator, to make sure there is only one
@@ -95,7 +96,7 @@ public final class MathExt {
     }
 
     // Gamma and logarithmic gamma function.
-    // :NOTE: Since the gamma function increases as a function of (z - 1)!, most
+    // NOTE: As the gamma function increases as a function of (z - 1)!, most
     // computers will experience an arithmetic overflow a z > 140 or so. For
     // this reason, the logarithm of the gamma function is provided as well.
     public static double gamma( final double x ) {
@@ -137,7 +138,7 @@ public final class MathExt {
         return numdigits;
     }
 
-    // :NOTE: No longer necessary as the core language now includes this
+    // NOTE: No longer necessary as the core language now includes this
     // method, using strict math in native code.
     public static double log10( final double x ) {
         return Math.log( x ) * MathConstants.LN10_SCALE;
@@ -149,7 +150,7 @@ public final class MathExt {
     }
 
     // The error function and its complement.
-    // :TODO: Implement these based on p. 498 of CRC Standard math Tables, 30th
+    // TODO: Implement these based on p. 498 of CRC Standard math Tables, 30th
     // edition (section 6.13, Error Functions).
     /*
      * public static double erf( double x ) { } public static double erfc(
@@ -194,9 +195,9 @@ public final class MathExt {
 
         // Use the built-in BigDecimal class to do the work, as library code
         // usually covers more edge cases than home-grown algorithms.
-        // :NOTE: We use Apache Commons Math instead, which wraps the built-in
+        // NOTE: We use Apache Commons Math instead, which wraps the built-in
         // BigDecimal class with safe edge case detection and handling.
-        // :TODO: Check for Apache Commons Math updates, that are compatible
+        // TODO: Check for Apache Commons Math updates, that are compatible
         // with Java 12 and its removal of BigDecimal.ROUND_HALF_UP.
         final double numberRounded = Precision
                 .round( number, numberOfDigitsAfterDecimalPoint, BigDecimal.ROUND_HALF_UP );

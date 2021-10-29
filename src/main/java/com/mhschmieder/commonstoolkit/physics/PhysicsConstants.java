@@ -70,7 +70,7 @@ public final class PhysicsConstants {
     public static final double WATER_TRIPLE_POINT_PRESSURE_PA                    = 611.657d;
 
     // Triple point temperature of specially purified water, in degrees Kelvin.
-    // :NOTE: Used in the conversion from Relative to Molar Humidity; but not to
+    // NOTE: Used in the conversion from Relative to Molar Humidity; but not to
     // convert temperature from degrees Celsius to degrees Kelvin, as it
     // corresponds to 0.01 degrees Celsius vs. Absolute Zero.
     public static final double WATER_TRIPLE_POINT_TEMPERATURE_K                  = 273.16d;

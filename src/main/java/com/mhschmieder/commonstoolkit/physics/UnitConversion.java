@@ -36,8 +36,9 @@ package com.mhschmieder.commonstoolkit.physics;
  */
 public final class UnitConversion {
 
-    // :NOTE: The constructor is disabled, since this is a static utilities
-    // class.
+    /**
+     * The default constructor is disabled, as this is a static utilities class.
+     */
     private UnitConversion() {}
 
     // //////////////////////////////////////////////////////////////////////////
@@ -213,6 +214,12 @@ public final class UnitConversion {
                                                               PhysicsConstants.ACCELERATION_OF_GRAVITY_METERS_PER_SECOND_SQUARED;
     public static final double           WEIGHT_TO_MASS_RATIO             =
                                                               1d / MASS_TO_WEIGHT_RATIO;
+
+    // Meters per Second (m/s) is more precise converted to Knots than
+    // vice-versa, so we initially express that ratio and derive the other.
+    public static final double           METERS_PER_SECOND_TO_KNOTS       = 1.9438444924406d;
+    public static final double           KNOTS_TO_METERS_PER_SECOND       =
+                                                                    1d / METERS_PER_SECOND_TO_KNOTS;
 
     // Declare a static instance of an explicit default metric measurement
     // (MKS).

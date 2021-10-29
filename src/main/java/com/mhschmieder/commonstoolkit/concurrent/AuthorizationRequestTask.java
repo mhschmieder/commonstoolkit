@@ -111,9 +111,9 @@ public final class AuthorizationRequestTask extends Task< AuthorizationServerRes
             return authorizationServerResponse;
         }
 
-        // Handle the MAPP authorization servlet's HTTP status, and echo
-        // the formatted error response to the user if an HTTP error
-        // code is detected and/or the authorization failed.
+        // Handle the authorization servlet's HTTP status, and echo the
+        // formatted error response to the user if an HTTP error code is
+        // detected and/or the authorization failed.
         final AuthorizationServerResponse authorizationServerResponse = NetworkUtilities
                 .getAuthorizationServerResponse( httpURLConnection );
         final String serverStatusMessage = authorizationServerResponse.getServerStatusMessage();
