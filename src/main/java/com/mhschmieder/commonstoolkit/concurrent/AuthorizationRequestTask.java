@@ -33,8 +33,9 @@ package com.mhschmieder.commonstoolkit.concurrent;
 import java.net.HttpURLConnection;
 
 import com.mhschmieder.commonstoolkit.net.AuthorizationServerResponse;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.net.NetworkUtilities;
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ServerRequestProperties;
 import com.mhschmieder.commonstoolkit.security.LoginCredentials;
 import com.mhschmieder.commonstoolkit.security.PredictionLoginCredentials;
 
@@ -42,38 +43,40 @@ import javafx.concurrent.Task;
 
 public final class AuthorizationRequestTask extends Task< AuthorizationServerResponse > {
 
-    /** Cache the Login Credentials to use for authorizing the prediction. */
-    protected LoginCredentials _loginCredentials;
+    /** The Request Type name that this task will pass to the server. */
+    @SuppressWarnings("nls") public static String AUTHORIZATION_REQUEST_TYPE = "AuthorizeUser";
 
-    /** Cache the Build ID passed in by the client application. */
-    protected int              _clientBuildId;
-
-    /** Cache the Client Type passed in by the client application. */
-    protected String           _clientType;
+    /** Cache the Login Credentials to use for authorizing the request. */
+    protected LoginCredentials                    loginCredentials;
 
     /**
-     * Cache the full Session Context (System Type, Locale, Client Type, etc.).
+     * Cache the Server Request Properties (Build ID, Client Type, etc.).
      */
-    public SessionContext      _sessionContext;
+    public ServerRequestProperties                serverRequestProperties;
 
-    public AuthorizationRequestTask( final LoginCredentials loginCredentials,
-                                     final int clientBuildId,
-                                     final String clientType,
-                                     final SessionContext sessionContext ) {
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties                       clientProperties;
+
+    public AuthorizationRequestTask( final LoginCredentials pLoginCredentials,
+                                     final ServerRequestProperties pServerRequestProperties,
+                                     final ClientProperties pClientProperties ) {
         // Always call the super-constructor first!
         super();
 
-        _loginCredentials = loginCredentials;
-        _clientBuildId = clientBuildId;
-        _clientType = clientType;
-        _sessionContext = sessionContext;
+        // TODO: Wrap the Login Credentials in an AuthorizationRequestContext
+        // class, for future-proof API expansion later on?
+        loginCredentials = pLoginCredentials;
+        serverRequestProperties = pServerRequestProperties;
+        clientProperties = pClientProperties;
     }
 
     @Override
     protected AuthorizationServerResponse call() throws InterruptedException {
         // Open a connection to the Authorization Servlet.
         final HttpURLConnection httpURLConnection = NetworkUtilities
-                .getHttpURLConnection( _sessionContext.urlHttpServlet );
+                .getHttpURLConnection( serverRequestProperties.urlHttpServlet );
         if ( httpURLConnection == null ) {
             final String urlConnectionStatus =
                                              "Server Connection Error: Authorization Service Not Found"; //$NON-NLS-1$
@@ -90,11 +93,10 @@ public final class AuthorizationRequestTask extends Task< AuthorizationServerRes
 
         // Add the HTTP request properties for the Authorization Servlet.
         NetworkUtilities.addServerRequestProperties( httpURLConnection,
-                                                     "AuthorizeUser", //$NON-NLS-1$
-                                                     _loginCredentials,
-                                                     _clientBuildId,
-                                                     _clientType,
-                                                     _sessionContext );
+                                                     AUTHORIZATION_REQUEST_TYPE,
+                                                     loginCredentials,
+                                                     serverRequestProperties,
+                                                     clientProperties );
 
         // Request a user authorization based on Login Credentials.
         final String servletErrorMessage = NetworkUtilities.connectToServlet( httpURLConnection,

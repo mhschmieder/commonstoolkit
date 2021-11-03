@@ -31,12 +31,11 @@
 package com.mhschmieder.commonstoolkit.net;
 
 import java.io.File;
-import java.net.URL;
 import java.util.Locale;
 
 import com.mhschmieder.commonstoolkit.util.SystemType;
 
-public class SessionContext {
+public class ClientProperties {
 
     // Cache the verbose OS Name compounded from system toolkit queries.
     public String     osNameVerbose;
@@ -45,7 +44,7 @@ public class SessionContext {
     public SystemType systemType;
 
     // Cache the screen size, for Full Screen Mode and user statistics.
-    // :NOTE: We use simple types, to avoid Graphics API dependencies.
+    // NOTE: We use simple types, to avoid Graphics API dependencies.
     public double     screenWidth;
     public double     screenHeight;
 
@@ -55,42 +54,17 @@ public class SessionContext {
     // Cache the user default directory as it is expensive to query.
     public File       userHomeDirectory;
 
-    // Cache the local host (client) name.
-    public String     localHostName;
-
-    // Cache the web host (server) name.
-    public String     webHostName;
-
-    // Cache the URL for local host to web host HTTP requests/responses.
-    public URL        urlHttpServlet;
-
-    @SuppressWarnings("nls")
-    public SessionContext( final String osNameVerbose,
-                           final double screenWidth,
-                           final double screenHeight,
-                           final Locale locale,
-                           final File userHomeDirectory,
-                           final String localHostName,
-                           final String webHostName,
-                           final int webServletPort,
-                           final String webServletName ) {
-        this.osNameVerbose = osNameVerbose;
-        systemType = SystemType.valueFromOsName( osNameVerbose );
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
-        this.locale = locale;
-        this.userHomeDirectory = userHomeDirectory;
-        this.localHostName = localHostName;
-        this.webHostName = webHostName;
-        this.localHostName = localHostName;
-
-        // Compile the URL for local host to web host HTTP requests/responses.
-        // NOTE: We make this here instead of in the invoker, and don't cache
-        // the servlet port or servlet name, because our needs may change and
-        // this is more flexible than doing it outside this constructor and
-        // then throwing away the uncached parameters.
-        urlHttpServlet = NetworkUtilities
-                .getRelativeURL( "http", webHostName, webServletPort, webServletName );
+    public ClientProperties( final String pOsNameVerbose,
+                             final double pScreenWidth,
+                             final double pScreenHeight,
+                             final Locale pLocale,
+                             final File pUserHomeDirectory ) {
+        osNameVerbose = pOsNameVerbose;
+        systemType = SystemType.valueFromOsName( pOsNameVerbose );
+        screenWidth = pScreenWidth;
+        screenHeight = pScreenHeight;
+        locale = pLocale;
+        userHomeDirectory = pUserHomeDirectory;
     }
 
 }

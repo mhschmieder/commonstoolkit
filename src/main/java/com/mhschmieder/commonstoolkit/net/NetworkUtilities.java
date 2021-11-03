@@ -58,37 +58,39 @@ public final class NetworkUtilities {
     public static void addServerRequestProperties( final HttpURLConnection httpURLConnection,
                                                    final String requestType,
                                                    final LoginCredentials loginCredentials,
-                                                   final int clientBuildId,
-                                                   final String clientType,
-                                                   final SessionContext sessionContext ) {
+                                                   final ServerRequestProperties serverRequestProperties,
+                                                   final ClientProperties clientProperties ) {
         try {
             // Encoding format
             final String enc = "UTF-8";
 
+            // Set the request type for the prediction request.
+            httpURLConnection.setRequestProperty( "requestType", requestType );
+
             // Encode the username
             final String username = loginCredentials.getUserName();
-            String username_encoded;
-            username_encoded = URLEncoder.encode( username, enc );
-            httpURLConnection.setRequestProperty( "username", username_encoded );
+            final String usernameEncoded = URLEncoder.encode( username, enc );
+            httpURLConnection.setRequestProperty( "username", usernameEncoded );
 
             // Encode the password
             final String password = loginCredentials.getPassword();
-            String password_encoded;
-            password_encoded = URLEncoder.encode( password, enc );
-            httpURLConnection.setRequestProperty( "password", password_encoded );
+            final String passwordEncoded = URLEncoder.encode( password, enc );
+            httpURLConnection.setRequestProperty( "password", passwordEncoded );
 
-            httpURLConnection.setRequestProperty( "clientType", clientType );
-            httpURLConnection.setRequestProperty( "client", sessionContext.localHostName );
-            httpURLConnection.setRequestProperty( "server", sessionContext.webHostName );
-            httpURLConnection.setRequestProperty( "clientOS", sessionContext.osNameVerbose );
+            httpURLConnection
+                    .setRequestProperty( "buildID",
+                                         Integer.toString( serverRequestProperties.clientBuildId ) );
+            httpURLConnection.setRequestProperty( "clientType",
+                                                  serverRequestProperties.clientType );
+            httpURLConnection.setRequestProperty( "client", serverRequestProperties.localHostName );
+            httpURLConnection.setRequestProperty( "server", serverRequestProperties.webHostName );
+
+            httpURLConnection.setRequestProperty( "clientOS", clientProperties.osNameVerbose );
             httpURLConnection.setRequestProperty( "screenSizeX",
-                                                  Double.toString( sessionContext.screenWidth ) );
-            httpURLConnection.setRequestProperty( "screenSizeY",
-                                                  Double.toString( sessionContext.screenHeight ) );
-            httpURLConnection.setRequestProperty( "buildID", Integer.toString( clientBuildId ) );
-
-            // Set the request type for the prediction request.
-            httpURLConnection.setRequestProperty( "requestType", requestType );
+                                                  Double.toString( clientProperties.screenWidth ) );
+            httpURLConnection
+                    .setRequestProperty( "screenSizeY",
+                                         Double.toString( clientProperties.screenHeight ) );
         }
         catch ( final Exception e ) {
             e.printStackTrace();
@@ -266,7 +268,7 @@ public final class NetworkUtilities {
     // default POST request method and UTF-8 encoded text content type.
     @SuppressWarnings("nls")
     public static HttpURLConnection getHttpURLConnection( final URL url ) {
-        // :NOTE: The "POST" request method is inferred by "setDoOutput" but
+        // NOTE: The "POST" request method is inferred by "setDoOutput" but
         // could also be "PUT" or "HEAD" in that context.
         return getHttpURLConnection( url, "POST" );
     }

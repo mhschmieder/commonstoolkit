@@ -42,7 +42,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 public final class LogUtilities {
 
@@ -54,14 +54,14 @@ public final class LogUtilities {
     /**
      * Print critical info about the client, the user and their computer.
      *
-     * @param sessionContext
-     *            The @SessionContext for system and user-specific settings
+     * @param clientProperties
+     *            The @ClientProperties for system and user-specific settings
      * @param productBranding
      *            The @ProductBranding terms approved by Marketing
      * @param cssStylesheet
      *            The name of the CSS Stylesheet used as the top-level default
      */
-    public static void generateSessionLogHeader( final SessionContext sessionContext,
+    public static void generateSessionLogHeader( final ClientProperties clientProperties,
                                                  final ProductBranding productBranding,
                                                  final String cssStylesheet ) {
         final StringBuilder sessionLogHeader = new StringBuilder();
@@ -82,11 +82,11 @@ public final class LogUtilities {
             sessionLogHeader.append( userName );
             sessionLogHeader.append( System.lineSeparator() );
             sessionLogHeader.append( "User Home Directory: " ); //$NON-NLS-1$
-            sessionLogHeader.append( sessionContext.userHomeDirectory );
+            sessionLogHeader.append( clientProperties.userHomeDirectory );
             sessionLogHeader.append( System.lineSeparator() );
 
             sessionLogHeader.append( "Operating System: " ); //$NON-NLS-1$
-            sessionLogHeader.append( sessionContext.osNameVerbose );
+            sessionLogHeader.append( clientProperties.osNameVerbose );
 
             sessionLogHeader.append( System.lineSeparator() );
             final Runtime rt = Runtime.getRuntime();

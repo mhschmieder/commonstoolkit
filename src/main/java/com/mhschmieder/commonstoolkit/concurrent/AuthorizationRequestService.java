@@ -34,7 +34,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.mhschmieder.commonstoolkit.net.AuthorizationServerResponse;
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
+import com.mhschmieder.commonstoolkit.net.ServerRequestProperties;
 import com.mhschmieder.commonstoolkit.security.LoginCredentials;
 
 import javafx.concurrent.Service;
@@ -43,37 +44,34 @@ import javafx.util.Pair;
 
 public final class AuthorizationRequestService extends Service< AuthorizationServerResponse > {
 
-    /** Cache the Login Credentials to use for authorizing the prediction. */
-    protected LoginCredentials                 _loginCredentials;
-
-    /** Reference to a Login Dialog that instigates the authorization. */
-    protected Dialog< Pair< String, String > > _loginDialog;
-
-    /** Cache the Build ID passed in by the client application. */
-    protected int                              _clientBuildId;
-
-    /** Cache the Client Type passed in by the client application. */
-    protected String                           _clientType;
+    /**
+     * Cache the Server Request Properties (Build ID, Client Type, etc.).
+     */
+    private ServerRequestProperties               serverRequestProperties;
 
     /**
-     * Cache the full Session Context (System Type, Locale, Client Type, etc.).
+     * Cache the Client Properties (System Type, Locale, etc.).
      */
-    public SessionContext                      _sessionContext;
+    public ClientProperties                       clientProperties;
 
-    public AuthorizationRequestService( final int clientBuildId,
-                                        final String clientType,
-                                        final SessionContext sessionContext ) {
+    /** Cache the Login Credentials to use for authorizing the request. */
+    protected LoginCredentials                 loginCredentials;
+
+    /** Reference to a Login Dialog that instigates the authorization. */
+    protected Dialog< Pair< String, String > > loginDialog;
+
+   public AuthorizationRequestService( final ServerRequestProperties pServerRequestProperties,
+                                        final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super();
 
-        _clientBuildId = clientBuildId;
-        _clientType = clientType;
-        _sessionContext = sessionContext;
+        serverRequestProperties = pServerRequestProperties;
+        clientProperties = pClientProperties;
 
-        _loginCredentials = new LoginCredentials();
+        loginCredentials = new LoginCredentials();
 
         // Not all authorization requests are launched from Login Dialogs.
-        _loginDialog = null;
+        loginDialog = null;
 
         // Set the Service to use a Cached Thread Pool vs. the default daemon,
         // to protect against run-time cross-threading issues (especially in a
@@ -86,16 +84,15 @@ public final class AuthorizationRequestService extends Service< AuthorizationSer
     protected AuthorizationRequestTask createTask() {
         // Create a new Authorization Request Task.
         final AuthorizationRequestTask authorizationrequestTask =
-                                                                new AuthorizationRequestTask( _loginCredentials,
-                                                                                              _clientBuildId,
-                                                                                              _clientType,
-                                                                                              _sessionContext );
+                                                                new AuthorizationRequestTask( loginCredentials,
+                                                                                              serverRequestProperties,
+                                                                                              clientProperties );
 
         return authorizationrequestTask;
     }
 
     public Dialog< Pair< String, String > > getLoginDialog() {
-        return _loginDialog;
+        return loginDialog;
     }
 
     public void requestUserAuthorization( final LoginCredentials loginCredentials ) {
@@ -111,12 +108,12 @@ public final class AuthorizationRequestService extends Service< AuthorizationSer
         restart();
     }
 
-    public void setLoginCredentials( final LoginCredentials loginCredentials ) {
-        _loginCredentials = loginCredentials;
+    public void setLoginCredentials( final LoginCredentials pLoginCredentials ) {
+        loginCredentials = pLoginCredentials;
     }
 
-    public void setLoginDialog( final Dialog< Pair< String, String > > loginDialog ) {
-        _loginDialog = loginDialog;
+    public void setLoginDialog( final Dialog< Pair< String, String > > pLoginDialog ) {
+        loginDialog = pLoginDialog;
     }
 
 }

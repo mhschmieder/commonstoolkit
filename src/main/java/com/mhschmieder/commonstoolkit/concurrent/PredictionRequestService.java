@@ -33,8 +33,9 @@ package com.mhschmieder.commonstoolkit.concurrent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.net.PredictionServerResponse;
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ServerRequestProperties;
 
 import javafx.concurrent.Service;
 
@@ -44,15 +45,22 @@ import javafx.concurrent.Service;
 public abstract class PredictionRequestService extends Service< PredictionServerResponse > {
 
     /**
-     * Cache the full Session Context (System Type, Locale, Client Type, etc.).
+     * Cache the Server Request Properties (Build ID, Client Type, etc.).
      */
-    public SessionContext _sessionContext;
+    public ServerRequestProperties serverRequestProperties;
 
-    public PredictionRequestService( final SessionContext sessionContext ) {
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties        clientProperties;
+
+    public PredictionRequestService( final ServerRequestProperties pServerRequestProperties,
+                                     final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super();
 
-        _sessionContext = sessionContext;
+        serverRequestProperties = pServerRequestProperties;
+        clientProperties = pClientProperties;
 
         // Set the Service to use a Cached Thread Pool vs. the default daemon,
         // to protect against run-time cross-threading issues (especially in a

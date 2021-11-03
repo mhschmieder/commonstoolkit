@@ -33,7 +33,7 @@ package com.mhschmieder.commonstoolkit.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import com.mhschmieder.commonstoolkit.net.SessionContext;
+import com.mhschmieder.commonstoolkit.net.ClientProperties;
 
 public class ResourceUtilities {
 
@@ -43,12 +43,12 @@ public class ResourceUtilities {
     private ResourceUtilities() {}
 
     @SuppressWarnings("nls")
-    public static ResourceBundle getResourceBundle( final SessionContext sessionContext,
+    public static ResourceBundle getResourceBundle( final ClientProperties clientProperties,
                                                     final String bundleName,
                                                     final boolean ignoreUserLocale ) {
         final Locale locale = ignoreUserLocale
             ? Locale.forLanguageTag( "en-US" )
-            : sessionContext.locale;
+            : clientProperties.locale;
         return ResourceBundle.getBundle( bundleName, locale );
     }
 
