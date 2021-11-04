@@ -33,11 +33,11 @@ package com.mhschmieder.commonstoolkit.concurrent;
 import java.net.HttpURLConnection;
 
 import com.mhschmieder.commonstoolkit.net.AuthorizationServerResponse;
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.net.NetworkUtilities;
 import com.mhschmieder.commonstoolkit.net.ServerRequestProperties;
 import com.mhschmieder.commonstoolkit.security.LoginCredentials;
 import com.mhschmieder.commonstoolkit.security.PredictionLoginCredentials;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.concurrent.Task;
 

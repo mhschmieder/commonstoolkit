@@ -30,26 +30,39 @@
  */
 package com.mhschmieder.commonstoolkit.util;
 
+import java.io.File;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
+public class ClientProperties {
 
-public class ResourceUtilities {
+    // Cache the verbose OS Name compounded from system toolkit queries.
+    public String     osNameVerbose;
 
-    /**
-     * The default constructor is disabled, as this is a static utilities class.
-     */
-    private ResourceUtilities() {}
+    // Cache the System Type to special-case for macOS, Linux, etc.
+    public SystemType systemType;
 
-    @SuppressWarnings("nls")
-    public static ResourceBundle getResourceBundle( final ClientProperties clientProperties,
-                                                    final String bundleName,
-                                                    final boolean ignoreUserLocale ) {
-        final Locale locale = ignoreUserLocale
-            ? Locale.forLanguageTag( "en-US" )
-            : clientProperties.locale;
-        return ResourceBundle.getBundle( bundleName, locale );
+    // Cache the screen size, for Full Screen Mode and user statistics.
+    // NOTE: We use simple types, to avoid Graphics API dependencies.
+    public double     screenWidth;
+    public double     screenHeight;
+
+    // Cache the locale, so it can be easily queried and/or changed.
+    public Locale     locale;
+
+    // Cache the user default directory as it is expensive to query.
+    public File       userHomeDirectory;
+
+    public ClientProperties( final String pOsNameVerbose,
+                             final double pScreenWidth,
+                             final double pScreenHeight,
+                             final Locale pLocale,
+                             final File pUserHomeDirectory ) {
+        osNameVerbose = pOsNameVerbose;
+        systemType = SystemType.valueFromOsName( pOsNameVerbose );
+        screenWidth = pScreenWidth;
+        screenHeight = pScreenHeight;
+        locale = pLocale;
+        userHomeDirectory = pUserHomeDirectory;
     }
 
 }

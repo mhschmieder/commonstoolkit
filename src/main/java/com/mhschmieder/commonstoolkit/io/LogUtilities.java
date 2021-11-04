@@ -42,7 +42,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 public final class LogUtilities {
 

@@ -33,9 +33,9 @@ package com.mhschmieder.commonstoolkit.concurrent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.net.PredictionServerResponse;
 import com.mhschmieder.commonstoolkit.net.ServerRequestProperties;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.concurrent.Service;
 

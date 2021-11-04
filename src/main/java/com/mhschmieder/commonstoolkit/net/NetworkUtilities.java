@@ -44,6 +44,7 @@ import java.net.UnknownHostException;
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
 import com.mhschmieder.commonstoolkit.security.LoginCredentials;
 import com.mhschmieder.commonstoolkit.security.PredictionLoginCredentials;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 public final class NetworkUtilities {
 

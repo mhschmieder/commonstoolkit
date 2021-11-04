@@ -34,9 +34,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.mhschmieder.commonstoolkit.net.AuthorizationServerResponse;
-import com.mhschmieder.commonstoolkit.net.ClientProperties;
 import com.mhschmieder.commonstoolkit.net.ServerRequestProperties;
 import com.mhschmieder.commonstoolkit.security.LoginCredentials;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 import javafx.concurrent.Service;
 import javafx.scene.control.Dialog;
