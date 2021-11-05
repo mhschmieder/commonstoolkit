@@ -47,12 +47,12 @@ public final class AuthorizationRequestService extends Service< AuthorizationSer
     /**
      * Cache the Server Request Properties (Build ID, Client Type, etc.).
      */
-    private ServerRequestProperties               serverRequestProperties;
+    private final ServerRequestProperties      serverRequestProperties;
 
     /**
      * Cache the Client Properties (System Type, Locale, etc.).
      */
-    public ClientProperties                       clientProperties;
+    public ClientProperties                    clientProperties;
 
     /** Cache the Login Credentials to use for authorizing the request. */
     protected LoginCredentials                 loginCredentials;
@@ -60,7 +60,7 @@ public final class AuthorizationRequestService extends Service< AuthorizationSer
     /** Reference to a Login Dialog that instigates the authorization. */
     protected Dialog< Pair< String, String > > loginDialog;
 
-   public AuthorizationRequestService( final ServerRequestProperties pServerRequestProperties,
+    public AuthorizationRequestService( final ServerRequestProperties pServerRequestProperties,
                                         final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super();

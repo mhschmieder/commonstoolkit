@@ -138,7 +138,7 @@ public class GlobalUtilities {
      * In most cases, this bundle has already been created by the JVM (usually
      * at startup during class loading), but it can be an expensive call so is
      * best queried once and cached within the application lifecycle.
-     * 
+     *
      * @param clientProperties
      *            The {@link ClientProperties} that include the User Locale
      * @param bundleName
