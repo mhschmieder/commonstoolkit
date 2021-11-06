@@ -70,7 +70,7 @@ public final class NaturalEnvironment {
 
     /**
      * This is the fully qualified constructor.
-     * 
+     *
      * @param pTemperatureK
      *            The temperature to use, in degrees Kelvin
      * @param pHumidityRelative
@@ -246,7 +246,7 @@ public final class NaturalEnvironment {
 
     /**
      * Fully qualified pseudo-constructor.
-     * 
+     *
      * @param pTemperatureK
      *            The temperature to use, in degrees Kelvin
      * @param pHumidityRelative
@@ -269,7 +269,7 @@ public final class NaturalEnvironment {
 
     /**
      * Copy pseudo-constructor.
-     * 
+     *
      * @param pNaturalEnvironment
      *            The Natural Environment reference for setting the values
      */
