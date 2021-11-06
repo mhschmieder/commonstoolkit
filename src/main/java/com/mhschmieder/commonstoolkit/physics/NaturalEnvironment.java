@@ -68,7 +68,19 @@ public final class NaturalEnvironment {
               AIR_ATTENUATION_APPLIED_DEFAULT );
     }
 
-    /** This is the fully qualified constructor. */
+    /**
+     * This is the fully qualified constructor.
+     * 
+     * @param pTemperatureK
+     *            The temperature to use, in degrees Kelvin
+     * @param pHumidityRelative
+     *            The Relative Humidity to use (percent)
+     * @param pPressurePa
+     *            The Pressure to use, in pascals
+     * @param pAirAttenuationApplied
+     *            {@code true} if Air Attenuation should be applied by
+     *            downstream consumers of this environmental variable wrapper
+     */
     public NaturalEnvironment( final double pTemperatureK,
                                final double pHumidityRelative,
                                final double pPressurePa,
@@ -232,7 +244,19 @@ public final class NaturalEnvironment {
         }
     }
 
-    /** Fully qualified pseudo-constructor. */
+    /**
+     * Fully qualified pseudo-constructor.
+     * 
+     * @param pTemperatureK
+     *            The temperature to use, in degrees Kelvin
+     * @param pHumidityRelative
+     *            The Relative Humidity to use (percent)
+     * @param pPressurePa
+     *            The Pressure to use, in pascals
+     * @param pAirAttenuationApplied
+     *            {@code true} if Air Attenuation should be applied by
+     *            downstream consumers of this environmental variable wrapper
+     */
     public void setNaturalEnvironment( final double pTemperatureK,
                                        final double pHumidityRelative,
                                        final double pPressurePa,
@@ -243,7 +267,12 @@ public final class NaturalEnvironment {
         setAirAttenuationApplied( pAirAttenuationApplied );
     }
 
-    /** Copy pseudo-constructor. */
+    /**
+     * Copy pseudo-constructor.
+     * 
+     * @param pNaturalEnvironment
+     *            The Natural Environment reference for setting the values
+     */
     public void setNaturalEnvironment( final NaturalEnvironment pNaturalEnvironment ) {
         setNaturalEnvironment( pNaturalEnvironment.getTemperatureK(),
                                pNaturalEnvironment.getHumidityRelative(),
