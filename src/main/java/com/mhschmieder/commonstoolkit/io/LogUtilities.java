@@ -161,7 +161,7 @@ public final class LogUtilities {
         // Chain a BufferedReader to an InputStreamReader to a FileInputStream,
         // for better performance.
         //
-        // :NOTE: Using the Logger API causes deadlock on second use, so is
+        // NOTE: Using the Logger API causes deadlock on second use, so is
         // commented out until we adopt a full Logging Framework. For now, we
         // simply redirect to a file in the user's default temporary directory.
         // Also, we can't use try-with-resources as that causes the stream to

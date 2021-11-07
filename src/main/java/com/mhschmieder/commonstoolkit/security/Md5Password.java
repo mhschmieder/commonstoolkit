@@ -35,13 +35,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * This simple class uses the MD5 hash algorithm (RSA developed =
- * very secure) to develop a simple username / password protection
- * scheme (see http://www.ietf.org/rfc/rfc1321.txt for more info).
+ * This simple class uses the MD5 hash algorithm (RSA developed = very secure)
+ * to develop a simple username / password protection scheme (see
+ * http://www.ietf.org/rfc/rfc1321.txt for more info).
  * <p>
- * The goal is to take a username and use MD5 to create a unique
- * four to six digit integer password, which can then be compared
- * against an actual input string.
+ * The goal is to take a username and use MD5 to create a unique four to six
+ * digit integer password, which can then be compared against an input string.
  *
  * Please note that the passwords are case sensitive.
  */

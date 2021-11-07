@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.commonstoolkit.math;
 
+import java.util.Objects;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Bounds;
@@ -53,10 +55,25 @@ public class Extents2D {
     protected final DoubleProperty width;
     protected final DoubleProperty height;
 
+    /**
+     * Default constructor, which zeroes everything.
+     */
     public Extents2D() {
         this( 0d, 0d, 0d, 0d );
     }
 
+    /**
+     * Fully qualified constructor.
+     *
+     * @param pX
+     *            The x-origin to use for the new {@link Extents2D}
+     * @param pY
+     *            The y-origin to use for the new {@link Extents2D}
+     * @param pWidth
+     *            The width to use for the new {@link Extents2D}
+     * @param pHeight
+     *            The height to use for the new {@link Extents2D}
+     */
     public Extents2D( final double pX,
                       final double pY,
                       final double pWidth,
@@ -67,16 +84,53 @@ public class Extents2D {
         height = new SimpleDoubleProperty( pHeight );
     }
 
+    /**
+     * Copy Constructor.
+     *
+     * @param pExtents
+     *            The {@link Extents2D} to use for setting the fields
+     */
     public Extents2D( final Extents2D pExtents ) {
         this( pExtents.getX(), pExtents.getY(), pExtents.getWidth(), pExtents.getHeight() );
     }
 
+    /**
+     * Cross-constructor from {@link Rectangle} to {@link Extents2D}.
+     *
+     * @param pBoundary
+     *            The {@link Rectangle} to use for setting the fields
+     */
     public Extents2D( final Rectangle pBoundary ) {
         this( pBoundary.getX(), pBoundary.getY(), pBoundary.getWidth(), pBoundary.getHeight() );
     }
 
+    /**
+     * Cross-constructor from {@link Rectangle2D} to {@link Extents2D}.
+     *
+     * @param pBounds
+     *            The {@link Rectangle2D} to use for setting the fields
+     */
     public Extents2D( final Rectangle2D pBounds ) {
         this( pBounds.getMinX(), pBounds.getMinY(), pBounds.getWidth(), pBounds.getHeight() );
+    }
+
+    @Override
+    public boolean equals( final Object other ) {
+        if ( this == other ) {
+            return true;
+        }
+        if ( ( other == null ) || ( getClass() != other.getClass() ) ) {
+            return false;
+        }
+        final Extents2D otherExtents2D = ( Extents2D ) other;
+        return Objects.equals( x, otherExtents2D.x ) && Objects.equals( y, otherExtents2D.y )
+                && Objects.equals( width, otherExtents2D.width )
+                && Objects.equals( height, otherExtents2D.height );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash( x, y, width, height );
     }
 
     public final double getHeight() {

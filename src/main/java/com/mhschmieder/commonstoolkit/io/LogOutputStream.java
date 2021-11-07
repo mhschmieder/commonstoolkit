@@ -61,7 +61,7 @@ public class LogOutputStream extends OutputStream {
         buffer.append( ch );
 
         // Detect line separators.
-        // :NOTE: This is more complicated than it could be for performance
+        // NOTE: This is more complicated than it could be for performance
         // reasons. Because the line separator is different on Unix and Windows
         // system, the only way to get cross-platform code is to use the
         // newline.separator System Property. But this property is a string, and

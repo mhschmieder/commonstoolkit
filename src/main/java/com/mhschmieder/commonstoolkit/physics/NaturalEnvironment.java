@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.commonstoolkit.physics;
 
+import java.util.Objects;
+
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -142,6 +144,27 @@ public final class NaturalEnvironment {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
+    }
+
+    @Override
+    public boolean equals( final Object other ) {
+        if ( this == other ) {
+            return true;
+        }
+        if ( ( other == null ) || ( getClass() != other.getClass() ) ) {
+            return false;
+        }
+        final NaturalEnvironment otherNaturalEnvironment = ( NaturalEnvironment ) other;
+        return Objects.equals( temperatureK, otherNaturalEnvironment.temperatureK )
+                && Objects.equals( humidityRelative, otherNaturalEnvironment.humidityRelative )
+                && Objects.equals( pressurePa, otherNaturalEnvironment.pressurePa )
+                && Objects.equals( airAttenuationApplied,
+                                   otherNaturalEnvironment.airAttenuationApplied );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash( temperatureK, humidityRelative, pressurePa, airAttenuationApplied );
     }
 
     public double getHumidityRelative() {

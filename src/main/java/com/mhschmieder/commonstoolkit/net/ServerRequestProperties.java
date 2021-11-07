@@ -31,6 +31,7 @@
 package com.mhschmieder.commonstoolkit.net;
 
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * {@code ServerRequestProperties} is a container for request properties
@@ -73,6 +74,32 @@ public class ServerRequestProperties {
         // then throwing away the uncached parameters.
         urlHttpServlet = NetworkUtilities
                 .getRelativeURL( "http", pWebHostName, pWebServletPort, pWebServletName );
+    }
+
+    @Override
+    public boolean equals( final Object other ) {
+        if ( this == other ) {
+            return true;
+        }
+        if ( ( other == null ) || ( getClass() != other.getClass() ) ) {
+            return false;
+        }
+        final ServerRequestProperties otherServerRequestProperties =
+                                                                   ( ServerRequestProperties ) other;
+        return ( clientBuildId == otherServerRequestProperties.clientBuildId )
+                && Objects.equals( clientType, otherServerRequestProperties.clientType )
+                && Objects.equals( localHostName, otherServerRequestProperties.localHostName )
+                && Objects.equals( webHostName, otherServerRequestProperties.webHostName )
+                && Objects.equals( urlHttpServlet, otherServerRequestProperties.urlHttpServlet );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash( new Integer( clientBuildId ),
+                             clientType,
+                             localHostName,
+                             webHostName,
+                             urlHttpServlet );
     }
 
 }
