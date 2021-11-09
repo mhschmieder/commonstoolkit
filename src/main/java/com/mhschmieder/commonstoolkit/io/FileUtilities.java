@@ -38,9 +38,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.prefs.Preferences;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -57,6 +59,13 @@ import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 public final class FileUtilities {
 
     /**
+     * The MRU cache size is generally limited to in-line menu items using
+     * numeric mnemonics from 1-9, as extending to letters gets confusing and
+     * blocks those shortcuts from use with common File commands in menus.
+     */
+    public static final int MRU_CACHE_SIZE = 9;
+
+    /**
      * The default constructor is disabled, as this is a static utilities class.
      */
     private FileUtilities() {}
@@ -68,6 +77,38 @@ public final class FileUtilities {
         final String packagePath = "/"
                 + classInstance.getClass().getPackage().getName().replaceAll( "\\.", "/" );
         return packagePath;
+    }
+
+    // Load the MRU Filename Cache from User Preferences.
+    // TODO: Use the same collection or array type for load and save.
+    @SuppressWarnings("nls")
+    public static String[] loadMruPreferences( final Preferences preferences ) {
+        final int maximumNumberOfMruFiles = MRU_CACHE_SIZE;
+        final String[] mruFilenames = new String[ maximumNumberOfMruFiles ];
+
+        for ( int i = 0; i < maximumNumberOfMruFiles; i++ ) {
+            final int mruFileNumber = i + 1;
+            final String mruFilenameKey = "mruFilename" + Integer.toString( mruFileNumber );
+            final String mruFilename = preferences.get( mruFilenameKey, "" );
+            mruFilenames[ i ] = mruFilename;
+        }
+
+        return mruFilenames;
+    }
+
+    // Save the MRU Filename Cache to User Preferences.
+    // TODO: Use the same collection or array type for load and save.
+    @SuppressWarnings("nls")
+    public static void saveMruPreferences( final List< String > mruFilenames,
+                                           final Preferences preferences ) {
+        final int maximumNumberOfMruFiles = Math.min( MRU_CACHE_SIZE, mruFilenames.size() );
+
+        for ( int i = 0; i < maximumNumberOfMruFiles; i++ ) {
+            final String mruFilename = mruFilenames.get( i );
+            final int mruFileNumber = i + 1;
+            final String mruFilenameKey = "mruFilename" + Integer.toString( mruFileNumber );
+            preferences.put( mruFilenameKey, mruFilename );
+        }
     }
 
     // Generic method to get the "saved from" text for a document.
@@ -112,7 +153,7 @@ public final class FileUtilities {
 
     /**
      * Return the file's name minus the extension portion.
-     * 
+     *
      * @param file
      *            The file whose extension should be stripped
      * @return The original filename sans extension
@@ -128,7 +169,7 @@ public final class FileUtilities {
 
     /**
      * Return the filename minus the extension portion.
-     * 
+     *
      * @param filename
      *            The filename whose extension should be stripped
      * @return The original filename sans extension
