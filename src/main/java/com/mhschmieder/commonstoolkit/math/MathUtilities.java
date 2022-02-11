@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.commonstoolkit.math;
 
-import javafx.geometry.Point2D;
-import javafx.geometry.Point3D;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 /**
  * Utility methods for math; primarily consisting of basic entity methods on
@@ -44,27 +44,28 @@ public class MathUtilities {
      */
     private MathUtilities() {}
 
-    public static Point2D copyPoint2D( final Point2D point2D ) {
-        final Point2D copiedPoint2D = new Point2D( point2D.getX(), point2D.getY() );
+    public static Vector2D copyPoint2D( final Vector2D point2D ) {
+        final Vector2D copiedPoint2D = new Vector2D( point2D.getX(), point2D.getY() );
         return copiedPoint2D;
     }
 
-    public static Point3D copyPoint3D( final Point3D point3D ) {
-        final Point3D copiedPoint3D = new Point3D( point3D.getX(), point3D.getY(), point3D.getZ() );
+    public static Vector3D copyPoint3D( final Vector3D point3D ) {
+        final Vector3D copiedPoint3D =
+                                     new Vector3D( point3D.getX(), point3D.getY(), point3D.getZ() );
         return copiedPoint3D;
     }
 
-    public static Point3D exchangeCoordinates( final Point3D point3D,
-                                               final OrthogonalAxes orthogonalAxes ) {
+    public static Vector3D exchangeCoordinates( final Vector3D point3D,
+                                                final OrthogonalAxes orthogonalAxes ) {
         switch ( orthogonalAxes ) {
         case XY:
-            return new Point3D( point3D.getY(), point3D.getX(), point3D.getZ() );
+            return new Vector3D( point3D.getY(), point3D.getX(), point3D.getZ() );
         case XZ:
-            return new Point3D( point3D.getZ(), point3D.getY(), point3D.getX() );
+            return new Vector3D( point3D.getZ(), point3D.getY(), point3D.getX() );
         case YZ:
-            return new Point3D( point3D.getX(), point3D.getZ(), point3D.getY() );
+            return new Vector3D( point3D.getX(), point3D.getZ(), point3D.getY() );
         default:
-            return Point3D.ZERO;
+            return Vector3D.ZERO;
         }
     }
 
@@ -106,7 +107,7 @@ public class MathUtilities {
      *         point.
      * @since 1.2
      */
-    public static double distance( final Point2D pt, final double px, final double py ) {
+    public static double distance( final Vector2D pt, final double px, final double py ) {
         final double pxAdjusted = px - pt.getX();
         final double pyAdjusted = py - pt.getY();
         return Math.hypot( pxAdjusted, pyAdjusted );
@@ -152,7 +153,7 @@ public class MathUtilities {
      *         the specified point.
      * @since 1.2
      */
-    public static double distanceSq( final Point2D point, final double px, final double py ) {
+    public static double distanceSq( final Vector2D point, final double px, final double py ) {
         final double pxAdjusted = px - point.getX();
         final double pyAdjusted = py - point.getY();
         return ( ( pxAdjusted * pxAdjusted ) + ( pyAdjusted * pyAdjusted ) );
@@ -170,7 +171,7 @@ public class MathUtilities {
      *         specified <code>Point2D</code>.
      * @since 1.2
      */
-    public static double distanceSq( final Point2D pt1, final Point2D pt2 ) {
+    public static double distanceSq( final Vector2D pt1, final Vector2D pt2 ) {
         final double px = pt2.getX() - pt1.getX();
         final double py = pt2.getY() - pt1.getY();
         return ( ( px * px ) + ( py * py ) );

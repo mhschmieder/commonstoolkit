@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +37,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
-
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
 
 /**
  * {@code GlobalUtilities} is a utility class for global methods that are
@@ -97,13 +94,7 @@ public class GlobalUtilities {
             e.printStackTrace();
         }
 
-        // Get the user's screen size, for Full Screen Mode and user statistics.
-        // TODO: Also get and cache the minimum point, which may not be zero.
-        final Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
-        final double screenWidth = visualBounds.getWidth();
-        final double screenHeight = visualBounds.getHeight();
-
-        // TODO: Get the locale from cached User Preferences instead.
+        // TODO: Get the locale from cached User Preferences instead?
         // final Locale locale = Locale.getDefault( Category.DISPLAY );
         final Locale locale = Locale.getDefault();
 
@@ -125,8 +116,6 @@ public class GlobalUtilities {
 
         // Make a Client Properties singleton for hosting global data.
         final ClientProperties clientProperties = new ClientProperties( osNameVerbose,
-                                                                        screenWidth,
-                                                                        screenHeight,
                                                                         locale,
                                                                         userDefaultDirectory );
 

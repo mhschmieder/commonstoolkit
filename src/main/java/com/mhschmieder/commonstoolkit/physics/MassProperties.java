@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.commonstoolkit.physics;
 
-import com.mhschmieder.commonstoolkit.math.MathUtilities;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
-import javafx.geometry.Point3D;
+import com.mhschmieder.commonstoolkit.math.MathUtilities;
 
 /**
  * The coordinate/axis convention is the same as elsewhere in rigging:
@@ -47,14 +47,14 @@ import javafx.geometry.Point3D;
  */
 public final class MassProperties implements MassComputable {
 
-    private static final double  WEIGHT_DEFAULT_KG                 = 0d;
-    private static final Point3D COG_IN_OBJECT_COORDINATES_DEFAULT = Point3D.ZERO;
-    private static final boolean COG_VALID_DEFAULT                 = false;
+    private static final double   WEIGHT_DEFAULT_KG                 = 0d;
+    private static final Vector3D COG_IN_OBJECT_COORDINATES_DEFAULT = Vector3D.ZERO;
+    private static final boolean  COG_VALID_DEFAULT                 = false;
 
-    private double               _weightKg                         = WEIGHT_DEFAULT_KG;
-    private Point3D              _cogInObjectCoordinates           =
-                                                         COG_IN_OBJECT_COORDINATES_DEFAULT;
-    private boolean              _cogValid                         = COG_VALID_DEFAULT;
+    private double                _weightKg                         = WEIGHT_DEFAULT_KG;
+    private Vector3D              _cogInObjectCoordinates           =
+                                                          COG_IN_OBJECT_COORDINATES_DEFAULT;
+    private boolean               _cogValid                         = COG_VALID_DEFAULT;
 
     // Default constructor.
     public MassProperties() {
@@ -68,7 +68,7 @@ public final class MassProperties implements MassComputable {
 
     // Fully qualified constructor.
     public MassProperties( final double weightKg,
-                           final Point3D cogInObjectCoordinates,
+                           final Vector3D cogInObjectCoordinates,
                            final boolean cogValid ) {
         _weightKg = weightKg;
         _cogInObjectCoordinates = MathUtilities.copyPoint3D( cogInObjectCoordinates );
@@ -76,7 +76,7 @@ public final class MassProperties implements MassComputable {
     }
 
     @Override
-    public Point3D getCogInObjectCoordinates() {
+    public Vector3D getCogInObjectCoordinates() {
         return _cogInObjectCoordinates;
     }
 

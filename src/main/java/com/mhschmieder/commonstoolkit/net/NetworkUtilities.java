@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,9 @@ public final class NetworkUtilities {
                                                    final String requestType,
                                                    final LoginCredentials loginCredentials,
                                                    final ServerRequestProperties serverRequestProperties,
-                                                   final ClientProperties clientProperties ) {
+                                                   final ClientProperties clientProperties,
+                                                   final double screenWidth,
+                                                   final double screenHeight ) {
         try {
             // Encoding format
             final String enc = "UTF-8";
@@ -87,11 +89,8 @@ public final class NetworkUtilities {
             httpURLConnection.setRequestProperty( "server", serverRequestProperties.webHostName );
 
             httpURLConnection.setRequestProperty( "clientOS", clientProperties.osNameVerbose );
-            httpURLConnection.setRequestProperty( "screenSizeX",
-                                                  Double.toString( clientProperties.screenWidth ) );
-            httpURLConnection
-                    .setRequestProperty( "screenSizeY",
-                                         Double.toString( clientProperties.screenHeight ) );
+            httpURLConnection.setRequestProperty( "screenSizeX", Double.toString( screenWidth ) );
+            httpURLConnection.setRequestProperty( "screenSizeY", Double.toString( screenHeight ) );
         }
         catch ( final Exception e ) {
             e.printStackTrace();

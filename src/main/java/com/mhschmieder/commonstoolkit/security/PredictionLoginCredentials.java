@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,8 +35,6 @@ import java.time.ZoneOffset;
 
 import com.mhschmieder.commonstoolkit.net.AuthorizationServerResponse;
 
-import javafx.util.Pair;
-
 public final class PredictionLoginCredentials extends LoginCredentials {
 
     // By default, the user is not authorized on the server.
@@ -47,64 +45,51 @@ public final class PredictionLoginCredentials extends LoginCredentials {
 
     // Declare a flag for whether the user is authorized on this client/server
     // combination or not.
-    private boolean             _authorizedOnServer;
+    private boolean             authorizedOnServer;
 
     // Cache the user's expiration date for their license, in milliseconds.
-    private long                _expirationDateEpochMs;
+    private long                expirationDateEpochMs;
 
-    // Default Constructor; sets all instance variables to default values.
-    public PredictionLoginCredentials() {
-        this( USER_NAME_DEFAULT, PASSWORD_DEFAULT );
-    }
-
-    // Partial Constructor; used when the base values are consolidated.
-    public PredictionLoginCredentials( final Pair< String, String > login ) {
-        this( login, AUTHORIZED_ON_SERVER_DEFAULT, EXPIRATION_DATE_DEFAULT );
-    }
-
-    // Fully Qualified Constructor; when initialization values are consolidated.
-    public PredictionLoginCredentials( final Pair< String, String > login,
-                                       final boolean authorizedOnServer,
-                                       final long expirationDate ) {
-        setLoginCredentials( login, authorizedOnServer, expirationDate );
+    // Fully Qualified Constructor.
+    public PredictionLoginCredentials( final String pUserName,
+                                       final String pPassword,
+                                       final boolean pAuthorizedOnServer,
+                                       final long pExpirationDate ) {
+        setLoginCredentials( pUserName, pPassword, pAuthorizedOnServer, pExpirationDate );
     }
 
     // Copy Constructor; offered in place of clone() to guarantee that the
     // source object is never modified by the new target object created here.
     public PredictionLoginCredentials( final PredictionLoginCredentials loginCredentials ) {
-        this( loginCredentials.getLogin(),
+        this( loginCredentials.getUserName(),
+              loginCredentials.getPassword(),
               loginCredentials.isAuthorizedOnServer(),
               loginCredentials.getExpirationDate() );
     }
 
-    // Partial Constructor; used when the base values are gathered piecemeal.
-    public PredictionLoginCredentials( final String userName, final String password ) {
-        this( new Pair<>( userName, password ) );
+    public boolean isAuthorizedOnServer() {
+        return authorizedOnServer;
     }
 
-    // Atomic Constructor; when initialization values are gathered piecemeal.
-    public PredictionLoginCredentials( final String userName,
-                                       final String password,
-                                       final boolean authorizedOnServer,
-                                       final long expirationDate ) {
-        this( new Pair<>( userName, password ), authorizedOnServer, expirationDate );
+    public void setAuthorizedOnServer( final boolean pAuthorizedOnServer ) {
+        authorizedOnServer = pAuthorizedOnServer;
     }
 
     public long getExpirationDate() {
-        return _expirationDateEpochMs;
+        return expirationDateEpochMs;
     }
 
-    public boolean isAuthorizedOnServer() {
-        return _authorizedOnServer;
+    public void setExpirationDate( final long pExpirationDate ) {
+        expirationDateEpochMs = pExpirationDate;
     }
 
-    // :TODO: Write a separate method to determine when near expiry.
+    // TODO: Write a separate method to determine when we are near expiry.
     public boolean isExpired() {
         // Get the current date/time and compare for expiry.
-        // :NOTE: The client receives a long integer form of the expiry
+        // NOTE: The client receives a long integer form of the expiry
         // representing "ms" since 1 JAN 1970 GMT (in server's locale).
         final LocalDateTime dateTime = LocalDateTime.now();
-        final long epochSecond = Math.round( 0.001 * _expirationDateEpochMs );
+        final long epochSecond = Math.round( 0.001 * expirationDateEpochMs );
         final LocalDateTime expirationDate = LocalDateTime
                 .ofEpochSecond( epochSecond, 0, ZoneOffset.UTC );
         return dateTime.compareTo( expirationDate ) > 0;
@@ -119,48 +104,34 @@ public final class PredictionLoginCredentials extends LoginCredentials {
         super.reset();
 
         // Don't forget to clear the authorized flag as well!
-        // :NOTE: Do not reset the expiration date, as that should still be
-        // queryable as it is often the cause of the user not being authorized
+        // NOTE: Do not reset the expiration date, as that should still be
+        // queryable; it is often the cause of the user not being authorized
         // by the server!
         setAuthorizedOnServer( AUTHORIZED_ON_SERVER_DEFAULT );
     }
 
-    public void setAuthorizedOnServer( final boolean authorizedOnServer ) {
-        _authorizedOnServer = authorizedOnServer;
-    }
-
-    public void setExpirationDate( final long expirationDate ) {
-        _expirationDateEpochMs = expirationDate;
-    }
-
-    public void setLoginCredentials( final Pair< String, String > login,
-                                     final boolean authorizedOnServer,
-                                     final long expirationDate ) {
-        setLogin( login );
-        setAuthorizedOnServer( authorizedOnServer );
-        setExpirationDate( expirationDate );
+    public void setLoginCredentials( final String pUserName,
+                                     final String pPassword,
+                                     final boolean pAuthorizedOnServer,
+                                     final long pExpirationDate ) {
+        setLogin( pUserName, pPassword );
+        setAuthorizedOnServer( pAuthorizedOnServer );
+        setExpirationDate( pExpirationDate );
     }
 
     public void setLoginCredentials( final PredictionLoginCredentials loginCredentials ) {
-        setLoginCredentials( loginCredentials.getLogin(),
+        setLoginCredentials( loginCredentials.getUserName(),
+                             loginCredentials.getPassword(),
                              loginCredentials.isAuthorizedOnServer(),
                              loginCredentials.getExpirationDate() );
     }
 
-    public void setLoginCredentials( final String userName,
-                                     final String password,
-                                     final boolean authorizedOnServer,
-                                     final long expirationDate ) {
-        final Pair< String, String > login = new Pair<>( userName, password );
-        setLoginCredentials( login, authorizedOnServer, expirationDate );
-    }
-
     public void updateUserAuthorizationStatus( final AuthorizationServerResponse authorizationServerResponse ) {
         // Cache the new "authorized on server" status.
-        final boolean authorizedOnServer = authorizationServerResponse.isAuthorizedOnServer();
-        setAuthorizedOnServer( authorizedOnServer );
+        final boolean isAuthorizedOnServer = authorizationServerResponse.isAuthorizedOnServer();
+        setAuthorizedOnServer( isAuthorizedOnServer );
 
-        if ( authorizedOnServer ) {
+        if ( isAuthorizedOnServer ) {
             // Overload the cached user license expiration date if a valid one
             // was returned; otherwise do not disturb the current cached value,
             // as this could lead to annoying multiple login dialogs.

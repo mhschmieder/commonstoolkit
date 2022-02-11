@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,38 +30,29 @@
  */
 package com.mhschmieder.commonstoolkit.security;
 
-import javafx.util.Pair;
-
-/**
- * TODO: Remove the JavaFX dependency and use a different Pair implementation?
- */
 public class LoginCredentials {
 
     // Declare default constants, where appropriate, for all fields.
     @SuppressWarnings("nls") public static final String USER_NAME_DEFAULT = "";
     @SuppressWarnings("nls") public static final String PASSWORD_DEFAULT  = "";
 
-    private Pair< String, String >                      login;
+    private String                                      userName;
+    private String                                      password;
 
     // Default Constructor; sets all instance variables to default values.
     public LoginCredentials() {
         this( USER_NAME_DEFAULT, PASSWORD_DEFAULT );
     }
 
+    // Fully Qualified Constructor.
+    public LoginCredentials( final String pUserName, final String pPassword ) {
+        setLogin( pUserName, pPassword );
+    }
+
     // Copy Constructor; offered in place of clone() to guarantee that the
     // source object is never modified by the new target object created here.
     public LoginCredentials( final LoginCredentials loginCredentials ) {
-        this( loginCredentials.getLogin() );
-    }
-
-    // Fully Qualified Constructor; when initialization values are consolidated.
-    public LoginCredentials( final Pair< String, String > pLogin ) {
-        setLogin( pLogin );
-    }
-
-    // Atomic Constructor; when initialization values are gathered piecemeal.
-    public LoginCredentials( final String userName, final String password ) {
-        this( new Pair<>( userName, password ) );
+        this( loginCredentials.getUserName(), loginCredentials.getPassword() );
     }
 
     // :NOTE: Cloning is disabled as it is dangerous; use the copy constructor
@@ -71,16 +62,12 @@ public class LoginCredentials {
         throw new CloneNotSupportedException();
     }
 
-    public final Pair< String, String > getLogin() {
-        return login;
+    public final String getUserName() {
+        return userName;
     }
 
     public final String getPassword() {
-        return login.getValue();
-    }
-
-    public final String getUserName() {
-        return login.getKey();
+        return password;
     }
 
     public final boolean isValid() {
@@ -91,17 +78,13 @@ public class LoginCredentials {
         setLogin( LoginCredentials.USER_NAME_DEFAULT, LoginCredentials.PASSWORD_DEFAULT );
     }
 
+    public final void setLogin( final String pUserName, final String pPassword ) {
+        userName = pUserName;
+        password = pPassword;
+    }
+
     public final void setLogin( final LoginCredentials loginCredentials ) {
-        setLogin( loginCredentials.getLogin() );
-    }
-
-    public final void setLogin( final Pair< String, String > pLogin ) {
-        login = pLogin;
-    }
-
-    public final void setLogin( final String userName, final String password ) {
-        final Pair< String, String > newLogin = new Pair<>( userName, password );
-        setLogin( newLogin );
+        setLogin( getUserName(), getPassword() );
     }
 
 }

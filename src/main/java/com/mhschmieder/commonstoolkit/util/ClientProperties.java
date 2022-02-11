@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,11 +41,6 @@ public class ClientProperties {
     // Cache the System Type to special-case for macOS, Linux, etc.
     public SystemType systemType;
 
-    // Cache the screen size, for Full Screen Mode and user statistics.
-    // NOTE: We use simple types, to avoid Graphics API dependencies.
-    public double     screenWidth;
-    public double     screenHeight;
-
     // Cache the locale, so it can be easily queried and/or changed.
     public Locale     locale;
 
@@ -53,14 +48,10 @@ public class ClientProperties {
     public File       userHomeDirectory;
 
     public ClientProperties( final String pOsNameVerbose,
-                             final double pScreenWidth,
-                             final double pScreenHeight,
                              final Locale pLocale,
                              final File pUserHomeDirectory ) {
         osNameVerbose = pOsNameVerbose;
         systemType = SystemType.valueFromOsName( pOsNameVerbose );
-        screenWidth = pScreenWidth;
-        screenHeight = pScreenHeight;
         locale = pLocale;
         userHomeDirectory = pUserHomeDirectory;
     }
