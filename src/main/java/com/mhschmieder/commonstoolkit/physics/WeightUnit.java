@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,18 +35,31 @@ import java.util.Locale;
 public enum WeightUnit {
     METRIC_TONS, KILOGRAMS, GRAMS, POUNDS, OUNCES;
 
+    @SuppressWarnings("nls")
     public static WeightUnit abbreviatedValueOf( final String abbreviatedWeightUnit ) {
-        return ( " mt".equalsIgnoreCase( abbreviatedWeightUnit ) ) //$NON-NLS-1$
-            ? METRIC_TONS
-            : ( " kg".equalsIgnoreCase( abbreviatedWeightUnit ) ) //$NON-NLS-1$
-                ? KILOGRAMS
-                : ( " g".equalsIgnoreCase( abbreviatedWeightUnit ) ) //$NON-NLS-1$
-                    ? GRAMS
-                    : ( " lbs".equalsIgnoreCase( abbreviatedWeightUnit ) ) //$NON-NLS-1$
-                        ? POUNDS
-                        : ( " oz".equalsIgnoreCase( abbreviatedWeightUnit ) ) //$NON-NLS-1$
-                            ? OUNCES
-                            : defaultValue();
+        // NOTE: These abbreviated values account for the standard of leaving a
+        // space between the numeric value and its associated unit.
+        if ( " mt".equalsIgnoreCase( abbreviatedWeightUnit ) ) {
+            return METRIC_TONS;
+        }
+
+        if ( " kg".equalsIgnoreCase( abbreviatedWeightUnit ) ) {
+            return KILOGRAMS;
+        }
+
+        if ( " g".equalsIgnoreCase( abbreviatedWeightUnit ) ) {
+            return GRAMS;
+        }
+
+        if ( " lbs".equalsIgnoreCase( abbreviatedWeightUnit ) ) {
+            return POUNDS;
+        }
+
+        if ( " oz".equalsIgnoreCase( abbreviatedWeightUnit ) ) {
+            return OUNCES;
+        }
+
+        return defaultValue();
     }
 
     public static WeightUnit canonicalValueOf( final String canonicalWeightUnit ) {

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,16 +35,27 @@ import java.util.Locale;
 public enum PressureUnit {
     KILOPASCALS, PASCALS, MILLIBARS, ATMOSPHERES;
 
+    @SuppressWarnings("nls")
     public static PressureUnit abbreviatedValueOf( final String abbreviatedPressureUnit ) {
-        return ( " kPa".equalsIgnoreCase( abbreviatedPressureUnit ) ) //$NON-NLS-1$
-            ? KILOPASCALS
-            : ( " Pa".equalsIgnoreCase( abbreviatedPressureUnit ) ) //$NON-NLS-1$
-                ? PASCALS
-                : ( " mb".equalsIgnoreCase( abbreviatedPressureUnit ) ) //$NON-NLS-1$
-                    ? MILLIBARS
-                    : ( " atm".equalsIgnoreCase( abbreviatedPressureUnit ) ) //$NON-NLS-1$
-                        ? ATMOSPHERES
-                        : defaultValue();
+        // NOTE: These abbreviated values account for the standard of leaving a
+        // space between the numeric value and its associated unit.
+        if ( " kPa".equalsIgnoreCase( abbreviatedPressureUnit ) ) {
+            return KILOPASCALS;
+        }
+
+        if ( " Pa".equalsIgnoreCase( abbreviatedPressureUnit ) ) {
+            return PASCALS;
+        }
+
+        if ( " mb".equalsIgnoreCase( abbreviatedPressureUnit ) ) {
+            return MILLIBARS;
+        }
+
+        if ( " atm".equalsIgnoreCase( abbreviatedPressureUnit ) ) {
+            return ATMOSPHERES;
+        }
+
+        return defaultValue();
     }
 
     public static PressureUnit canonicalValueOf( final String canonicalPressureUnit ) {

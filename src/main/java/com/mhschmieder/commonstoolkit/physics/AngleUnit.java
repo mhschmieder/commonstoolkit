@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,12 +37,19 @@ import com.mhschmieder.commonstoolkit.text.StringUtilities;
 public enum AngleUnit {
     DEGREES, RADIANS;
 
+    @SuppressWarnings("nls")
     public static AngleUnit abbreviatedValueOf( final String abbreviatedAngleUnit ) {
-        return ( StringUtilities.DEGREES_SYMBOL.equalsIgnoreCase( abbreviatedAngleUnit ) )
-            ? DEGREES
-            : ( " rad".equalsIgnoreCase( abbreviatedAngleUnit ) ) //$NON-NLS-1$
-                ? RADIANS
-                : defaultValue();
+        if ( StringUtilities.DEGREES_SYMBOL.equalsIgnoreCase( abbreviatedAngleUnit ) ) {
+            return DEGREES;
+        }
+
+        // NOTE: This abbreviated value accounts for the standard of leaving a
+        // space between the numeric value and its associated unit.
+        if ( " rad".equalsIgnoreCase( abbreviatedAngleUnit ) ) {
+            return RADIANS;
+        }
+
+        return defaultValue();
     }
 
     public static AngleUnit canonicalValueOf( final String canonicalAngleUnit ) {

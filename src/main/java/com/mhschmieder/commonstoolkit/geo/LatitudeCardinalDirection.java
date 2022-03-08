@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,12 +53,17 @@ public enum LatitudeCardinalDirection {
         return canonicalValueOf( presentationLatitudeCardinalDirection );
     }
 
+    @SuppressWarnings("nls")
     public static LatitudeCardinalDirection abbreviatedValueOf( final String abbreviatedLatitudeCardinalDirection ) {
-        return ( "N".equalsIgnoreCase( abbreviatedLatitudeCardinalDirection ) ) //$NON-NLS-1$
-            ? NORTH
-            : ( "S".equalsIgnoreCase( abbreviatedLatitudeCardinalDirection ) ) //$NON-NLS-1$
-                ? SOUTH
-                : defaultValue();
+        if ( "N".equalsIgnoreCase( abbreviatedLatitudeCardinalDirection ) ) {
+            return NORTH;
+        }
+
+        if ( "S".equalsIgnoreCase( abbreviatedLatitudeCardinalDirection ) ) {
+            return SOUTH;
+        }
+
+        return defaultValue();
     }
 
     public final String toCanonicalString() {

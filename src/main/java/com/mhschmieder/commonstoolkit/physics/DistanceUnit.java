@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,21 +43,37 @@ public enum DistanceUnit {
 
     @SuppressWarnings("nls")
     public static DistanceUnit abbreviatedValueOf( final String abbreviatedDistanceUnit ) {
-        return ( " m".equalsIgnoreCase( abbreviatedDistanceUnit ) )
-            ? METERS
-            : ( " cm".equalsIgnoreCase( abbreviatedDistanceUnit ) )
-                ? CENTIMETERS
-                : ( " mm".equalsIgnoreCase( abbreviatedDistanceUnit ) )
-                    ? MILLIMETERS
-                    : ( " yd".equalsIgnoreCase( abbreviatedDistanceUnit ) )
-                        ? YARDS
-                        : ( " ft".equalsIgnoreCase( abbreviatedDistanceUnit ) )
-                            ? FEET
-                            : ( " in".equalsIgnoreCase( abbreviatedDistanceUnit ) )
-                                ? INCHES
-                                : ( "".equalsIgnoreCase( abbreviatedDistanceUnit ) )
-                                    ? UNITLESS
-                                    : UNITLESS;
+        // NOTE: These abbreviated values account for the standard of leaving a
+        // space between the numeric value and its associated unit.
+        if ( " m".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+            return METERS;
+        }
+
+        if ( " cm".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+            return CENTIMETERS;
+        }
+
+        if ( " mm".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+            return MILLIMETERS;
+        }
+
+        if ( " yd".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+            return YARDS;
+        }
+
+        if ( " ft".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+            return FEET;
+        }
+
+        if ( " in".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+            return INCHES;
+        }
+
+        if ( "".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+            return UNITLESS;
+        }
+
+        return UNITLESS;
     }
 
     public static DistanceUnit canonicalValueOf( final String canonicalDistanceUnit ) {

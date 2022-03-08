@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,16 +35,24 @@ public enum ClassificationLevel {
 
     @SuppressWarnings("nls")
     public static ClassificationLevel abbreviatedValueOf( final String clientType ) {
-        return "unclassified".equalsIgnoreCase( clientType )
-            ? UNCLASSIFIED
-            : "confidential".equalsIgnoreCase( clientType )
-                ? CONFIDENTIAL
-                : "secret".equalsIgnoreCase( clientType )
-                    ? SECRET
-                    : ( "top secret".equalsIgnoreCase( clientType )
-                            || "top_secret".equalsIgnoreCase( clientType ) )
-                                ? TOP_SECRET
-                                : defaultValue();
+        if ( "unclassified".equalsIgnoreCase( clientType ) ) {
+            return UNCLASSIFIED;
+        }
+
+        if ( "confidential".equalsIgnoreCase( clientType ) ) {
+            return CONFIDENTIAL;
+        }
+
+        if ( "secret".equalsIgnoreCase( clientType ) ) {
+            return SECRET;
+        }
+
+        if ( ( "top secret".equalsIgnoreCase( clientType )
+                || "top_secret".equalsIgnoreCase( clientType ) ) ) {
+            return TOP_SECRET;
+        }
+
+        return defaultValue();
     }
 
     public static ClassificationLevel defaultValue() {

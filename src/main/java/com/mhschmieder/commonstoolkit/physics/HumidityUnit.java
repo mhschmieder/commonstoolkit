@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,12 +35,19 @@ import java.util.Locale;
 public enum HumidityUnit {
     RELATIVE, MOLAR;
 
+    @SuppressWarnings("nls")
     public static HumidityUnit abbreviatedValueOf( final String abbreviatedHumidityUnit ) {
-        return ( "%".equalsIgnoreCase( abbreviatedHumidityUnit ) ) //$NON-NLS-1$
-            ? RELATIVE
-            : ( " moles".equalsIgnoreCase( abbreviatedHumidityUnit ) ) //$NON-NLS-1$
-                ? MOLAR
-                : defaultValue();
+        if ( "%".equalsIgnoreCase( abbreviatedHumidityUnit ) ) {
+            return RELATIVE;
+        }
+
+        // NOTE: This abbreviated value accounts for the standard of leaving a
+        // space between the numeric value and its associated unit.
+        if ( " moles".equalsIgnoreCase( abbreviatedHumidityUnit ) ) {
+            return MOLAR;
+        }
+
+        return defaultValue();
     }
 
     public static HumidityUnit canonicalValueOf( final String canonicalHumidityUnit ) {
