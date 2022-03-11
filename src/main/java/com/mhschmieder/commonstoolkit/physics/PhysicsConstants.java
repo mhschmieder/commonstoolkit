@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ package com.mhschmieder.commonstoolkit.physics;
  */
 public final class PhysicsConstants {
 
-    // :NOTE: The constructor is disabled, since this is a static utilities
+    // NOTE: The constructor is disabled, since this is a static utilities
     // class.
     private PhysicsConstants() {}
 
@@ -99,7 +99,7 @@ public final class PhysicsConstants {
                                  TemperatureUnit.CELSIUS );
 
     // Relative Humidity extrema in percentiles.
-    public static final double HUMIDITY_MINIMUM_RELATIVE                         = 0d;
+    public static final double HUMIDITY_MINIMUM_RELATIVE                         = 0.0d;
     public static final double HUMIDITY_MAXIMUM_RELATIVE                         = 100d;
 
     // //////////////////////////////////////////////////////////////////////////

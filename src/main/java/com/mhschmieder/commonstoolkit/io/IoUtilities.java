@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -114,7 +114,7 @@ public final class IoUtilities {
                                                final double defaultValue ) {
         // Avoid throwing unnecessary exceptions by not attempting to open bad
         // streams or use unallocated or incorrectly sized data arrays.
-        // :NOTE: We mustn't assume the invoker requires all data to be loaded
+        // NOTE: We mustn't assume the invoker requires all data to be loaded
         // when comparing allocated data vector size, so we pick the smallest.
         if ( ( inputStream == null ) || ( data == null ) ) {
             return false;

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -146,7 +146,7 @@ public final class CsvUtilities {
         return true;
     }
 
-    // :TODO: Find a way to report errors if not a legitimate ZIP file.
+    // TODO: Find a way to report errors if not a legitimate ZIP file.
     @SuppressWarnings("nls")
     public static boolean loadFromZip( final File file, final Vector< Vector< String > > rows ) {
         try ( final ZipFile zipFile = new ZipFile( file ) ) {

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -75,14 +75,14 @@ public class FileExtensions {
                                                                                          "*.html",
                                                                                          "*.htm" };
 
-    // :NOTE: TIFF requires either ImageIO-Ext or JAI 1.1.3 JAR's. Both are
+    // NOTE: TIFF requires either ImageIO-Ext or JAI 1.1.3 JAR's. Both are
     // quite large (especially the former, which also has JNI support that might
     // not include the Mac, but otherwise is a more direct analog to how we do
     // other formats currently vs. the different JAI approach). Better to wait
     // until the switch to JavaFX, which has its own imaging API's.
-    // :NOTE: WBMP isn't necessary anymore as most people's wireless devices can
+    // NOTE: WBMP isn't necessary anymore as most people's wireless devices can
     // now handle the bandwidth of full color images.
-    // :NOTE: PostScript is now commented out due to the export method not
+    // NOTE: PostScript is now commented out due to the export method not
     // having a way to run properly on a Swing thread inside a JavaFX thread and
     // return status as well as have the action be guaranteed to have completed
     // the file write before the attempt to copy the temp file checks the file

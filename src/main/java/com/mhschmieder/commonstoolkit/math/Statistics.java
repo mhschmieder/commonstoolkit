@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -144,17 +144,17 @@ public final class Statistics {
     // central moment divided by the fourth power of the standard deviation.
     public static double kurtosis( final double[] x ) {
         if ( x.length < 2 ) {
-            return 0d;
+            return 0.0d;
         }
 
         final double m4 = Statistics.moment( x, 4 );
         final double sm2 = Math.sqrt( Statistics.moment( x, 2 ) );
-        return ( m4 / Math.pow( sm2, 4d ) );
+        return ( m4 / Math.pow( sm2, 4.0d ) );
     }
 
     public static double maximum( final double[] x ) {
         if ( x.length < 1 ) {
-            return 0d;
+            return 0.0d;
         }
 
         double maxVal = x[ 0 ];
@@ -169,13 +169,13 @@ public final class Statistics {
     }
 
     // Properties of a data set.
-    // :NOTE: The arithmetic mean is the same as the average.
+    // NOTE: The arithmetic mean is the same as the average.
     public static double mean( final double[] x ) {
         if ( x.length < 1 ) {
-            return 0d;
+            return 0.0d;
         }
 
-        double sum = 0d;
+        double sum = 0.0d;
         for ( final double element : x ) {
             sum += element;
         }
@@ -186,7 +186,7 @@ public final class Statistics {
         double median = 0;
 
         if ( x.length < 1 ) {
-            return 0d;
+            return 0.0d;
         }
 
         // Get local copy of data.
@@ -210,7 +210,7 @@ public final class Statistics {
 
     public static double minimum( final double[] x ) {
         if ( x.length < 1 ) {
-            return 0d;
+            return 0.0d;
         }
 
         double minVal = x[ 0 ];
@@ -226,7 +226,7 @@ public final class Statistics {
 
     public static double moment( final double[] x, final int order ) {
         if ( order == 1 ) {
-            return 0d;
+            return 0.0d;
         }
 
         final double mu = Statistics.mean( x );
@@ -307,12 +307,12 @@ public final class Statistics {
     // central moment divided by the third power of the standard deviation.
     public static double skew( final double[] x ) {
         if ( x.length < 2 ) {
-            return 0d;
+            return 0.0d;
         }
 
         final double m3 = Statistics.moment( x, 3 );
         final double sm2 = Math.sqrt( Statistics.moment( x, 2 ) );
-        return ( m3 / Math.pow( sm2, 3d ) );
+        return ( m3 / Math.pow( sm2, 3.0d ) );
     }
 
     // Sample standard deviation (dividing by n - 1). This method calculates
@@ -329,11 +329,11 @@ public final class Statistics {
     // is sampled from a normal distribution.
     public static double variance( final double[] x ) {
         if ( x.length < 2 ) {
-            return 0d;
+            return 0.0d;
         }
 
-        double sum = 0d;
-        double sum2 = 0d;
+        double sum = 0.0d;
+        double sum2 = 0.0d;
         for ( final double element : x ) {
             sum += element;
             sum2 += element * element;

@@ -47,7 +47,7 @@ import com.mhschmieder.commonstoolkit.math.MathUtilities;
  */
 public final class MassProperties implements MassComputable {
 
-    private static final double   WEIGHT_DEFAULT_KG                 = 0d;
+    private static final double   WEIGHT_DEFAULT_KG                 = 0.0d;
     private static final Vector3D COG_IN_OBJECT_COORDINATES_DEFAULT = Vector3D.ZERO;
     private static final boolean  COG_VALID_DEFAULT                 = false;
 

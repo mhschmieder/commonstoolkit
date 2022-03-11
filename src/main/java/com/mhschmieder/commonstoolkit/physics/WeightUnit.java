@@ -100,7 +100,7 @@ public enum WeightUnit {
 
     @Override
     public final String toString() {
-        // :NOTE: As of Java 6, enums include the underscore in their string
+        // NOTE: As of Java 6, enums include the underscore in their string
         // representation, which is a problem for backward-compatibility with
         // XML parsers. Thus, we need to strip the underscores and replace them
         // with spaces, to behave like Java 5.

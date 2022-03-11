@@ -109,7 +109,7 @@ public final class NumberFormatUtilities {
                                       final NumberFormat numberFormat ) {
         // In case of null or empty (non-numeric) strings, default to zero.
         if ( ( formattedValue == null ) || formattedValue.isEmpty() ) {
-            return 0d;
+            return 0.0d;
         }
 
         try {
@@ -128,7 +128,7 @@ public final class NumberFormatUtilities {
                 e2.printStackTrace();
 
                 // At this point, the only safe thing to return is zero.
-                return 0d;
+                return 0.0d;
             }
         }
     }

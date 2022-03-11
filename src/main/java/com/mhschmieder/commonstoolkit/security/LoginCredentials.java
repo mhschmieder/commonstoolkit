@@ -55,7 +55,7 @@ public class LoginCredentials {
         this( loginCredentials.getUserName(), loginCredentials.getPassword() );
     }
 
-    // :NOTE: Cloning is disabled as it is dangerous; use the copy constructor
+    // NOTE: Cloning is disabled as it is dangerous; use the copy constructor
     // instead.
     @Override
     protected final Object clone() throws CloneNotSupportedException {

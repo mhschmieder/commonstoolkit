@@ -84,7 +84,7 @@ public enum TemperatureUnit {
     public final String toCanonicalString() {
         String canonicalString = toString();
 
-        // :NOTE: Temperature Units are all capitalized, unlike most other
+        // NOTE: Temperature Units are all capitalized, unlike most other
         // units, as they are named after people.
         canonicalString = canonicalString.substring( 0, 1 )
                 .concat( canonicalString.substring( 1 ).toLowerCase( Locale.ENGLISH ) );

@@ -95,7 +95,7 @@ public final class StringUtilities {
     // pass-through; whereas other numbers insert a "-" sign (if not already
     // present) to negate the number. Numbers already qualified with a "-" are
     // also pass-through. This method does not deal with "negative-zero".
-    // :TODO: Re-implement this using RegEx pattern matching?
+    // TODO: Re-implement this using RegEx pattern matching?
     public static String defaultToNegativeNumber( final String numberString ) {
         // Effectively treat this as a no-op if we have a null or empty string.
         if ( ( numberString == null ) || numberString.trim().isEmpty() ) {
@@ -107,7 +107,7 @@ public final class StringUtilities {
                                                                  new StringBuilder( defaultToNegativeNumberString );
         final char[] chars = new char[ 1 ];
 
-        // :NOTE: We should never get an exception here as we pre-check for null
+        // NOTE: We should never get an exception here as we pre-check for null
         // or empty strings, so the try-catch-throw block is a fail-safe for
         // future-proof code.
         try {
@@ -287,7 +287,7 @@ public final class StringUtilities {
      * This method cuts down on code bloat and cut/paste errors by formalizing
      * the @String formatting of paired quantities that are in different units.
      * <p>
-     * :NOTE: The third quantity is optional, so we check for NaN condition.
+     * NOTE: The third quantity is optional, so we check for NaN condition.
      *
      * @param quantity1
      *            The first quantity in the quantity triplet
@@ -443,7 +443,7 @@ public final class StringUtilities {
     }
 
     // Pad a vector of string vectors to the maximum column count.
-    // :NOTE: This is designed as a generic preparatory task for loading
+    // NOTE: This is designed as a generic preparatory task for loading
     // string-based data into a table or possibly a database (e.g. SQL).
     @SuppressWarnings("nls")
     public static int stringVectorPadToMaxColumn( final Vector< Vector< String > > vector ) {

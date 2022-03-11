@@ -59,16 +59,16 @@ public final class MathExt {
     private static Random _randomNumberGenerator = null;
 
     public static double acosh( final double x ) {
-        return Math.log( x + Math.sqrt( sqr( x ) - 1d ) );
+        return Math.log( x + Math.sqrt( sqr( x ) - 1.0d ) );
     }
 
     // Inverse hyperbolic functions.
     public static double asinh( final double x ) {
-        return Math.log( x + Math.sqrt( 1d + sqr( x ) ) );
+        return Math.log( x + Math.sqrt( 1.0d + sqr( x ) ) );
     }
 
     public static double atanh( final double x ) {
-        return 0.5d * Math.log( ( 1d + x ) / ( 1d - x ) );
+        return 0.5d * Math.log( ( 1.0d + x ) / ( 1.0d - x ) );
     }
 
     public static double boundedValue( final double value, final double min, final double max ) {
@@ -83,11 +83,11 @@ public final class MathExt {
     }
 
     public static double cot( final double x ) {
-        return 1d / Math.tan( x );
+        return 1.0d / Math.tan( x );
     }
 
     public static double csc( final double x ) {
-        return 1d / Math.sin( x );
+        return 1.0d / Math.sin( x );
     }
 
     // Return the exponent of a number represented by mantissa * 10^ (exponent).
@@ -119,7 +119,7 @@ public final class MathExt {
         int numdigits = 0;
         double numAdjusted = num;
         while ( ( numdigits <= 15 ) && ( numAdjusted != Math.floor( numAdjusted ) ) ) {
-            numAdjusted *= 10d;
+            numAdjusted *= 10.0d;
             numdigits += 1;
         }
         return numdigits;
@@ -132,7 +132,7 @@ public final class MathExt {
         int numdigits = 0;
         double numAdjusted = num;
         while ( ( numdigits <= 15 ) && ( ( int ) numAdjusted != 0.0 ) ) {
-            numAdjusted /= 10d;
+            numAdjusted /= 10.0d;
             numdigits += 1;
         }
         return numdigits;
@@ -168,7 +168,7 @@ public final class MathExt {
     // Return the mantissa of a number represented by mantissa * 10^ (exponent).
     public static double mantissa( final double number ) {
         final int exponent = exponent( number );
-        return number / Math.pow( 10d, exponent );
+        return number / Math.pow( 10.0d, exponent );
     }
 
     // Return the common modulus (remainder) of a number and a given divisor.
@@ -229,37 +229,37 @@ public final class MathExt {
     }
 
     // Given a number, round up to the nearest power of ten (times 1, 2, or 5).
-    // :NOTE: The argument must be strictly positive.
+    // NOTE: The argument must be strictly positive.
     public static double roundUp( final double val ) {
         final int exponent = ( int ) Math.floor( Math.log( val ) * MathConstants.LN10_SCALE );
         double valAdjusted = val;
-        valAdjusted *= Math.pow( 10d, -exponent );
-        if ( valAdjusted > 5d ) {
-            valAdjusted = 10d;
+        valAdjusted *= Math.pow( 10.0d, -exponent );
+        if ( valAdjusted > 5.0d ) {
+            valAdjusted = 10.0d;
         }
-        else if ( valAdjusted > 2d ) {
-            valAdjusted = 5d;
+        else if ( valAdjusted > 2.0d ) {
+            valAdjusted = 5.0d;
         }
-        else if ( valAdjusted > 1d ) {
-            valAdjusted = 2d;
+        else if ( valAdjusted > 1.0d ) {
+            valAdjusted = 2.0d;
         }
-        valAdjusted *= Math.pow( 10d, exponent );
+        valAdjusted *= Math.pow( 10.0d, exponent );
         return valAdjusted;
     }
 
     // Trigonometric functions.
     public static double sec( final double x ) {
-        return 1d / Math.cos( x );
+        return 1.0d / Math.cos( x );
     }
 
     // Return the value of x with the sign of y.
     public static double sign( final double x, final double y ) {
-        return ( y < 0d ) ? ( x < 0d ) ? x : -x : ( x < 0d ) ? -x : x;
+        return ( y < 0.0d ) ? ( x < 0.0d ) ? x : -x : ( x < 0.0d ) ? -x : x;
     }
 
     // Return the function sinc(x), where sinc(x) is defined as sin(x) / x.
     public static double sinc( final double x ) {
-        return ( Math.abs( x ) < 1.0e-30 ) ? 1d : Math.sin( x ) / x;
+        return ( Math.abs( x ) < 1.0e-30 ) ? 1.0d : Math.sin( x ) / x;
     }
 
     // Hyperbolic functions.

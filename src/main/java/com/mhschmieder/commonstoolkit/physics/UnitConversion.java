@@ -49,18 +49,18 @@ public final class UnitConversion {
     // NOTE: The drawback to this approach is making them private, inaccessible
     // for tight-loop usage or for usage as scale factors in an affine transform
     // matrix. This needs further investigation.
-    public static final double YARDS_TO_FEET_RATIO              = 3d;
+    public static final double YARDS_TO_FEET_RATIO              = 3.0d;
 
-    public static final double FEET_TO_YARDS_RATIO              = 1d / YARDS_TO_FEET_RATIO;
+    public static final double FEET_TO_YARDS_RATIO              = 1.0d / YARDS_TO_FEET_RATIO;
 
     public static final double FEET_TO_INCHES_RATIO             = 12d;
 
-    public static final double INCHES_TO_FEET_RATIO             = 1d / FEET_TO_INCHES_RATIO;
+    public static final double INCHES_TO_FEET_RATIO             = 1.0d / FEET_TO_INCHES_RATIO;
 
     public static final double YARDS_TO_INCHES_RATIO            =
                                                      YARDS_TO_FEET_RATIO * FEET_TO_INCHES_RATIO;
 
-    public static final double INCHES_TO_YARDS_RATIO            = 1d / YARDS_TO_INCHES_RATIO;
+    public static final double INCHES_TO_YARDS_RATIO            = 1.0d / YARDS_TO_INCHES_RATIO;
 
     public static final double METERS_TO_INCHES_RATIO           = 39.37007874d;
 
@@ -68,11 +68,11 @@ public final class UnitConversion {
 
     public static final double MILLIMETERS_TO_INCHES_RATIO      = 0.001d * METERS_TO_INCHES_RATIO;
 
-    public static final double INCHES_TO_METERS_RATIO           = 1d / METERS_TO_INCHES_RATIO;
+    public static final double INCHES_TO_METERS_RATIO           = 1.0d / METERS_TO_INCHES_RATIO;
 
-    public static final double INCHES_TO_CENTIMETERS_RATIO      = 1d / CENTIMETERS_TO_INCHES_RATIO;
+    public static final double INCHES_TO_CENTIMETERS_RATIO      = 1.0d / CENTIMETERS_TO_INCHES_RATIO;
 
-    public static final double INCHES_TO_MILLIMETERS_RATIO      = 1d / MILLIMETERS_TO_INCHES_RATIO;
+    public static final double INCHES_TO_MILLIMETERS_RATIO      = 1.0d / MILLIMETERS_TO_INCHES_RATIO;
 
     public static final double FEET_TO_METERS_RATIO             =
                                                     FEET_TO_INCHES_RATIO * INCHES_TO_METERS_RATIO;
@@ -81,7 +81,7 @@ public final class UnitConversion {
 
     public static final double FEET_TO_MILLIMETERS_RATIO        = 1000d * FEET_TO_METERS_RATIO;
 
-    public static final double METERS_TO_FEET_RATIO             = 1d / FEET_TO_METERS_RATIO;
+    public static final double METERS_TO_FEET_RATIO             = 1.0d / FEET_TO_METERS_RATIO;
 
     public static final double CENTIMETERS_TO_FEET_RATIO        = 0.01d * METERS_TO_FEET_RATIO;
 
@@ -94,7 +94,7 @@ public final class UnitConversion {
 
     public static final double YARDS_TO_MILLIMETERS_RATIO       = 1000d * YARDS_TO_METERS_RATIO;
 
-    public static final double METERS_TO_YARDS_RATIO            = 1d / YARDS_TO_METERS_RATIO;
+    public static final double METERS_TO_YARDS_RATIO            = 1.0d / YARDS_TO_METERS_RATIO;
 
     public static final double CENTIMETERS_TO_YARDS_RATIO       = 0.01d * METERS_TO_YARDS_RATIO;
 
@@ -102,7 +102,7 @@ public final class UnitConversion {
 
     public static final double POUNDS_TO_OUNCES_RATIO           = 16d;
 
-    public static final double OUNCES_TO_POUNDS_RATIO           = 1d / POUNDS_TO_OUNCES_RATIO;
+    public static final double OUNCES_TO_POUNDS_RATIO           = 1.0d / POUNDS_TO_OUNCES_RATIO;
 
     public static final double METRIC_TONS_TO_POUNDS_RATIO      = 2204.6232402d;
 
@@ -112,11 +112,11 @@ public final class UnitConversion {
     public static final double GRAMS_TO_POUNDS_RATIO            =
                                                      0.001d * KILOGRAMS_TO_POUNDS_RATIO;
 
-    public static final double POUNDS_TO_METRIC_TONS_RATIO      = 1d / METRIC_TONS_TO_POUNDS_RATIO;
+    public static final double POUNDS_TO_METRIC_TONS_RATIO      = 1.0d / METRIC_TONS_TO_POUNDS_RATIO;
 
-    public static final double POUNDS_TO_KILOGRAMS_RATIO        = 1d / KILOGRAMS_TO_POUNDS_RATIO;
+    public static final double POUNDS_TO_KILOGRAMS_RATIO        = 1.0d / KILOGRAMS_TO_POUNDS_RATIO;
 
-    public static final double POUNDS_TO_GRAMS_RATIO            = 1d / GRAMS_TO_POUNDS_RATIO;
+    public static final double POUNDS_TO_GRAMS_RATIO            = 1.0d / GRAMS_TO_POUNDS_RATIO;
 
     public static final double METRIC_TONS_TO_OUNCES_RATIO      = METRIC_TONS_TO_POUNDS_RATIO
             * POUNDS_TO_OUNCES_RATIO;
@@ -127,25 +127,25 @@ public final class UnitConversion {
     public static final double GRAMS_TO_OUNCES_RATIO            =
                                                      0.001d * KILOGRAMS_TO_OUNCES_RATIO;
 
-    public static final double OUNCES_TO_METRIC_TONS_RATIO      = 1d / METRIC_TONS_TO_OUNCES_RATIO;
+    public static final double OUNCES_TO_METRIC_TONS_RATIO      = 1.0d / METRIC_TONS_TO_OUNCES_RATIO;
 
-    public static final double OUNCES_TO_KILOGRAMS_RATIO        = 1d / KILOGRAMS_TO_OUNCES_RATIO;
+    public static final double OUNCES_TO_KILOGRAMS_RATIO        = 1.0d / KILOGRAMS_TO_OUNCES_RATIO;
 
-    public static final double OUNCES_TO_GRAMS_RATIO            = 1d / GRAMS_TO_OUNCES_RATIO;
+    public static final double OUNCES_TO_GRAMS_RATIO            = 1.0d / GRAMS_TO_OUNCES_RATIO;
 
-    public static final double KILOPASCALS_TO_MILLIBARS_RATIO   = 10d;
+    public static final double KILOPASCALS_TO_MILLIBARS_RATIO   = 10.0d;
 
     public static final double KILOPASCALS_TO_PASCALS_RATIO     = 1000d;
 
-    public static final double PASCALS_TO_KILOPASCALS_RATIO     = 1d / KILOPASCALS_TO_PASCALS_RATIO;
+    public static final double PASCALS_TO_KILOPASCALS_RATIO     = 1.0d / KILOPASCALS_TO_PASCALS_RATIO;
 
     public static final double MILLIBARS_TO_KILOPASCALS_RATIO   =
-                                                              1d / KILOPASCALS_TO_MILLIBARS_RATIO;
+                                                              1.0d / KILOPASCALS_TO_MILLIBARS_RATIO;
 
     public static final double MILLIBARS_TO_PASCALS_RATIO       = MILLIBARS_TO_KILOPASCALS_RATIO
             * KILOPASCALS_TO_PASCALS_RATIO;
 
-    public static final double PASCALS_TO_MILLIBARS_RATIO       = 1d / MILLIBARS_TO_PASCALS_RATIO;
+    public static final double PASCALS_TO_MILLIBARS_RATIO       = 1.0d / MILLIBARS_TO_PASCALS_RATIO;
 
     public static final double ATMOSPHERES_TO_PASCALS_RATIO     = 101325d;
 
@@ -155,17 +155,17 @@ public final class UnitConversion {
     public static final double ATMOSPHERES_TO_MILLIBARS_RATIO   = ATMOSPHERES_TO_PASCALS_RATIO
             * PASCALS_TO_MILLIBARS_RATIO;
 
-    public static final double PASCALS_TO_ATMOSPHERES_RATIO     = 1d / ATMOSPHERES_TO_PASCALS_RATIO;
+    public static final double PASCALS_TO_ATMOSPHERES_RATIO     = 1.0d / ATMOSPHERES_TO_PASCALS_RATIO;
 
-    public static final double KILOPASCALS_TO_ATMOSPHERES_RATIO = 1d
+    public static final double KILOPASCALS_TO_ATMOSPHERES_RATIO = 1.0d
             / ATMOSPHERES_TO_KILOPASCALS_RATIO;
 
     public static final double MILLIBARS_TO_ATMOSPHERES_RATIO   =
-                                                              1d / ATMOSPHERES_TO_MILLIBARS_RATIO;
+                                                              1.0d / ATMOSPHERES_TO_MILLIBARS_RATIO;
 
-    public static final double FAHRENHEIT_TO_CELSIUS_RATIO      = 9d / 5d;
+    public static final double FAHRENHEIT_TO_CELSIUS_RATIO      = 9.0d / 5.0d;
 
-    public static final double CELSIUS_TO_FAHRENHEIT_RATIO      = 1d / FAHRENHEIT_TO_CELSIUS_RATIO;
+    public static final double CELSIUS_TO_FAHRENHEIT_RATIO      = 1.0d / FAHRENHEIT_TO_CELSIUS_RATIO;
 
     public static final double CELSIUS_TO_FAHRENHEIT_ADJUSTMENT = 32d;
 
@@ -173,17 +173,17 @@ public final class UnitConversion {
 
     // Conversion ratio for pound-force to newton, as a unit of force.
     public static final double POUND_FORCE_TO_NEWTONS_RATIO     = 4.4482216152605d;
-    public static final double NEWTONS_TO_POUND_FORCE_RATIO     = 1d / POUND_FORCE_TO_NEWTONS_RATIO;
+    public static final double NEWTONS_TO_POUND_FORCE_RATIO     = 1.0d / POUND_FORCE_TO_NEWTONS_RATIO;
 
     // Conversion ratios between mass and weight (measured in kilograms).
     public static final double MASS_TO_WEIGHT_RATIO             =
                                                     PhysicsConstants.ACCELERATION_OF_GRAVITY_METERS_PER_SECOND_SQUARED;
-    public static final double WEIGHT_TO_MASS_RATIO             = 1d / MASS_TO_WEIGHT_RATIO;
+    public static final double WEIGHT_TO_MASS_RATIO             = 1.0d / MASS_TO_WEIGHT_RATIO;
 
     // Meters per Second (m/s) is more precise converted to Knots than
     // vice-versa, so we initially express that ratio and derive the other.
     public static final double METERS_PER_SECOND_TO_KNOTS       = 1.9438444924406d;
-    public static final double KNOTS_TO_METERS_PER_SECOND       = 1d / METERS_PER_SECOND_TO_KNOTS;
+    public static final double KNOTS_TO_METERS_PER_SECOND       = 1.0d / METERS_PER_SECOND_TO_KNOTS;
 
     public static double atmospheresToKilopascals( final double pressureAtmopsheres ) {
         return pressureAtmopsheres * ATMOSPHERES_TO_KILOPASCALS_RATIO;

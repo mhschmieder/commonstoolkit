@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -65,11 +65,11 @@ public final class PhysicsUtilities {
     public static double getNormalizedAngleRadians( final double angleRadians ) {
         double normalizedAngleRadians = angleRadians;
 
-        if ( ( normalizedAngleRadians + Math.PI ) < 0d ) {
+        if ( ( normalizedAngleRadians + Math.PI ) < 0.0d ) {
             normalizedAngleRadians += MathConstants.TWO_PI;
         }
 
-        if ( ( normalizedAngleRadians - Math.PI ) > 0d ) {
+        if ( ( normalizedAngleRadians - Math.PI ) > 0.0d ) {
             normalizedAngleRadians -= MathConstants.TWO_PI;
         }
 

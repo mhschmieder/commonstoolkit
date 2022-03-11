@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -93,7 +93,7 @@ import com.mhschmieder.commonstoolkit.math.MathExt;
  * <p>
  * This class also implements the <code>java.lang.Comparable</code> interface.
  * In this case, the comparisons are between the <i>absolute values</i> of the
- * two <code>Complex</code> numbers. :NOTE: Some of these methods and
+ * two <code>Complex</code> numbers. NOTE: Some of these methods and
  * constants are patterned after the API spec from the once-free JNL from
  * VisualNumerics, the Complex class from "Java for Engineers and Scientists"
  * (Stephen J. Chapman, Prentice-Hall), and the Complex class from
@@ -109,23 +109,23 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
     /**
      * Constant representing a zero vector along the real axis.
      */
-    public static final Complex ZERO             = new Complex( 0d, 0d );
+    public static final Complex ZERO             = new Complex( 0.0d, 0.0d );
 
     /**
      * Constant representing a unit vector along the real axis.
      */
-    public static final Complex UNITY            = new Complex( 1d, 0d );
+    public static final Complex UNITY            = new Complex( 1.0d, 0.0d );
 
     /**
      * Constant representing <i><b>i</b></i>, the square root of -1.
      */
-    public static final Complex I                = new Complex( 0d, 1d );
+    public static final Complex I                = new Complex( 0.0d, 1.0d );
 
     /**
      * Constant representing <i><b>i</b></i>, the square root of -1. (For
      * electrical engineers, who use the "J" terminology instead of "I").
      */
-    public static final Complex J                = new Complex( 0d, 1d );
+    public static final Complex J                = new Complex( 0.0d, 1.0d );
 
     /**
      * Returns the absolute value (magnitude) of a <tt>Complex</tt> number.
@@ -143,16 +143,16 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         // This algorithm avoids overflows that might otherwise occur when
         // evaluating Math.sqrt(re*re + im*im), and essentially pre-factors that
         // equation for safety.
-        if ( ( absRe == 0d ) && ( absIm == 0d ) ) {
-            return 0d;
+        if ( ( absRe == 0.0d ) && ( absIm == 0.0d ) ) {
+            return 0.0d;
         }
         else if ( absRe >= absIm ) {
             final double d = z._im / z._re;
-            return absRe * Math.sqrt( 1d + ( d * d ) );
+            return absRe * Math.sqrt( 1.0d + ( d * d ) );
         }
         else {
             final double d = z._re / z._im;
-            return absIm * Math.sqrt( 1d + ( d * d ) );
+            return absIm * Math.sqrt( 1.0d + ( d * d ) );
         }
     }
 
@@ -175,8 +175,8 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         Complex result; // Result of intermediate calculations
 
         // Build (1 - z*z)
-        re1 = 1d - ( ( z._re * z._re ) - ( z._im * z._im ) );
-        im1 = 0d - ( ( z._re * z._im ) + ( z._im * z._re ) );
+        re1 = 1.0d - ( ( z._re * z._re ) - ( z._im * z._im ) );
+        im1 = 0.0d - ( ( z._re * z._im ) + ( z._im * z._re ) );
 
         // Build sqrt(1 - z*z)
         result = complex( re1, im1 );
@@ -220,7 +220,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         Complex result; // Result of intermediate calculations
 
         // Build (z*z - 1)
-        re1 = ( ( z._re * z._re ) - ( z._im * z._im ) ) - 1d;
+        re1 = ( ( z._re * z._re ) - ( z._im * z._im ) ) - 1.0d;
         im1 = ( ( z._re * z._im ) + ( z._im * z._re ) );
 
         // Build sqrt(z*z - 1)
@@ -277,8 +277,8 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         Complex result; // Result of intermediate calculations
 
         // Build (1 - z*z)
-        re1 = 1d - ( ( z._re * z._re ) - ( z._im * z._im ) );
-        im1 = 0d - ( ( z._re * z._im ) + ( z._im * z._re ) );
+        re1 = 1.0d - ( ( z._re * z._re ) - ( z._im * z._im ) );
+        im1 = 0.0d - ( ( z._re * z._im ) + ( z._im * z._re ) );
 
         // Build sqrt(1 - z*z)
         result = complex( re1, im1 );
@@ -322,7 +322,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         Complex result; // Intermediate results of calc
 
         // Build z*z + 1
-        re1 = ( ( z._re * z._re ) - ( z._im * z._im ) ) + 1d;
+        re1 = ( ( z._re * z._re ) - ( z._im * z._im ) ) + 1.0d;
         im1 = ( ( z._re * z._im ) + ( z._im * z._re ) );
 
         // Build sqrt(z*z + 1)
@@ -362,11 +362,11 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         Complex result; // Intermediate results of calculation
 
         // Build (i-z)
-        result = complex( -z._re, 1d - z._im );
+        result = complex( -z._re, 1.0d - z._im );
 
         // Build (i+z)
         re1 = z._re;
-        im1 = 1d + z._im;
+        im1 = 1.0d + z._im;
 
         // Build (i-z)/(i+z)
         result = div( result, re1, im1 );
@@ -401,10 +401,10 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         Complex result; // Intermediate results of calculation
 
         // Build (1+z)
-        result = complex( 1d + z._re, +z._im );
+        result = complex( 1.0d + z._re, +z._im );
 
         // Build (1-z)
-        re1 = 1d - z._re;
+        re1 = 1.0d - z._re;
         im1 = -z._im;
 
         // Build (1+z)/(1-z)
@@ -431,7 +431,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * @see Complex#complex(double, double)
      */
     public static Complex complex( final double re ) {
-        return new Complex( re, 0d );
+        return new Complex( re, 0.0d );
     }
 
     /**
@@ -556,13 +556,13 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         // "Numerical Recipes in Fortran 77: The Art of Scientific Computing".
         if ( Math.abs( x ) >= Math.abs( y ) ) {
             ratio = y / x;
-            scalar = 1d / ( x + ( y * ratio ) );
+            scalar = 1.0d / ( x + ( y * ratio ) );
             zRe = scalar * ( z._re + ( z._im * ratio ) );
             zIm = scalar * ( z._im - ( z._re * ratio ) );
         }
         else {
             ratio = x / y;
-            scalar = 1d / ( ( x * ratio ) + y );
+            scalar = 1.0d / ( ( x * ratio ) + y );
             zRe = scalar * ( ( z._re * ratio ) + z._im );
             zIm = scalar * ( ( z._im * ratio ) - z._re );
         }
@@ -615,13 +615,13 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         // "Numerical Recipes in Fortran 77: The Art of Scientific Computing".
         if ( Math.abs( x ) >= Math.abs( y ) ) {
             ratio = y / x;
-            scalar = 1d / ( x + ( y * ratio ) );
+            scalar = 1.0d / ( x + ( y * ratio ) );
             zRe = scalar;
             zIm = -scalar * ratio;
         }
         else {
             ratio = x / y;
-            scalar = 1d / ( ( x * ratio ) + y );
+            scalar = 1.0d / ( ( x * ratio ) + y );
             zRe = scalar * ratio;
             zIm = -scalar;
         }
@@ -756,7 +756,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         // return exp( exponent * log(base) );
 
         final double re = Math.log( Math.abs( base ) );
-        final double im = Math.atan2( 0d, base );
+        final double im = Math.atan2( 0.0d, base );
 
         final double re2 = ( re * exponent._re ) - ( im * exponent._im );
         final double im2 = ( re * exponent._im ) + ( im * exponent._re );
@@ -862,18 +862,18 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      */
     public static Complex sqrt( final Complex z ) {
         // This algorithm is inspired by "Numerical Recipes in C".
-        double re = 0d, im = 0d;
+        double re = 0.0d, im = 0.0d;
         final double mag = z.abs();
 
-        if ( mag > 0d ) {
-            if ( z._re > 0d ) {
+        if ( mag > 0.0d ) {
+            if ( z._re > 0.0d ) {
                 final double temp = Math.sqrt( 0.5d * ( mag + z._re ) );
                 re = temp;
                 im = ( 0.5d * z._im ) / temp;
             }
             else {
                 double temp = Math.sqrt( 0.5d * ( mag - z._re ) );
-                if ( z._im < 0d ) {
+                if ( z._im < 0.0d ) {
                     temp = -temp;
                 }
                 re = ( 0.5d * z._im ) / temp;
@@ -1010,8 +1010,8 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * Constructs a <tt>Complex</tt> object representing the number zero.
      */
     public Complex() {
-        _re = 0d;
-        _im = 0d;
+        _re = 0.0d;
+        _im = 0.0d;
     }
 
     /**
@@ -1037,7 +1037,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      */
     public Complex( final double re ) {
         _re = re;
-        _im = 0d;
+        _im = 0.0d;
     }
 
     /**
@@ -1072,16 +1072,16 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
         // This algorithm avoids overflows that might otherwise occur when
         // evaluating Math.sqrt(re*re + im*im), and essentially pre-factors that
         // equation for safety.
-        if ( ( absRe == 0d ) && ( absIm == 0d ) ) {
-            return 0d;
+        if ( ( absRe == 0.0d ) && ( absIm == 0.0d ) ) {
+            return 0.0d;
         }
         else if ( absRe >= absIm ) {
             final double d = _im / _re;
-            return absRe * Math.sqrt( 1d + ( d * d ) );
+            return absRe * Math.sqrt( 1.0d + ( d * d ) );
         }
         else {
             final double d = _re / _im;
-            return absIm * Math.sqrt( 1d + ( d * d ) );
+            return absIm * Math.sqrt( 1.0d + ( d * d ) );
         }
     }
 
@@ -1574,7 +1574,7 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      * @see Complex#div(double)
      */
     public Complex sqr() {
-        return complex( MathExt.sqr( _re ) - MathExt.sqr( _im ), 2d * ( _re * _im ) );
+        return complex( MathExt.sqr( _re ) - MathExt.sqr( _im ), 2.0d * ( _re * _im ) );
     }
 
     /**
@@ -1633,11 +1633,11 @@ public final class Complex extends Number implements Cloneable, Comparable< Comp
      */
     @Override
     public String toString() {
-        if ( _im < 0d ) {
+        if ( _im < 0.0d ) {
             return ( "(" + _re + " - i " + ( -_im ) + ")" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
-        else if ( ( 1d / _im ) == Double.NEGATIVE_INFINITY ) {
-            return ( "(" + _re + " + i " + 0d + ")" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        else if ( ( 1.0d / _im ) == Double.NEGATIVE_INFINITY ) {
+            return ( "(" + _re + " + i " + 0.0d + ")" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
         else {
             return ( "(" + _re + " + i " + ( +_im ) + ")" ); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
