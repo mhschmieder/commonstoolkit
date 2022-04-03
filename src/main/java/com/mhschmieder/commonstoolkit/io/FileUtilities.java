@@ -47,6 +47,7 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
@@ -66,7 +67,7 @@ public final class FileUtilities {
     public static final int MRU_CACHE_SIZE = 9;
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities class
      */
     private FileUtilities() {}
 
@@ -108,6 +109,47 @@ public final class FileUtilities {
             final int mruFileNumber = i + 1;
             final String mruFilenameKey = "mruFilename" + Integer.toString( mruFileNumber );
             preferences.put( mruFilenameKey, mruFilename );
+        }
+    }
+
+    // Load the Default Directory from User Preferences.
+    public static File loadDefaultDirectoryPreferences( final Preferences preferences ) {
+        // NOTE: The current User Home Directory is simply the default in case
+        // the preferred default directory hasn't been set as a preference yet.
+        try {
+            final String userHomeDirectoryPath = FileUtils.getUserDirectoryPath();
+            final String defaultDirectoryPath = preferences.get( "defaultDirectory", //$NON-NLS-1$
+                                                                 userHomeDirectoryPath );
+            if ( ( defaultDirectoryPath != null ) && !defaultDirectoryPath.trim().isEmpty() ) {
+                final File defaultDirectory = new File( defaultDirectoryPath );
+                if ( Files.isDirectory( defaultDirectory.toPath() ) ) {
+                    return defaultDirectory;
+                }
+            }
+
+            // If the Default Directory is malformed or doesn't exist, return
+            // the User Home Directory instead.
+            final File userHomeDirectory = FileUtils.getUserDirectory();
+            return userHomeDirectory;
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    // Save the Default Directory to User Preferences.
+    public static void saveDefaultDirectoryPreferences( final File defaultDirectory,
+                                                        final Preferences preferences ) {
+        if ( defaultDirectory != null ) {
+            try {
+                preferences.put( "defaultDirectory", //$NON-NLS-1$
+                                 defaultDirectory.getCanonicalPath() );
+            }
+            catch ( final Exception e ) {
+                e.printStackTrace();
+            }
         }
     }
 

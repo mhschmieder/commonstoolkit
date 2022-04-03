@@ -46,11 +46,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.Charsets;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.SwappedDataInputStream;
 
@@ -69,7 +73,7 @@ public final class IoUtilities {
     @SuppressWarnings("nls") public static final String LATIN_1 = "ISO-8859-1";
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities class
      */
     private IoUtilities() {}
 
@@ -149,11 +153,11 @@ public final class IoUtilities {
     // Generic method to load the contents of a reader into a string builder.
     @SuppressWarnings("nls")
     public static boolean loadIntoStringBuilder( final BufferedReader bufferedReader,
-                                                 final StringBuilder stringBuilder ) {
+                                                 final StringBuilder fileContent ) {
         try {
             String line = bufferedReader.readLine();
             while ( line != null ) {
-                stringBuilder.append( line ).append( "\n" );
+                fileContent.append( line ).append( "\n" );
                 line = bufferedReader.readLine();
             }
             return true;
@@ -165,11 +169,12 @@ public final class IoUtilities {
     }
 
     // Generic method to load the contents of a file into a string builder.
-    public static boolean loadIntoStringBuilder( final File file, final StringBuilder buffer ) {
+    public static boolean loadIntoStringBuilder( final File file,
+                                                 final StringBuilder fileContent ) {
         // Chain a BufferedReader to a FileReader, for better performance.
         try ( final FileReader fileReader = new FileReader( file );
                 final BufferedReader bufferedReader = new BufferedReader( fileReader ) ) {
-            final boolean fileOpened = loadIntoStringBuilder( bufferedReader, buffer );
+            final boolean fileOpened = loadIntoStringBuilder( bufferedReader, fileContent );
             return fileOpened;
         }
         catch ( final Exception e ) {
@@ -181,13 +186,55 @@ public final class IoUtilities {
     // Generic method to load the contents of an input stream into a string
     // builder.
     public static boolean loadIntoStringBuilder( final InputStream inputStream,
-                                                 final StringBuilder buffer ) {
+                                                 final StringBuilder fileContent ) {
         // Chain a BufferedReader to an InputStreamReader, for better
         // performance.
         try ( final InputStreamReader inputStreamReader = new InputStreamReader( inputStream,
                                                                                  LATIN_1 );
                 final BufferedReader bufferedReader = new BufferedReader( inputStreamReader ) ) {
-            final boolean fileOpened = loadIntoStringBuilder( bufferedReader, buffer );
+            final boolean fileOpened = loadIntoStringBuilder( bufferedReader, fileContent );
+            return fileOpened;
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Generic method to load the contents of a zip file entry of a specified
+    // content type into a string builder.
+    // TODO: Write another version of this method that takes a specific zip
+    // entry name vs. content type, as in some cases there may be more than one
+    // entry of the same type and unlike in this case the name of the zip entry
+    // of interest may be known.
+    // TODO: Find a way to report errors if not a legitimate ZIP file.
+    public static boolean loadFromZipIntoStringBuilder( final File file,
+                                                        final StringBuilder fileContent,
+                                                        final String contentType ) {
+        // NOTE: If the file is not a valid ZIP file (whether or not it has a
+        // ".zip" extension), an exception will be caught, so it is up to the
+        // caller whether to check in advance for file type validity.
+        try ( final ZipFile zipFile = new ZipFile( file ) ) {
+            final Predicate< ZipEntry > isFile = zipEntry -> !zipEntry.isDirectory();
+            final Predicate< ZipEntry > isXml = zipEntry -> FilenameUtils
+                    .isExtension( zipEntry.getName().toLowerCase( Locale.ENGLISH ), contentType );
+
+            final Optional< ? extends ZipEntry > optionalXmlEntry = zipFile.stream()
+                    .filter( isFile.and( isXml ) ).findFirst();
+
+            // There must be a valid entry of the specified content type, in
+            // order for this ZIP file to be considered valid.
+            if ( !optionalXmlEntry.isPresent() ) {
+                return false;
+            }
+
+            // Read in the relevant zip entry as an in-memory stream.
+            boolean fileOpened = false;
+            try ( final InputStream inputStream =
+                                                zipFile.getInputStream( optionalXmlEntry.get() ) ) {
+                fileOpened = loadIntoStringBuilder( inputStream, fileContent );
+            }
+
             return fileOpened;
         }
         catch ( final Exception e ) {
