@@ -66,17 +66,17 @@ public final class FrequencySignalUtilities {
     // Convert magnitude (the square root of the sum of the squares of the real
     // and imaginary parts of a complex value) from linear to decibels.
     public static double convertMagnitudeToDecibels( final double magnitude ) {
-        return 20.0d * Math.log10( magnitude );
+        return 20.0d * StrictMath.log10( magnitude );
     }
 
     // Convert the power ratio from linear to decibels.
     public static double convertPowerRatioToDecibels( final double powerRatio ) {
-        return 10.0d * Math.log10( powerRatio );
+        return 10.0d * StrictMath.log10( powerRatio );
     }
 
     // Get the power ratio (decibels) from the voltage ratio (linear).
     public static double getPowerRatioDb( final double voltageRatio ) {
-        return 20.0d * Math.log10( voltageRatio );
+        return 20.0d * StrictMath.log10( voltageRatio );
     }
 
     // Get the voltage ratio (linear) from the power ratio (decibels).
@@ -85,7 +85,7 @@ public final class FrequencySignalUtilities {
     //
     // https://webaudio.github.io/Audio-EQ-Cookbook/Audio-EQ-Cookbook.txt
     public static double getVoltageRatio( final double powerRatioDb ) {
-        return Math.pow( 10.0d, powerRatioDb / 20.0d );
+        return StrictMath.pow( 10.0d, powerRatioDb / 20.0d );
     }
 
     // Get the peaking voltage ratio (linear) from the power ratio (decibels).
@@ -94,17 +94,17 @@ public final class FrequencySignalUtilities {
     //
     // https://webaudio.github.io/Audio-EQ-Cookbook/Audio-EQ-Cookbook.txt
     public static double getPeakingVoltageRatio( final double powerRatioDb ) {
-        return Math.pow( 10.0d, powerRatioDb / 40.0d );
+        return StrictMath.pow( 10.0d, powerRatioDb / 40.0d );
     }
 
     // Convert the magnitude from decibels to linear.
     public static double convertMagnitudeFromDecibels( final double magnitude ) {
-        return Math.pow( 10.0d, magnitude / 20.0d );
+        return StrictMath.pow( 10.0d, magnitude / 20.0d );
     }
 
     // Convert the power ratio from decibels to linear.
     public static double convertPowerRatioFromDecibels( final double powerRatioDb ) {
-        return Math.pow( 10.0d, powerRatioDb / 10.0d );
+        return StrictMath.pow( 10.0d, powerRatioDb / 10.0d );
     }
 
     // Normalize a frequency phase vector to [-180, +180] range.
@@ -117,15 +117,15 @@ public final class FrequencySignalUtilities {
             double nextPhase = frequencyPhaseData[ binIndex + 1 ];
             double phaseDiff = phase - nextPhase;
 
-            while ( phaseDiff > 180d ) {
-                nextPhase += 360d;
+            while ( phaseDiff > 180.0d ) {
+                nextPhase += 360.0d;
                 phaseDiff = phase - nextPhase;
             }
 
             phaseDiff = nextPhase - phase;
 
-            while ( phaseDiff > 180d ) {
-                nextPhase -= 360d;
+            while ( phaseDiff > 180.0d ) {
+                nextPhase -= 360.0d;
                 phaseDiff = nextPhase - phase;
             }
 
@@ -137,12 +137,12 @@ public final class FrequencySignalUtilities {
     public static double unwrapPhase( final double frequencyPhase ) {
         double unwrappedFrequencyPhase = frequencyPhase;
 
-        while ( unwrappedFrequencyPhase < -180d ) {
-            unwrappedFrequencyPhase += 360d;
+        while ( unwrappedFrequencyPhase < -180.0d ) {
+            unwrappedFrequencyPhase += 360.0d;
         }
 
-        while ( unwrappedFrequencyPhase > 180d ) {
-            unwrappedFrequencyPhase -= 360d;
+        while ( unwrappedFrequencyPhase > 180.0d ) {
+            unwrappedFrequencyPhase -= 360.0d;
         }
 
         return unwrappedFrequencyPhase;
@@ -171,7 +171,7 @@ public final class FrequencySignalUtilities {
             // connect neighboring data points, which is perceived as wrapping.
             if ( ( ( nextPhase > 179.9999d ) && ( nextPhase < 180.0001d ) )
                     || ( ( nextPhase < -179.9999d ) && ( nextPhase > -180.0001d ) ) ) {
-                frequencyPhaseData[ binIndex + 1 ] = ( phase <= 0.0d ) ? -180d : 180d;
+                frequencyPhaseData[ binIndex + 1 ] = ( phase <= 0.0d ) ? -180.0d : 180.0d;
             }
         }
     }
@@ -185,7 +185,7 @@ public final class FrequencySignalUtilities {
         for ( int binIndex = binFirstIndex; binIndex <= binIndexLast; binIndex++ ) {
             final double phase = frequencyPhaseData[ binIndex ];
             if ( ( phase > 179.9999d ) && ( phase < 180.0001d ) ) {
-                frequencyPhaseData[ binIndex ] = -180d;
+                frequencyPhaseData[ binIndex ] = -180.0d;
             }
         }
     }
@@ -219,7 +219,7 @@ public final class FrequencySignalUtilities {
         final double frequency = NumberFormatUtilities.parseDouble( numericString, numberParse );
 
         // Conditionally adjust the frequency to account for thousands.
-        final double frequencyAdjusted = isMetricAbbreviated ? frequency * 1000d : frequency;
+        final double frequencyAdjusted = isMetricAbbreviated ? frequency * 1000.0d : frequency;
 
         return frequencyAdjusted;
     }
@@ -232,10 +232,10 @@ public final class FrequencySignalUtilities {
     public static double getCenterFrequencyByBandNumber( final int bandNumber,
                                                          final double octaveDivider ) {
         final double octaveDividerRatio = octaveDivider / 3.0d;
-        final int bandNumberAt1kHz = ( int ) Math.round( octaveDividerRatio * 30d );
+        final int bandNumberAt1kHz = ( int ) Math.round( octaveDividerRatio * 30.0d );
         final int numberOfFractionalOctaveBandsFrom1kHz = bandNumber - bandNumberAt1kHz;
-        final double centerFrequency = 1000d
-                * Math.pow( 2.0d, numberOfFractionalOctaveBandsFrom1kHz / octaveDivider );
+        final double centerFrequency = 1000.0d
+                * StrictMath.pow( 2.0d, numberOfFractionalOctaveBandsFrom1kHz / octaveDivider );
         return centerFrequency;
     }
 
@@ -302,7 +302,8 @@ public final class FrequencySignalUtilities {
     // frequency.
     public static Complex convertFrequencyToSDomain( final double frequencyHz ) {
         // Get the angular frequency in radians based on the frequency in Hertz.
-        final double angularFrequencyRadians = FrequencySignalUtilities.getAngularFrequencyRadians( frequencyHz );
+        final double angularFrequencyRadians = FrequencySignalUtilities
+                .getAngularFrequencyRadians( frequencyHz );
 
         // Calculate the sinusoidal filter slope as a function of frequency
         // "f": slope = -J*2*PI*f (where J = sqrt(-1)), and return as the omega
