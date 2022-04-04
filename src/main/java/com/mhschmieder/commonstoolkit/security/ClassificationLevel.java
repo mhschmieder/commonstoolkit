@@ -33,30 +33,40 @@ package com.mhschmieder.commonstoolkit.security;
 public enum ClassificationLevel {
     UNCLASSIFIED, CONFIDENTIAL, SECRET, TOP_SECRET;
 
+    public static ClassificationLevel defaultValue() {
+        return UNCLASSIFIED;
+    }
+
     @SuppressWarnings("nls")
-    public static ClassificationLevel abbreviatedValueOf( final String clientType ) {
-        if ( "unclassified".equalsIgnoreCase( clientType ) ) {
+    public static ClassificationLevel fromAbbreviatedString( final String clientTypeAbbreviatedString ) {
+        if ( "unclassified".equalsIgnoreCase( clientTypeAbbreviatedString ) ) {
             return UNCLASSIFIED;
         }
 
-        if ( "confidential".equalsIgnoreCase( clientType ) ) {
+        if ( "confidential".equalsIgnoreCase( clientTypeAbbreviatedString ) ) {
             return CONFIDENTIAL;
         }
 
-        if ( "secret".equalsIgnoreCase( clientType ) ) {
+        if ( "secret".equalsIgnoreCase( clientTypeAbbreviatedString ) ) {
             return SECRET;
         }
 
-        if ( ( "top secret".equalsIgnoreCase( clientType )
-                || "top_secret".equalsIgnoreCase( clientType ) ) ) {
+        if ( ( "top secret".equalsIgnoreCase( clientTypeAbbreviatedString )
+                || "top_secret".equalsIgnoreCase( clientTypeAbbreviatedString ) ) ) {
             return TOP_SECRET;
         }
 
         return defaultValue();
     }
 
-    public static ClassificationLevel defaultValue() {
-        return UNCLASSIFIED;
+    @Override
+    public final String toString() {
+        // NOTE: As of Java 6, enums include the underscore in their string
+        // representation, which is a problem for backward-compatibility with
+        // XML parsers. Thus, we need to strip the underscores and replace them
+        // with spaces, to behave like Java 5.
+        final String value = super.toString();
+        return value.replaceAll( "_", " " ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public final String toAbbreviatedString() {
@@ -91,16 +101,6 @@ public enum ClassificationLevel {
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
-    }
-
-    @Override
-    public final String toString() {
-        // NOTE: As of Java 6, enums include the underscore in their string
-        // representation, which is a problem for backward-compatibility with
-        // XML parsers. Thus, we need to strip the underscores and replace them
-        // with spaces, to behave like Java 5.
-        final String value = super.toString();
-        return value.replaceAll( "_", " " ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

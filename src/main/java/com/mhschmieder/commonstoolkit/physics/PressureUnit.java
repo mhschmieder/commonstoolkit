@@ -35,41 +35,49 @@ import java.util.Locale;
 public enum PressureUnit {
     KILOPASCALS, PASCALS, MILLIBARS, ATMOSPHERES;
 
-    @SuppressWarnings("nls")
-    public static PressureUnit abbreviatedValueOf( final String abbreviatedPressureUnit ) {
-        // NOTE: These abbreviated values account for the standard of leaving a
-        // space between the numeric value and its associated unit.
-        if ( " kPa".equalsIgnoreCase( abbreviatedPressureUnit ) ) {
-            return KILOPASCALS;
-        }
-
-        if ( " Pa".equalsIgnoreCase( abbreviatedPressureUnit ) ) {
-            return PASCALS;
-        }
-
-        if ( " mb".equalsIgnoreCase( abbreviatedPressureUnit ) ) {
-            return MILLIBARS;
-        }
-
-        if ( " atm".equalsIgnoreCase( abbreviatedPressureUnit ) ) {
-            return ATMOSPHERES;
-        }
-
-        return defaultValue();
-    }
-
-    public static PressureUnit canonicalValueOf( final String canonicalPressureUnit ) {
-        return ( canonicalPressureUnit != null )
-            ? valueOf( canonicalPressureUnit.toUpperCase( Locale.ENGLISH ) )
-            : defaultValue();
-    }
-
     public static PressureUnit defaultValue() {
         return PASCALS;
     }
 
     public static PressureUnit defaultValueForAir() {
         return KILOPASCALS;
+    }
+
+    public static PressureUnit fromCanonicalString( final String pressureUnitCanonicalString ) {
+        return ( pressureUnitCanonicalString != null )
+            ? valueOf( pressureUnitCanonicalString.toUpperCase( Locale.ENGLISH ) )
+            : defaultValue();
+    }
+
+    @SuppressWarnings("nls")
+    public static PressureUnit fromAbbreviatedString( final String pressureUnitAbbreviatedString ) {
+        // NOTE: These abbreviated values account for the standard of leaving a
+        // space between the numeric value and its associated unit.
+        if ( " kPa".equalsIgnoreCase( pressureUnitAbbreviatedString ) ) {
+            return KILOPASCALS;
+        }
+
+        if ( " Pa".equalsIgnoreCase( pressureUnitAbbreviatedString ) ) {
+            return PASCALS;
+        }
+
+        if ( " mb".equalsIgnoreCase( pressureUnitAbbreviatedString ) ) {
+            return MILLIBARS;
+        }
+
+        if ( " atm".equalsIgnoreCase( pressureUnitAbbreviatedString ) ) {
+            return ATMOSPHERES;
+        }
+
+        return defaultValue();
+    }
+
+    public final String toCanonicalString() {
+        return toString().toLowerCase( Locale.ENGLISH );
+    }
+
+    public final String toPresentationString() {
+        return toAbbreviatedString();
     }
 
     public final String toAbbreviatedString() {
@@ -86,14 +94,6 @@ public enum PressureUnit {
             final String errMessage = "Unexpected PressureUnit " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
-    }
-
-    public final String toCanonicalString() {
-        return toString().toLowerCase( Locale.ENGLISH );
-    }
-
-    public final String toPresentationString() {
-        return toAbbreviatedString();
     }
 
 }

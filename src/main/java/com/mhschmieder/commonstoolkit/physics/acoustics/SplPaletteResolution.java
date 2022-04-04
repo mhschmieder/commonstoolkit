@@ -51,9 +51,13 @@ public enum SplPaletteResolution {
     // number vs. a letter.
     RES_256, RES_64, RES_1DB, RES_2DB, RES_3DB;
 
+    public static final SplPaletteResolution defaultValue() {
+        return RES_64;
+    }
+
     @SuppressWarnings("nls")
-    public static SplPaletteResolution abbreviatedValueOf( final String splPaletteResolution ) {
-        switch ( splPaletteResolution ) {
+    public static SplPaletteResolution fromAbbreviatedString( final String splPaletteResolutionAbbreviatedString ) {
+        switch ( splPaletteResolutionAbbreviatedString ) {
         case "256":
             return RES_256;
         case "64":
@@ -66,27 +70,6 @@ public enum SplPaletteResolution {
             return RES_3DB;
         default:
             return defaultValue();
-        }
-    }
-
-    public static final SplPaletteResolution defaultValue() {
-        return RES_64;
-    }
-
-    public final int getNumberOfPaletteColors( final int splRangeDb ) {
-        switch ( this ) {
-        case RES_256:
-            return 256;
-        case RES_64:
-            return 64;
-        case RES_1DB:
-            return splRangeDb;
-        case RES_2DB:
-            return ( int ) Math.ceil( MathConstants.ONE_HALF * splRangeDb );
-        case RES_3DB:
-            return ( int ) Math.ceil( MathConstants.ONE_THIRD * splRangeDb );
-        default:
-            return 64;
         }
     }
 
@@ -105,6 +88,23 @@ public enum SplPaletteResolution {
             return "3db";
         default:
             return "64";
+        }
+    }
+
+    public final int getNumberOfPaletteColors( final int splRangeDb ) {
+        switch ( this ) {
+        case RES_256:
+            return 256;
+        case RES_64:
+            return 64;
+        case RES_1DB:
+            return splRangeDb;
+        case RES_2DB:
+            return ( int ) Math.ceil( MathConstants.ONE_HALF * splRangeDb );
+        case RES_3DB:
+            return ( int ) Math.ceil( MathConstants.ONE_THIRD * splRangeDb );
+        default:
+            return 64;
         }
     }
 

@@ -35,29 +35,37 @@ import java.util.Locale;
 public enum HumidityUnit {
     RELATIVE, MOLAR;
 
+    public static HumidityUnit defaultValue() {
+        return RELATIVE;
+    }
+
+    public static HumidityUnit fromCanonicalString( final String humidityUnitCanonicalString ) {
+        return ( humidityUnitCanonicalString != null )
+            ? valueOf( humidityUnitCanonicalString.toUpperCase( Locale.ENGLISH ) )
+            : defaultValue();
+    }
+
     @SuppressWarnings("nls")
-    public static HumidityUnit abbreviatedValueOf( final String abbreviatedHumidityUnit ) {
-        if ( "%".equalsIgnoreCase( abbreviatedHumidityUnit ) ) {
+    public static HumidityUnit fromAbbreviatedString( final String humidityUnitAbbreviatedString ) {
+        if ( "%".equalsIgnoreCase( humidityUnitAbbreviatedString ) ) {
             return RELATIVE;
         }
 
         // NOTE: This abbreviated value accounts for the standard of leaving a
         // space between the numeric value and its associated unit.
-        if ( " moles".equalsIgnoreCase( abbreviatedHumidityUnit ) ) {
+        if ( " moles".equalsIgnoreCase( humidityUnitAbbreviatedString ) ) {
             return MOLAR;
         }
 
         return defaultValue();
     }
 
-    public static HumidityUnit canonicalValueOf( final String canonicalHumidityUnit ) {
-        return ( canonicalHumidityUnit != null )
-            ? valueOf( canonicalHumidityUnit.toUpperCase( Locale.ENGLISH ) )
-            : defaultValue();
+    public final String toCanonicalString() {
+        return toString().toLowerCase( Locale.ENGLISH );
     }
 
-    public static HumidityUnit defaultValue() {
-        return RELATIVE;
+    public final String toPresentationString() {
+        return toAbbreviatedString();
     }
 
     public final String toAbbreviatedString() {
@@ -70,14 +78,6 @@ public enum HumidityUnit {
             final String errMessage = "Unexpected HumidityUnit " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
-    }
-
-    public final String toCanonicalString() {
-        return toString().toLowerCase( Locale.ENGLISH );
-    }
-
-    public final String toPresentationString() {
-        return toAbbreviatedString();
     }
 
 }

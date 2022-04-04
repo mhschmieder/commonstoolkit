@@ -35,14 +35,14 @@ import java.util.Locale;
 public enum Altitude {
     LOW, MEDIUM, HIGH;
 
-    public static Altitude canonicalValueOf( final String canonicalAltitude ) {
-        return ( canonicalAltitude != null )
-            ? valueOf( canonicalAltitude.toUpperCase( Locale.ENGLISH ) )
-            : defaultValue();
-    }
-
     public static Altitude defaultValue() {
         return LOW;
+    }
+
+    public static Altitude fromCanonicalString( final String altitudeCanonicalString ) {
+        return ( altitudeCanonicalString != null )
+            ? valueOf( altitudeCanonicalString.toUpperCase( Locale.ENGLISH ) )
+            : defaultValue();
     }
 
     public final String toCanonicalString() {

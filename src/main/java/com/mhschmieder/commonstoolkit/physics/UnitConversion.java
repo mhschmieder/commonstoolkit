@@ -70,9 +70,11 @@ public final class UnitConversion {
 
     public static final double INCHES_TO_METERS_RATIO           = 1.0d / METERS_TO_INCHES_RATIO;
 
-    public static final double INCHES_TO_CENTIMETERS_RATIO      = 1.0d / CENTIMETERS_TO_INCHES_RATIO;
+    public static final double INCHES_TO_CENTIMETERS_RATIO      =
+                                                           1.0d / CENTIMETERS_TO_INCHES_RATIO;
 
-    public static final double INCHES_TO_MILLIMETERS_RATIO      = 1.0d / MILLIMETERS_TO_INCHES_RATIO;
+    public static final double INCHES_TO_MILLIMETERS_RATIO      =
+                                                           1.0d / MILLIMETERS_TO_INCHES_RATIO;
 
     public static final double FEET_TO_METERS_RATIO             =
                                                     FEET_TO_INCHES_RATIO * INCHES_TO_METERS_RATIO;
@@ -112,7 +114,8 @@ public final class UnitConversion {
     public static final double GRAMS_TO_POUNDS_RATIO            =
                                                      0.001d * KILOGRAMS_TO_POUNDS_RATIO;
 
-    public static final double POUNDS_TO_METRIC_TONS_RATIO      = 1.0d / METRIC_TONS_TO_POUNDS_RATIO;
+    public static final double POUNDS_TO_METRIC_TONS_RATIO      =
+                                                           1.0d / METRIC_TONS_TO_POUNDS_RATIO;
 
     public static final double POUNDS_TO_KILOGRAMS_RATIO        = 1.0d / KILOGRAMS_TO_POUNDS_RATIO;
 
@@ -127,7 +130,8 @@ public final class UnitConversion {
     public static final double GRAMS_TO_OUNCES_RATIO            =
                                                      0.001d * KILOGRAMS_TO_OUNCES_RATIO;
 
-    public static final double OUNCES_TO_METRIC_TONS_RATIO      = 1.0d / METRIC_TONS_TO_OUNCES_RATIO;
+    public static final double OUNCES_TO_METRIC_TONS_RATIO      =
+                                                           1.0d / METRIC_TONS_TO_OUNCES_RATIO;
 
     public static final double OUNCES_TO_KILOGRAMS_RATIO        = 1.0d / KILOGRAMS_TO_OUNCES_RATIO;
 
@@ -137,7 +141,8 @@ public final class UnitConversion {
 
     public static final double KILOPASCALS_TO_PASCALS_RATIO     = 1000d;
 
-    public static final double PASCALS_TO_KILOPASCALS_RATIO     = 1.0d / KILOPASCALS_TO_PASCALS_RATIO;
+    public static final double PASCALS_TO_KILOPASCALS_RATIO     =
+                                                            1.0d / KILOPASCALS_TO_PASCALS_RATIO;
 
     public static final double MILLIBARS_TO_KILOPASCALS_RATIO   =
                                                               1.0d / KILOPASCALS_TO_MILLIBARS_RATIO;
@@ -155,7 +160,8 @@ public final class UnitConversion {
     public static final double ATMOSPHERES_TO_MILLIBARS_RATIO   = ATMOSPHERES_TO_PASCALS_RATIO
             * PASCALS_TO_MILLIBARS_RATIO;
 
-    public static final double PASCALS_TO_ATMOSPHERES_RATIO     = 1.0d / ATMOSPHERES_TO_PASCALS_RATIO;
+    public static final double PASCALS_TO_ATMOSPHERES_RATIO     =
+                                                            1.0d / ATMOSPHERES_TO_PASCALS_RATIO;
 
     public static final double KILOPASCALS_TO_ATMOSPHERES_RATIO = 1.0d
             / ATMOSPHERES_TO_KILOPASCALS_RATIO;
@@ -165,7 +171,8 @@ public final class UnitConversion {
 
     public static final double FAHRENHEIT_TO_CELSIUS_RATIO      = 9.0d / 5.0d;
 
-    public static final double CELSIUS_TO_FAHRENHEIT_RATIO      = 1.0d / FAHRENHEIT_TO_CELSIUS_RATIO;
+    public static final double CELSIUS_TO_FAHRENHEIT_RATIO      =
+                                                           1.0d / FAHRENHEIT_TO_CELSIUS_RATIO;
 
     public static final double CELSIUS_TO_FAHRENHEIT_ADJUSTMENT = 32d;
 
@@ -173,7 +180,8 @@ public final class UnitConversion {
 
     // Conversion ratio for pound-force to newton, as a unit of force.
     public static final double POUND_FORCE_TO_NEWTONS_RATIO     = 4.4482216152605d;
-    public static final double NEWTONS_TO_POUND_FORCE_RATIO     = 1.0d / POUND_FORCE_TO_NEWTONS_RATIO;
+    public static final double NEWTONS_TO_POUND_FORCE_RATIO     =
+                                                            1.0d / POUND_FORCE_TO_NEWTONS_RATIO;
 
     // Conversion ratios between mass and weight (measured in kilograms).
     public static final double MASS_TO_WEIGHT_RATIO             =

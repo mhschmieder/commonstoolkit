@@ -41,6 +41,19 @@ public enum Smoothing {
         return NARROW_BAND;
     }
 
+    public static final Smoothing fromOctaveDivider( final int octaveDivider ) {
+        switch ( octaveDivider ) {
+        case 0:
+            return NARROW_BAND;
+        case 6:
+            return SIXTH_OCTAVE_BAND;
+        case 3:
+            return THIRD_OCTAVE_BAND;
+        default:
+            return defaultValue();
+        }
+    }
+
     public static final int toOctaveDivider( final Smoothing smoothing ) {
         switch ( smoothing ) {
         case NARROW_BAND:
@@ -56,13 +69,13 @@ public enum Smoothing {
         }
     }
 
-    public static final Smoothing fromOctaveDivider( final int octaveDivider ) {
-        switch ( octaveDivider ) {
-        case 0:
+    public static final Smoothing fromPresentationString( final String smoothingPresentationString ) {
+        switch ( smoothingPresentationString ) {
+        case "No Smoothing": //$NON-NLS-1$
             return NARROW_BAND;
-        case 6:
+        case "1/6 Octave Smoothing": //$NON-NLS-1$ :
             return SIXTH_OCTAVE_BAND;
-        case 3:
+        case "1/3 Octave Smoothing": //$NON-NLS-1$
             return THIRD_OCTAVE_BAND;
         default:
             return defaultValue();
@@ -81,19 +94,6 @@ public enum Smoothing {
             final String errMessage = "Unexpected " + smoothing.getClass().getSimpleName() + " " //$NON-NLS-1$ //$NON-NLS-2$
                     + smoothing;
             throw new IllegalArgumentException( errMessage );
-        }
-    }
-
-    public static final Smoothing presentationValueOf( final String smoothing ) {
-        switch ( smoothing ) {
-        case "No Smoothing": //$NON-NLS-1$
-            return NARROW_BAND;
-        case "1/6 Octave Smoothing": //$NON-NLS-1$ :
-            return SIXTH_OCTAVE_BAND;
-        case "1/3 Octave Smoothing": //$NON-NLS-1$
-            return THIRD_OCTAVE_BAND;
-        default:
-            return defaultValue();
         }
     }
 

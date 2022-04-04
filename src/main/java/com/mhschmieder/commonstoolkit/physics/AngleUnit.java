@@ -37,29 +37,37 @@ import com.mhschmieder.commonstoolkit.text.StringUtilities;
 public enum AngleUnit {
     DEGREES, RADIANS;
 
+    public static AngleUnit defaultValue() {
+        return DEGREES;
+    }
+
+    public static AngleUnit fromCanonicalString( final String angleUnitCanonicalString ) {
+        return ( angleUnitCanonicalString != null )
+            ? valueOf( angleUnitCanonicalString.toUpperCase( Locale.ENGLISH ) )
+            : defaultValue();
+    }
+
     @SuppressWarnings("nls")
-    public static AngleUnit abbreviatedValueOf( final String abbreviatedAngleUnit ) {
-        if ( StringUtilities.DEGREES_SYMBOL.equalsIgnoreCase( abbreviatedAngleUnit ) ) {
+    public static AngleUnit fromAbbreviatedString( final String angleUnitAbbreviatedString ) {
+        if ( StringUtilities.DEGREES_SYMBOL.equalsIgnoreCase( angleUnitAbbreviatedString ) ) {
             return DEGREES;
         }
 
         // NOTE: This abbreviated value accounts for the standard of leaving a
         // space between the numeric value and its associated unit.
-        if ( " rad".equalsIgnoreCase( abbreviatedAngleUnit ) ) {
+        if ( " rad".equalsIgnoreCase( angleUnitAbbreviatedString ) ) {
             return RADIANS;
         }
 
         return defaultValue();
     }
 
-    public static AngleUnit canonicalValueOf( final String canonicalAngleUnit ) {
-        return ( canonicalAngleUnit != null )
-            ? valueOf( canonicalAngleUnit.toUpperCase( Locale.ENGLISH ) )
-            : defaultValue();
+    public final String toCanonicalString() {
+        return toString().toLowerCase( Locale.ENGLISH );
     }
 
-    public static AngleUnit defaultValue() {
-        return DEGREES;
+    public final String toPresentationString() {
+        return toAbbreviatedString();
     }
 
     public final String toAbbreviatedString() {
@@ -72,14 +80,6 @@ public enum AngleUnit {
             final String errMessage = "Unexpected AngleUnit " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
-    }
-
-    public final String toCanonicalString() {
-        return toString().toLowerCase( Locale.ENGLISH );
-    }
-
-    public final String toPresentationString() {
-        return toAbbreviatedString();
     }
 
 }

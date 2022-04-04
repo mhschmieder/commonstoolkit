@@ -37,28 +37,6 @@ import com.mhschmieder.commonstoolkit.text.StringUtilities;
 public enum TemperatureUnit {
     KELVIN, CELSIUS, FAHRENHEIT;
 
-    public static TemperatureUnit abbreviatedValueOf( final String abbreviatedTemperatureUnit ) {
-        if ( StringUtilities.DEGREES_KELVIN.equalsIgnoreCase( abbreviatedTemperatureUnit ) ) {
-            return KELVIN;
-        }
-
-        if ( StringUtilities.DEGREES_CELSIUS.equalsIgnoreCase( abbreviatedTemperatureUnit ) ) {
-            return CELSIUS;
-        }
-
-        if ( StringUtilities.DEGREES_FAHRENHEIT.equalsIgnoreCase( abbreviatedTemperatureUnit ) ) {
-            return FAHRENHEIT;
-        }
-
-        return defaultValue();
-    }
-
-    public static TemperatureUnit canonicalValueOf( final String canonicalTemperatureUnit ) {
-        return ( canonicalTemperatureUnit != null )
-            ? valueOf( canonicalTemperatureUnit.toUpperCase( Locale.ENGLISH ) )
-            : null;
-    }
-
     public static TemperatureUnit defaultValue() {
         return KELVIN;
     }
@@ -67,18 +45,28 @@ public enum TemperatureUnit {
         return CELSIUS;
     }
 
-    public final String toAbbreviatedString() {
-        switch ( this ) {
-        case KELVIN:
-            return StringUtilities.DEGREES_KELVIN;
-        case CELSIUS:
-            return StringUtilities.DEGREES_CELSIUS;
-        case FAHRENHEIT:
-            return StringUtilities.DEGREES_FAHRENHEIT;
-        default:
-            final String errMessage = "Unexpected TemperatureUnit " + this; //$NON-NLS-1$
-            throw new IllegalArgumentException( errMessage );
+    public static TemperatureUnit fromCanonicalString( final String temperatureUnitCanonicalString ) {
+        return ( temperatureUnitCanonicalString != null )
+            ? valueOf( temperatureUnitCanonicalString.toUpperCase( Locale.ENGLISH ) )
+            : null;
+    }
+
+    public static TemperatureUnit fromAbbreviatedString( final String temperatureUnitAbbreviatedString ) {
+        if ( StringUtilities.DEGREES_KELVIN.equalsIgnoreCase( temperatureUnitAbbreviatedString ) ) {
+            return KELVIN;
         }
+
+        if ( StringUtilities.DEGREES_CELSIUS
+                .equalsIgnoreCase( temperatureUnitAbbreviatedString ) ) {
+            return CELSIUS;
+        }
+
+        if ( StringUtilities.DEGREES_FAHRENHEIT
+                .equalsIgnoreCase( temperatureUnitAbbreviatedString ) ) {
+            return FAHRENHEIT;
+        }
+
+        return defaultValue();
     }
 
     public final String toCanonicalString() {
@@ -94,6 +82,20 @@ public enum TemperatureUnit {
 
     public final String toPresentationString() {
         return toAbbreviatedString();
+    }
+
+    public final String toAbbreviatedString() {
+        switch ( this ) {
+        case KELVIN:
+            return StringUtilities.DEGREES_KELVIN;
+        case CELSIUS:
+            return StringUtilities.DEGREES_CELSIUS;
+        case FAHRENHEIT:
+            return StringUtilities.DEGREES_FAHRENHEIT;
+        default:
+            final String errMessage = "Unexpected TemperatureUnit " + this; //$NON-NLS-1$
+            throw new IllegalArgumentException( errMessage );
+        }
     }
 
 }

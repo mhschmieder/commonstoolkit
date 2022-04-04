@@ -35,41 +35,60 @@ import java.util.Locale;
 public enum WeightUnit {
     METRIC_TONS, KILOGRAMS, GRAMS, POUNDS, OUNCES;
 
+    public static WeightUnit defaultValue() {
+        return KILOGRAMS;
+    }
+
+    public static WeightUnit fromCanonicalString( final String weightUnitCanonicalString ) {
+        return ( weightUnitCanonicalString != null )
+            ? valueOf( weightUnitCanonicalString.toUpperCase( Locale.ENGLISH ).replaceAll( " ", //$NON-NLS-1$
+                                                                                           "_" ) ) //$NON-NLS-1$
+            : defaultValue();
+    }
+
     @SuppressWarnings("nls")
-    public static WeightUnit abbreviatedValueOf( final String abbreviatedWeightUnit ) {
+    public static WeightUnit fromAbbreviatedString( final String weightUnitAbbreviatedString ) {
         // NOTE: These abbreviated values account for the standard of leaving a
         // space between the numeric value and its associated unit.
-        if ( " mt".equalsIgnoreCase( abbreviatedWeightUnit ) ) {
+        if ( " mt".equalsIgnoreCase( weightUnitAbbreviatedString ) ) {
             return METRIC_TONS;
         }
 
-        if ( " kg".equalsIgnoreCase( abbreviatedWeightUnit ) ) {
+        if ( " kg".equalsIgnoreCase( weightUnitAbbreviatedString ) ) {
             return KILOGRAMS;
         }
 
-        if ( " g".equalsIgnoreCase( abbreviatedWeightUnit ) ) {
+        if ( " g".equalsIgnoreCase( weightUnitAbbreviatedString ) ) {
             return GRAMS;
         }
 
-        if ( " lbs".equalsIgnoreCase( abbreviatedWeightUnit ) ) {
+        if ( " lbs".equalsIgnoreCase( weightUnitAbbreviatedString ) ) {
             return POUNDS;
         }
 
-        if ( " oz".equalsIgnoreCase( abbreviatedWeightUnit ) ) {
+        if ( " oz".equalsIgnoreCase( weightUnitAbbreviatedString ) ) {
             return OUNCES;
         }
 
         return defaultValue();
     }
 
-    public static WeightUnit canonicalValueOf( final String canonicalWeightUnit ) {
-        return ( canonicalWeightUnit != null )
-            ? valueOf( canonicalWeightUnit.toUpperCase( Locale.ENGLISH ).replaceAll( " ", "_" ) ) //$NON-NLS-1$ //$NON-NLS-2$
-            : defaultValue();
+    @Override
+    public final String toString() {
+        // NOTE: As of Java 6, enums include the underscore in their string
+        // representation, which is a problem for backward-compatibility with
+        // XML parsers. Thus, we need to strip the underscores and replace them
+        // with spaces, to behave like Java 5.
+        final String value = super.toString();
+        return value.replaceAll( "_", " " ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public static WeightUnit defaultValue() {
-        return KILOGRAMS;
+    public final String toCanonicalString() {
+        return toString().toLowerCase( Locale.ENGLISH );
+    }
+
+    public final String toPresentationString() {
+        return toAbbreviatedString();
     }
 
     public final String toAbbreviatedString() {
@@ -88,24 +107,6 @@ public enum WeightUnit {
             final String errMessage = "Unexpected WeightUnit " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
-    }
-
-    public final String toCanonicalString() {
-        return toString().toLowerCase( Locale.ENGLISH );
-    }
-
-    public String toPresentationString() {
-        return toAbbreviatedString();
-    }
-
-    @Override
-    public final String toString() {
-        // NOTE: As of Java 6, enums include the underscore in their string
-        // representation, which is a problem for backward-compatibility with
-        // XML parsers. Thus, we need to strip the underscores and replace them
-        // with spaces, to behave like Java 5.
-        final String value = super.toString();
-        return value.replaceAll( "_", " " ); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

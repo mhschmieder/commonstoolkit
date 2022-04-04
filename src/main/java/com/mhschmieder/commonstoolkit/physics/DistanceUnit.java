@@ -41,49 +41,57 @@ import java.util.Locale;
 public enum DistanceUnit {
     UNITLESS, METERS, CENTIMETERS, MILLIMETERS, YARDS, FEET, INCHES;
 
+    public static DistanceUnit defaultValue() {
+        return METERS;
+    }
+
+    public static DistanceUnit fromCanonicalString( final String distanceUnitCanonicalString ) {
+        return ( distanceUnitCanonicalString != null )
+            ? valueOf( distanceUnitCanonicalString.toUpperCase( Locale.ENGLISH ) )
+            : defaultValue();
+    }
+
     @SuppressWarnings("nls")
-    public static DistanceUnit abbreviatedValueOf( final String abbreviatedDistanceUnit ) {
+    public static DistanceUnit fromAbbreviatedString( final String distanceUnitAbbreviatedString ) {
         // NOTE: These abbreviated values account for the standard of leaving a
         // space between the numeric value and its associated unit.
-        if ( " m".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+        if ( " m".equalsIgnoreCase( distanceUnitAbbreviatedString ) ) {
             return METERS;
         }
 
-        if ( " cm".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+        if ( " cm".equalsIgnoreCase( distanceUnitAbbreviatedString ) ) {
             return CENTIMETERS;
         }
 
-        if ( " mm".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+        if ( " mm".equalsIgnoreCase( distanceUnitAbbreviatedString ) ) {
             return MILLIMETERS;
         }
 
-        if ( " yd".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+        if ( " yd".equalsIgnoreCase( distanceUnitAbbreviatedString ) ) {
             return YARDS;
         }
 
-        if ( " ft".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+        if ( " ft".equalsIgnoreCase( distanceUnitAbbreviatedString ) ) {
             return FEET;
         }
 
-        if ( " in".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+        if ( " in".equalsIgnoreCase( distanceUnitAbbreviatedString ) ) {
             return INCHES;
         }
 
-        if ( "".equalsIgnoreCase( abbreviatedDistanceUnit ) ) {
+        if ( "".equalsIgnoreCase( distanceUnitAbbreviatedString ) ) {
             return UNITLESS;
         }
 
         return UNITLESS;
     }
 
-    public static DistanceUnit canonicalValueOf( final String canonicalDistanceUnit ) {
-        return ( canonicalDistanceUnit != null )
-            ? valueOf( canonicalDistanceUnit.toUpperCase( Locale.ENGLISH ) )
-            : defaultValue();
+    public final String toCanonicalString() {
+        return toString().toLowerCase( Locale.ENGLISH );
     }
 
-    public static DistanceUnit defaultValue() {
-        return METERS;
+    public final String toPresentationString() {
+        return toAbbreviatedString();
     }
 
     @SuppressWarnings("nls")
@@ -107,14 +115,6 @@ public enum DistanceUnit {
             final String errMessage = "Unexpected DistanceUnit " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
-    }
-
-    public final String toCanonicalString() {
-        return toString().toLowerCase( Locale.ENGLISH );
-    }
-
-    public final String toPresentationString() {
-        return toAbbreviatedString();
     }
 
 }

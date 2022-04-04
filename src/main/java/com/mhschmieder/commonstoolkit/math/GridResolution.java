@@ -43,14 +43,14 @@ import java.util.Locale;
 public enum GridResolution {
     OFF, COARSE, MEDIUM, FINE;
 
-    public static final GridResolution canonicalValueOf( final String canonicalGridResolution ) {
-        return ( canonicalGridResolution != null )
-            ? valueOf( canonicalGridResolution.toUpperCase( Locale.ENGLISH ) )
-            : defaultValue();
-    }
-
     public static final GridResolution defaultValue() {
         return MEDIUM;
+    }
+
+    public static final GridResolution fromCanonicalString( final String gridResolutionCanonicalString ) {
+        return ( gridResolutionCanonicalString != null )
+            ? valueOf( gridResolutionCanonicalString.toUpperCase( Locale.ENGLISH ) )
+            : defaultValue();
     }
 
     public final String toCanonicalString() {

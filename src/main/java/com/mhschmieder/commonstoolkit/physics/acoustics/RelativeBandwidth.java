@@ -87,30 +87,31 @@ public enum RelativeBandwidth {
     }
 
     /**
-     * Returns an abbreviated value (string) for the Relative Bandwidth, whether
-     * for saving in a file or presenting on the screen in a GUI context.
+     * Returns the Relative Bandwidth corresponding to a provided presentation
+     * value (string).
      * 
-     * @param relativeBandwidth
-     *            The Relative Bandwidth to convert to an abbreviated value
-     * @return An abbreviated value (string) for the provided Relative Bandwidth
+     * @param relativeBandwidthPresentationString
+     *            The Relative Bandwidth presentation value to convert
+     * @return The Relative bandwidth corresponding to a provided presentation
+     *         value (string)
      */
     @SuppressWarnings("nls")
-    public static String toAbbreviatedString( final RelativeBandwidth relativeBandwidth ) {
-        switch ( relativeBandwidth ) {
-        case ONE_OCTAVE:
-            return "1";
-        case THIRD_OCTAVE:
-            return "1/3";
-        case SIXTH_OCTAVE:
-            return "1/6";
-        case TWELTH_OCTAVE:
-            return "1/12";
-        case TWENTYFOURTH_OCTAVE:
-            return "1/24";
-        case FORTYEIGHTH_OCTAVE:
-            return "1/48";
+    public static RelativeBandwidth fromPresentationString( final String relativeBandwidthPresentationString ) {
+        switch ( relativeBandwidthPresentationString ) {
+        case "1 octave":
+            return ONE_OCTAVE;
+        case "1/3 octave":
+            return THIRD_OCTAVE;
+        case "1/6 octave":
+            return SIXTH_OCTAVE;
+        case "1/12 octave":
+            return TWELTH_OCTAVE;
+        case "1/24 octave":
+            return TWENTYFOURTH_OCTAVE;
+        case "1/48 octave":
+            return FORTYEIGHTH_OCTAVE;
         default:
-            return defaultValue().toAbbreviatedString();
+            return defaultValue();
         }
     }
 
@@ -142,31 +143,30 @@ public enum RelativeBandwidth {
     }
 
     /**
-     * Returns the Relative Bandwidth corresponding to a provided presentation
-     * value (string).
+     * Returns an abbreviated value (string) for the Relative Bandwidth, whether
+     * for saving in a file or presenting on the screen in a GUI context.
      * 
-     * @param relativeBandwidthPresentationString
-     *            The Relative Bandwidth presentation value to convert
-     * @return The Relative bandwidth corresponding to a provided presentation
-     *         value (string)
+     * @param relativeBandwidth
+     *            The Relative Bandwidth to convert to an abbreviated value
+     * @return An abbreviated value (string) for the provided Relative Bandwidth
      */
     @SuppressWarnings("nls")
-    public static RelativeBandwidth fromPresentationString( final String relativeBandwidthPresentationString ) {
-        switch ( relativeBandwidthPresentationString ) {
-        case "1 octave":
-            return ONE_OCTAVE;
-        case "1/3 octave":
-            return THIRD_OCTAVE;
-        case "1/6 octave":
-            return SIXTH_OCTAVE;
-        case "1/12 octave":
-            return TWELTH_OCTAVE;
-        case "1/24 octave":
-            return TWENTYFOURTH_OCTAVE;
-        case "1/48 octave":
-            return FORTYEIGHTH_OCTAVE;
+    public static String toAbbreviatedString( final RelativeBandwidth relativeBandwidth ) {
+        switch ( relativeBandwidth ) {
+        case ONE_OCTAVE:
+            return "1";
+        case THIRD_OCTAVE:
+            return "1/3";
+        case SIXTH_OCTAVE:
+            return "1/6";
+        case TWELTH_OCTAVE:
+            return "1/12";
+        case TWENTYFOURTH_OCTAVE:
+            return "1/24";
+        case FORTYEIGHTH_OCTAVE:
+            return "1/48";
         default:
-            return defaultValue();
+            return defaultValue().toAbbreviatedString();
         }
     }
 
@@ -183,16 +183,6 @@ public enum RelativeBandwidth {
     }
 
     /**
-     * Returns an abbreviated value (string) for the Relative Bandwidth, whether
-     * for saving in a file or presenting on the screen in a GUI context.
-     * 
-     * @return An abbreviated value (string) for this Relative Bandwidth
-     */
-    public final String toAbbreviatedString() {
-        return toAbbreviatedString( this );
-    }
-
-    /**
      * Returns a presentation value (string) for the Relative Bandwidth, whether
      * for saving in a file or presenting on the screen in a GUI context.
      * 
@@ -200,6 +190,16 @@ public enum RelativeBandwidth {
      */
     public final String toPresentationString() {
         return toPresentationString( this );
+    }
+
+    /**
+     * Returns an abbreviated value (string) for the Relative Bandwidth, whether
+     * for saving in a file or presenting on the screen in a GUI context.
+     * 
+     * @return An abbreviated value (string) for this Relative Bandwidth
+     */
+    public final String toAbbreviatedString() {
+        return toAbbreviatedString( this );
     }
 
 }
