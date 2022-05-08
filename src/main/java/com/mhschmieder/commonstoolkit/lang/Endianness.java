@@ -34,7 +34,7 @@ package com.mhschmieder.commonstoolkit.lang;
  * NOTE: This was originally written as a tool to use with another toolkit
  * that was produced in Spain, so I wrote it in Spanish to be consistent.
  * TODO: Break out the enum or make it and this class a higher level.
- * TODO: Alternatively, replace with Endian utilities in the Apache Commons.
+ * TODO: Alternatively, replace with Endian utilities in Apache Commons I/O.
  */
 public class Endianness {
 
