@@ -75,7 +75,7 @@ public class BitPackUtilities {
      * @throws IllegalArgumentException
      *             If the buffer is smaller than the stated number of bits
      */
-    public static char[] bitPack( char[] packedBuffer,
+    public static byte[] bitPack( byte[] packedBuffer,
                                   int startBitIndex,
                                   int numberOfPackedBits,
                                   long value )
@@ -91,9 +91,9 @@ public class BitPackUtilities {
         // size to contain the stated number of packed bits.
         // TODO: Verify that the resulting buffer is large enough when the
         // number of bits is not precisely divisible by 16.
-        final char[] packedBits = ( packedBuffer != null )
+        final byte[] packedBits = ( packedBuffer != null )
             ? packedBuffer
-            : new char[ numberOfPackedBits % 16 ];
+            : new byte[ numberOfPackedBits % 16 ];
 
         // Bits are packed from right to left, in BIG ENDIAN order.
         int bitIndex = startBitIndex + numberOfPackedBits;
@@ -190,7 +190,7 @@ public class BitPackUtilities {
      * @throws IllegalArgumentException
      *             If the buffer is smaller than the stated number of bits
      */
-    public static long bitUnpack( char[] packedBuffer, int startBitIndex, int numberOfPackedBits )
+    public static long bitUnpack( byte[] packedBuffer, int startBitIndex, int numberOfPackedBits )
             throws IllegalArgumentException {
         // As the buffer size is dictated by the caller, it is the caller's
         // responsibility to ensure that its size is large enough to cover
@@ -248,7 +248,7 @@ public class BitPackUtilities {
                 bitIndex--;
 
                 // Get the next 8 bits from the packed buffer, via left-shift.
-                char nextBufferValue = packedBuffer[ startByte ];
+                byte nextBufferValue = packedBuffer[ startByte ];
                 long bufferValueShifted = ( nextBufferValue << ( ( bitIndex << 3 ) + endBit ) );
                 value += bufferValueShifted;
 
@@ -258,8 +258,9 @@ public class BitPackUtilities {
             }
 
             // For the last byte, we mask anything after the end bit, then shift
-            // to the right by (8 - endBit) bits.
-            char nextBufferValue = packedBuffer[ startByte ];
+            // to the right by (8 - endBit) bits. Account for the index's final
+            // auto-increment in the loop above, by decrementing to re-fetch.
+            byte nextBufferValue = packedBuffer[ startByte - 1 ];
             long bufferValueMasked = nextBufferValue & mask[ endBit ];
             long bufferValueShifted = ( bufferValueMasked ) >> ( 8 - endBit );
             value += bufferValueShifted;
