@@ -49,8 +49,9 @@ public final class NumberFormatUtilities {
 
     public static String formatInteger( final int integerValue, final NumberFormat numberFormat ) {
         try {
-            final String formattedValue = numberFormat.format( integerValue );
-            return formattedValue;
+            final String integerString = numberFormat.format( integerValue );
+
+            return integerString;
         }
         catch ( final ArithmeticException ae ) {
             ae.printStackTrace();
@@ -60,44 +61,91 @@ public final class NumberFormatUtilities {
         }
     }
 
-    @SuppressWarnings("nls")
-    public static String formatDouble( final double doubleValue, final NumberFormat numberFormat ) {
-        if ( Double.isNaN( doubleValue ) ) {
-            return "";
+    public static String formatFloat( final float floatValue, final NumberFormat numberFormat ) {
+        if ( Float.isNaN( floatValue ) ) {
+            return Float.toString( Float.NaN );
+        }
+
+        if ( Float.POSITIVE_INFINITY == floatValue ) {
+            return Float.toString( Float.POSITIVE_INFINITY );
+        }
+
+        if ( Float.NEGATIVE_INFINITY == floatValue ) {
+            return Float.toString( Float.NEGATIVE_INFINITY );
         }
 
         try {
-            final String formattedValue = numberFormat.format( doubleValue );
-            return formattedValue;
+            final String floatString = numberFormat.format( floatValue );
+
+            return floatString;
         }
         catch ( final ArithmeticException ae ) {
             ae.printStackTrace();
 
             // If parsing fails, just return a simple string representation.
+            // NOTE: This theoretically only happens if rounding mode was set to
+            // unnecessary and then rounding was requested.
+            return Float.toString( floatValue );
+        }
+    }
+
+    public static String formatDouble( final double doubleValue, final NumberFormat numberFormat ) {
+        if ( Double.isNaN( doubleValue ) ) {
+            return Double.toString( Float.NaN );
+        }
+
+        if ( Double.POSITIVE_INFINITY == doubleValue ) {
+            return Double.toString( Double.POSITIVE_INFINITY );
+        }
+
+        if ( Double.NEGATIVE_INFINITY == doubleValue ) {
+            return Double.toString( Double.NEGATIVE_INFINITY );
+        }
+
+        try {
+            final String doubleString = numberFormat.format( doubleValue );
+
+            return doubleString;
+        }
+        catch ( final ArithmeticException ae ) {
+            ae.printStackTrace();
+
+            // If parsing fails, just return a simple string representation.
+            // NOTE: This theoretically only happens if rounding mode was set to
+            // unnecessary and then rounding was requested.
             return Double.toString( doubleValue );
         }
     }
 
-    public static int parseInteger( final String formattedValue, final NumberFormat numberFormat ) {
+    /**
+     * Parses the provided string to an integer, using a number formatter.
+     * 
+     * @param integerString
+     *            The unconverted integer value, as a String
+     * @param numberFormat
+     *            The number formatter to use for determining precision
+     * @return An integer converted from the provided String
+     */
+    public static int parseInteger( final String integerString, final NumberFormat numberFormat ) {
         // In case of null or empty (non-numeric) strings, default to zero.
-        if ( ( formattedValue == null ) || formattedValue.isEmpty() ) {
+        if ( ( integerString == null ) || integerString.isEmpty() ) {
             return 0;
         }
 
         try {
-            final int integerValue = numberFormat.parse( formattedValue ).intValue();
+            final int integerValue = numberFormat.parse( integerString ).intValue();
 
             return integerValue;
         }
-        catch ( final ParseException | NullPointerException e ) {
-            e.printStackTrace();
+        catch ( final ParseException pe ) {
+            pe.printStackTrace();
 
             // If parsing fails, just return a simple number conversion.
             try {
-                return Integer.parseInt( formattedValue );
+                return Integer.parseInt( integerString );
             }
-            catch ( final NumberFormatException | NullPointerException e2 ) {
-                e2.printStackTrace();
+            catch ( final NumberFormatException nfe ) {
+                nfe.printStackTrace();
 
                 // At this point, the only safe thing to return is zero.
                 return 0;
@@ -105,27 +153,97 @@ public final class NumberFormatUtilities {
         }
     }
 
-    public static double parseDouble( final String formattedValue,
-                                      final NumberFormat numberFormat ) {
+    /**
+     * Parses the provided string to a single-precision float, using a number
+     * formatter, but first looking for infinity and NaN.
+     * 
+     * @param floatString
+     *            The unconverted single-precision value, as a String
+     * @param numberFormat
+     *            The number formatter to use for determining precision
+     * @return The converted single-precision value, as a float, or zero
+     */
+    public static float parseFloat( final String floatString, final NumberFormat numberFormat ) {
         // In case of null or empty (non-numeric) strings, default to zero.
-        if ( ( formattedValue == null ) || formattedValue.isEmpty() ) {
-            return 0.0d;
+        if ( ( floatString == null ) || floatString.isEmpty() ) {
+            return 0.0f;
+        }
+
+        if ( floatString.equals( Float.toString( Float.NaN ) ) ) {
+            return Float.NaN;
+        }
+
+        if ( floatString.equals( Float.toString( Float.POSITIVE_INFINITY ) ) ) {
+            return Float.POSITIVE_INFINITY;
+        }
+
+        if ( floatString.equals( Float.toString( Float.NEGATIVE_INFINITY ) ) ) {
+            return Float.NEGATIVE_INFINITY;
         }
 
         try {
-            final double doubleValue = numberFormat.parse( formattedValue ).doubleValue();
+            final float floatValue = numberFormat.parse( floatString ).floatValue();
 
-            return doubleValue;
+            return floatValue;
         }
-        catch ( final ParseException | NullPointerException e ) {
-            e.printStackTrace();
+        catch ( final ParseException pe ) {
+            pe.printStackTrace();
 
             // If parsing fails, just return a simple number conversion.
             try {
-                return Double.parseDouble( formattedValue );
+                return Float.parseFloat( floatString );
             }
-            catch ( final NumberFormatException | NullPointerException e2 ) {
-                e2.printStackTrace();
+            catch ( final NumberFormatException nfe ) {
+                nfe.printStackTrace();
+
+                // At this point, the only safe thing to return is zero.
+                return 0.0f;
+            }
+        }
+    }
+
+    /**
+     * Parses the provided string to a double-precision float, using a number
+     * formatter, but first looking for infinity and NaN.
+     * 
+     * @param doubleString
+     *            The unconverted double-precision value, as a String
+     * @param numberFormat
+     *            The number formatter to use for determining precision
+     * @return The converted double-precision value, as a double, or zero
+     */
+    public static double parseDouble( final String doubleString, final NumberFormat numberFormat ) {
+        // In case of null or empty (non-numeric) strings, default to zero.
+        if ( ( doubleString == null ) || doubleString.isEmpty() ) {
+            return 0.0d;
+        }
+
+        if ( doubleString.equals( Double.toString( Double.NaN ) ) ) {
+            return Double.NaN;
+        }
+
+        if ( doubleString.equals( Double.toString( Double.POSITIVE_INFINITY ) ) ) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        if ( doubleString.equals( Double.toString( Double.NEGATIVE_INFINITY ) ) ) {
+            return Double.NEGATIVE_INFINITY;
+        }
+
+        try {
+            final double doubleValue = numberFormat.parse( doubleString ).doubleValue();
+
+            return doubleValue;
+        }
+        catch ( final ParseException pe ) {
+            pe.printStackTrace();
+
+            // If parsing fails, just return a simple number conversion.
+            try {
+                return Double.parseDouble( doubleString );
+            }
+            catch ( final NumberFormatException nfe ) {
+                nfe.printStackTrace();
 
                 // At this point, the only safe thing to return is zero.
                 return 0.0d;
