@@ -127,7 +127,7 @@ public final class NumberFormatUtilities {
      * @return An integer converted from the provided String
      */
     public static int parseInteger( final String integerString, final NumberFormat numberFormat ) {
-        // In case of null or empty (non-numeric) strings, default to zero.
+        // In case of null or empty (non-numeric) string, default to zero.
         if ( ( integerString == null ) || integerString.isEmpty() ) {
             return 0;
         }
@@ -164,7 +164,7 @@ public final class NumberFormatUtilities {
      * @return The converted single-precision value, as a float, or zero
      */
     public static float parseFloat( final String floatString, final NumberFormat numberFormat ) {
-        // In case of null or empty (non-numeric) strings, default to zero.
+        // In case of null or empty (non-numeric) string, default to zero.
         if ( ( floatString == null ) || floatString.isEmpty() ) {
             return 0.0f;
         }
@@ -213,7 +213,7 @@ public final class NumberFormatUtilities {
      * @return The converted double-precision value, as a double, or zero
      */
     public static double parseDouble( final String doubleString, final NumberFormat numberFormat ) {
-        // In case of null or empty (non-numeric) strings, default to zero.
+        // In case of null or empty (non-numeric) string, default to zero.
         if ( ( doubleString == null ) || doubleString.isEmpty() ) {
             return 0.0d;
         }
