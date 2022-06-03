@@ -32,7 +32,8 @@ package com.mhschmieder.commonstoolkit.lang;
 
 /**
  * This is a utility class for methods that work with numbers generically,
- * without the use of any math theory.
+ * without the use of any math theory or number formatters. Use
+ * {@code NumberFormatUtilities} for the formatted versions of these methods.
  */
 public final class NumberUtilities {
 
@@ -41,12 +42,118 @@ public final class NumberUtilities {
      */
     private NumberUtilities() {}
 
+    // This is a null-safe replacement for auto-boxing of Integers to ints.
+    public static int getIntegerAsInt( final Integer integer ) {
+        return ( integer != null ) ? integer.intValue() : 0;
+    }
+
     public static double getFloatAsDouble( final float value ) {
         return Double.valueOf( Float.valueOf( value ).toString() ).doubleValue();
     }
 
     public static Double getFloatAsDouble( final Float fValue ) {
-        return Double.valueOf( fValue.toString() );
+        return ( fValue != null ) ? Double.valueOf( fValue.toString() ) : Double.valueOf( 0.0d );
+    }
+
+    /**
+     * Parses the provided string to an integer.
+     *
+     * @param integerString
+     *            The unconverted integer value, as a String
+     * @return An integer converted from the provided String
+     */
+    public static int parseInteger( final String integerString ) {
+        // In case of null or empty (non-numeric) string, default to zero.
+        if ( ( integerString == null ) || integerString.isEmpty() ) {
+            return 0;
+        }
+
+        // Return a simple number conversion, sans formatting.
+        try {
+            return Integer.parseInt( integerString );
+        }
+        catch ( final NumberFormatException nfe ) {
+            nfe.printStackTrace();
+
+            // At this point, the only safe thing to return is zero.
+            return 0;
+        }
+    }
+
+    /**
+     * Parses the provided string to a single-precision float, first looking for
+     * infinity and NaN.
+     *
+     * @param floatString
+     *            The unconverted single-precision value, as a String
+     * @return The converted single-precision value, as a float, or zero
+     */
+    public static float parseFloat( final String floatString ) {
+        // In case of null or empty (non-numeric) string, default to zero.
+        if ( ( floatString == null ) || floatString.isEmpty() ) {
+            return 0.0f;
+        }
+
+        if ( floatString.equals( Float.toString( Float.NaN ) ) ) {
+            return Float.NaN;
+        }
+
+        if ( floatString.equals( Float.toString( Float.POSITIVE_INFINITY ) ) ) {
+            return Float.POSITIVE_INFINITY;
+        }
+
+        if ( floatString.equals( Float.toString( Float.NEGATIVE_INFINITY ) ) ) {
+            return Float.NEGATIVE_INFINITY;
+        }
+
+        // Return a simple number conversion, sans formatting.
+        try {
+            return Float.parseFloat( floatString );
+        }
+        catch ( final NumberFormatException nfe ) {
+            nfe.printStackTrace();
+
+            // At this point, the only safe thing to return is zero.
+            return 0.0f;
+        }
+    }
+
+    /**
+     * Parses the provided string to a double-precision float, first looking for
+     * infinity and NaN.
+     *
+     * @param doubleString
+     *            The unconverted double-precision value, as a String
+     * @return The converted double-precision value, as a double, or zero
+     */
+    public static double parseDouble( final String doubleString ) {
+        // In case of null or empty (non-numeric) string, default to zero.
+        if ( ( doubleString == null ) || doubleString.isEmpty() ) {
+            return 0.0d;
+        }
+
+        if ( doubleString.equals( Double.toString( Double.NaN ) ) ) {
+            return Double.NaN;
+        }
+
+        if ( doubleString.equals( Double.toString( Double.POSITIVE_INFINITY ) ) ) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        if ( doubleString.equals( Double.toString( Double.NEGATIVE_INFINITY ) ) ) {
+            return Double.NEGATIVE_INFINITY;
+        }
+
+        // Return a simple number conversion, sans formatting.
+        try {
+            return Double.parseDouble( doubleString );
+        }
+        catch ( final NumberFormatException nfe ) {
+            nfe.printStackTrace();
+
+            // At this point, the only safe thing to return is zero.
+            return 0.0d;
+        }
     }
 
 }

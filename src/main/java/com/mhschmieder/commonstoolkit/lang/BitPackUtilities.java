@@ -62,7 +62,7 @@ public class BitPackUtilities {
      * the packed bits. The buffer is returned regardless, for more flexibility.
      * <p>
      * TODO: Check the number of bits against the size of a long as well.
-     * 
+     *
      * @param packedBuffer
      *            The buffer to use for storing the packed bits
      * @param startBitIndex
@@ -75,10 +75,10 @@ public class BitPackUtilities {
      * @throws IllegalArgumentException
      *             If the buffer is smaller than the stated number of bits
      */
-    public static byte[] bitPack( byte[] packedBuffer,
-                                  int startBitIndex,
-                                  int numberOfPackedBits,
-                                  long value )
+    public static byte[] bitPack( final byte[] packedBuffer,
+                                  final int startBitIndex,
+                                  final int numberOfPackedBits,
+                                  final long value )
             throws IllegalArgumentException {
         // As the buffer size is dictated by the caller, it is the caller's
         // responsibility to ensure that its size is large enough to cover
@@ -101,13 +101,13 @@ public class BitPackUtilities {
         // Right shift the start and end by 3 bits. This is the same as dividing
         // by 8 but is faster. This computes the buffer's start and end bytes.
         int startByte = startBitIndex >> 3;
-        int endByte = bitIndex >> 3;
+        final int endByte = bitIndex >> 3;
 
         // Apply Logical AND to the start and end positions using 7. This is the
         // same as doing a modulation with 8 but is faster. This computes the
         // start and end bits within the buffer's start and end bytes.
-        int startBit = startBitIndex & 7;
-        int endBit = bitIndex & 7;
+        final int startBit = startBitIndex & 7;
+        final int endBit = bitIndex & 7;
 
         // Compute the number of bytes covered by the packed buffer.
         bitIndex = endByte - startByte - 1;
@@ -119,7 +119,7 @@ public class BitPackUtilities {
             packedBits[ startByte ] &= ( mask[ startBit ] | notmask[ endBit ] );
 
             // Shift the value to the left, past the end bit.
-            long valueShifted = value << ( 8 - endBit );
+            final long valueShifted = value << ( 8 - endBit );
 
             // Mask anything in the left-shifted value that is prior to the
             // start bit and after the end bit.
@@ -179,7 +179,7 @@ public class BitPackUtilities {
      * supplied buffer, starting at a given bit position.
      * <p>
      * TODO: Check the number of bits against the size of a long as well.
-     * 
+     *
      * @param packedBuffer
      *            The buffer containing the packed bits
      * @param startBitIndex
@@ -190,7 +190,9 @@ public class BitPackUtilities {
      * @throws IllegalArgumentException
      *             If the buffer is smaller than the stated number of bits
      */
-    public static long bitUnpack( byte[] packedBuffer, int startBitIndex, int numberOfPackedBits )
+    public static long bitUnpack( final byte[] packedBuffer,
+                                  final int startBitIndex,
+                                  final int numberOfPackedBits )
             throws IllegalArgumentException {
         // As the buffer size is dictated by the caller, it is the caller's
         // responsibility to ensure that its size is large enough to cover
@@ -208,13 +210,13 @@ public class BitPackUtilities {
         // Right shift the start and end by 3 bits. This is the same as dividing
         // by 8 but is faster. This computes the buffer's start and end bytes.
         int startByte = startBitIndex >> 3;
-        int endByte = bitIndex >> 3;
+        final int endByte = bitIndex >> 3;
 
         // Apply Logical AND to the start and end positions using 7. This is the
         // same as doing a modulation with 8 but is faster. This computes the
         // start and end bits within the buffer's start and end bytes.
-        int startBit = startBitIndex & 7;
-        int endBit = bitIndex & 7;
+        final int startBit = startBitIndex & 7;
+        final int endBit = bitIndex & 7;
 
         // Compute the number of bytes covered by the packed buffer.
         bitIndex = endByte - startByte - 1;
@@ -248,8 +250,9 @@ public class BitPackUtilities {
                 bitIndex--;
 
                 // Get the next 8 bits from the packed buffer, via left-shift.
-                byte nextBufferValue = packedBuffer[ startByte ];
-                long bufferValueShifted = ( nextBufferValue << ( ( bitIndex << 3 ) + endBit ) );
+                final byte nextBufferValue = packedBuffer[ startByte ];
+                final long bufferValueShifted =
+                                              ( nextBufferValue << ( ( bitIndex << 3 ) + endBit ) );
                 value += bufferValueShifted;
 
                 // Increment to the next byte. Safer than auto-increment, which
@@ -260,9 +263,9 @@ public class BitPackUtilities {
             // For the last byte, we mask anything after the end bit, then shift
             // to the right by (8 - endBit) bits. Account for the index's final
             // auto-increment in the loop above, by decrementing to re-fetch.
-            byte nextBufferValue = packedBuffer[ startByte - 1 ];
-            long bufferValueMasked = nextBufferValue & mask[ endBit ];
-            long bufferValueShifted = ( bufferValueMasked ) >> ( 8 - endBit );
+            final byte nextBufferValue = packedBuffer[ startByte - 1 ];
+            final long bufferValueMasked = nextBufferValue & mask[ endBit ];
+            final long bufferValueShifted = ( bufferValueMasked ) >> ( 8 - endBit );
             value += bufferValueShifted;
         }
 

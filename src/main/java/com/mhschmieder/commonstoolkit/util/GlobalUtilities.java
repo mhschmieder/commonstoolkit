@@ -32,6 +32,7 @@ package com.mhschmieder.commonstoolkit.util;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -50,6 +51,28 @@ public class GlobalUtilities {
      * The default constructor is disabled, as this is a static utilities class.
      */
     private GlobalUtilities() {}
+
+    // Pad a collection of String collections to the maximum column count.
+    // NOTE: This is designed as a generic preparatory task for loading
+    // string-based data into a table or possibly a database (e.g. SQL).
+    @SuppressWarnings("nls")
+    public static int padStringsToMaxColumn( final Collection< Collection< String > > vector ) {
+        // Figure out maximum number of columns in a line.
+        int maxColumn = 0;
+        for ( final Collection< String > line : vector ) {
+            maxColumn = Math.max( maxColumn, line.size() );
+        }
+
+        // Expand all lines to the maximum number of columns.
+        for ( final Collection< String > line : vector ) {
+            while ( line.size() < maxColumn ) {
+                line.add( "" );
+            }
+        }
+
+        // Return the maximum column count for the data vector.
+        return maxColumn;
+    }
 
     /**
      * Make the Client Properties using Java JVM arguments and JNLP properties.

@@ -34,7 +34,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 
-import com.mhschmieder.commonstoolkit.text.StringUtilities;
+import com.mhschmieder.commonstoolkit.lang.StringConstants;
 
 /**
  * This class is a workaround for legacy code that uses System.out and
@@ -73,13 +73,13 @@ public class LogOutputStream extends OutputStream {
         if ( ( ch == lineSeparatorEndUnixDos ) || ( ch == lineSeparatorEndMac ) ) {
             // Check on a char by char basis for speed.
             final String s = buffer.toString();
-            if ( s.indexOf( StringUtilities.LINE_SEPARATOR ) != -1 ) {
+            if ( s.indexOf( StringConstants.LINE_SEPARATOR ) != -1 ) {
                 // The whole separator string is written.
                 // NOTE: We set the Logger to Info-level to avoid needing to
                 // configure the levels, as that is the default level for
                 // logging. This may not catch all third-party tracing though.
                 LOGGER.info( s.substring( 0,
-                                          s.length() - StringUtilities.LINE_SEPARATOR.length() ) );
+                                          s.length() - StringConstants.LINE_SEPARATOR.length() ) );
                 buffer.setLength( 0 );
             }
         }

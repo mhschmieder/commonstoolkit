@@ -38,7 +38,8 @@ import java.util.Locale;
 /**
  * This is a utility class for methods related to common use of Number Format
  * functionality. Many of these methods are placeholders for legacy code,
- * where we would prefer to eventually move to Number Converters instead.
+ * where we would prefer to eventually move to Number Converters instead. Use
+ * {@code NumbertUtilities} for the unformatted versions of these methods.
  */
 public final class NumberFormatUtilities {
 
@@ -119,7 +120,7 @@ public final class NumberFormatUtilities {
 
     /**
      * Parses the provided string to an integer, using a number formatter.
-     * 
+     *
      * @param integerString
      *            The unconverted integer value, as a String
      * @param numberFormat
@@ -156,7 +157,7 @@ public final class NumberFormatUtilities {
     /**
      * Parses the provided string to a single-precision float, using a number
      * formatter, but first looking for infinity and NaN.
-     * 
+     *
      * @param floatString
      *            The unconverted single-precision value, as a String
      * @param numberFormat
@@ -205,7 +206,7 @@ public final class NumberFormatUtilities {
     /**
      * Parses the provided string to a double-precision float, using a number
      * formatter, but first looking for infinity and NaN.
-     * 
+     *
      * @param doubleString
      *            The unconverted double-precision value, as a String
      * @param numberFormat

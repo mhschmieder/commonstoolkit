@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/commonstoolkit
  */
-package com.mhschmieder.commonstoolkit.io;
+package com.mhschmieder.commonstoolkit.xml;
 
 import java.io.File;
 import java.io.InputStream;
@@ -50,6 +50,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
+import com.mhschmieder.commonstoolkit.io.IoUtilities;
+import com.mhschmieder.commonstoolkit.lang.StringUtilities;
+
 /**
  * {@code XmlUtilities} is a static utilities class for common XML functionality
  * that at least wasn't part of Core Java at the time this library was written.
@@ -64,6 +67,119 @@ public class XmlUtilities {
      */
     private XmlUtilities() {}
 
+    /**
+     * Given a string, replace all the instances of XML special characters with
+     * their corresponding XML entities. This is necessary to allow arbitrary
+     * strings to be encoded within XML.
+     * <p>
+     *
+     * @see #unescapeForXML(String)
+     * @param string
+     *            The string to escape.
+     * @return A new string with special characters replaced.
+     */
+    @SuppressWarnings("nls")
+    public static String escapeForXML( final String string ) {
+        // This method gets called quite a bit when parsing large files, so
+        // rather than calling substitute() many times, we combine all the loops
+        // in one pass.
+
+        // TODO: Find a way to get this into Javadocs without causing errors
+        //
+        // In this method, we make the following translations:
+        //
+        // &amp; becomes &amp;amp;
+        // " becomes &amp;quot;
+        // < becomes &amp;lt;
+        // > becomes &amp;gt;
+        // newline becomes &amp;#10;
+        // carriage return becomes &amp;#13;
+
+        // A different solution might be to scan the string for escaped xml
+        // characters and if any are found, then create a StringBuilder and do
+        // the conversion. Using a profiler would help here.
+        if ( string == null ) {
+            return null;
+        }
+
+        final StringBuilder stringBuilder = new StringBuilder( string );
+        int i = 0;
+        int length = string.length();
+        while ( i < length ) {
+            switch ( stringBuilder.charAt( i ) ) {
+            case '\n':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&#10;" );
+                length += 4;
+                break;
+            case '\r':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&#13;" );
+                length += 4;
+                break;
+            case '"':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&quot;" );
+                length += 5;
+                break;
+            case '&':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&amp;" );
+                length += 4;
+                break;
+            case '<':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&lt;" );
+                length += 3;
+                break;
+            case '>':
+                stringBuilder.deleteCharAt( i );
+                stringBuilder.insert( i, "&gt;" );
+                length += 3;
+                break;
+            default:
+                break;
+            }
+            i++;
+        }
+
+        return stringBuilder.toString();
+    }
+
+    /**
+     * Given a string, replace all the instances of XML entities with their
+     * corresponding XML special characters. This is necessary to allow
+     * arbitrary strings to be encoded within XML.
+     *
+     * @see #escapeForXML(String)
+     * @param string
+     *            The string to escape.
+     * @return A new string with special characters replaced.
+     */
+    @SuppressWarnings("nls")
+    public static String unescapeForXML( final String string ) {
+        // TODO: Find a way to get this into Javadocs without causing errors
+        //
+        // In this method, we make the following translations:
+        //
+        // &amp;amp; becomes &amp
+        // &amp;quot; becomes "
+        // &amp;lt; becomes <
+        // &amp;gt; becomes >
+        // &amp;#10; becomes newline
+        // &amp;#13; becomes carriage return
+        String unescapeString = string;
+        if ( string.indexOf( '&' ) != -1 ) {
+            unescapeString = StringUtilities.substitute( unescapeString, "&amp;", "&" );
+            unescapeString = StringUtilities.substitute( unescapeString, "&quot;", "\"" );
+            unescapeString = StringUtilities.substitute( unescapeString, "&lt;", "<" );
+            unescapeString = StringUtilities.substitute( unescapeString, "&gt;", ">" );
+            unescapeString = StringUtilities.substitute( unescapeString, "&#10;", "\n" );
+            unescapeString = StringUtilities.substitute( unescapeString, "&#13;", "\r" );
+        }
+        return unescapeString;
+    }
+
     public static void setTextValue( final Element rootElement,
                                      final String TagName,
                                      final String textValue ) {
@@ -71,11 +187,6 @@ public class XmlUtilities {
             rootElement.getElementsByTagName( TagName ).item( 0 ).getFirstChild()
                     .setNodeValue( textValue );
         }
-    }
-
-    // This is a null-safe replacement for auto-boxing of Integers to ints.
-    public static int xmlIntegerToInt( final Integer integer ) {
-        return ( integer != null ) ? integer.intValue() : 0;
     }
 
     public static double getElementDouble( final String tagName, final Document domDocument ) {
@@ -103,19 +214,6 @@ public class XmlUtilities {
         final String stringValue = child.getTextContent();
 
         return stringValue;
-    }
-
-    public static String getTransformerExceptionDetails( final TransformerException te ) {
-        final StringBuilder builder = new StringBuilder();
-        builder.append( te );
-        builder.append( " at " ); //$NON-NLS-1$
-        builder.append( te.getLocationAsString() );
-        final Throwable clause = te.getCause();
-        if ( ( clause != null ) && !clause.equals( te ) ) {
-            builder.append( '\n' );
-            builder.append( clause );
-        }
-        return builder.toString();
     }
 
     // NOTE: This method only works with JAR-resident XSLT files.
@@ -177,7 +275,7 @@ public class XmlUtilities {
             catch ( final TransformerException te ) {
                 // NOTE: We catch this exception separately because it needs
                 // special handling in order to dump useful information.
-                System.err.println( com.mhschmieder.commonstoolkit.io.XmlUtilities
+                System.err.println( com.mhschmieder.commonstoolkit.xml.XmlUtilities
                         .getTransformerExceptionDetails( te ) );
                 return false;
             }
@@ -188,5 +286,18 @@ public class XmlUtilities {
         }
 
         return true;
+    }
+
+    public static String getTransformerExceptionDetails( final TransformerException te ) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append( te );
+        builder.append( " at " ); //$NON-NLS-1$
+        builder.append( te.getLocationAsString() );
+        final Throwable clause = te.getCause();
+        if ( ( clause != null ) && !clause.equals( te ) ) {
+            builder.append( '\n' );
+            builder.append( clause );
+        }
+        return builder.toString();
     }
 }
