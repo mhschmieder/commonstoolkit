@@ -230,12 +230,6 @@ public class BitPackUtilities {
         if ( numberOfPackedBits < 1 ) {
             throw new IllegalArgumentException( "bitUnpack: number of packed bits is less than one; impossible to store data" );
         }
-        if ( packedBuffer.length < numberOfPackedBits ) {
-            throw new IllegalArgumentException( "bitUnpack: buffer size is smaller than the stated number of packed bits" );
-        }
-        if ( ( startBitIndex < 0 ) || ( startBitIndex >= packedBuffer.length ) ) {
-            throw new IllegalArgumentException( "bitUnpack: start bit index is out of range of buffer" );
-        }
 
         // Bits are packed from right to left, in BIG ENDIAN order.
         int endBitIndex = startBitIndex + numberOfPackedBits;
