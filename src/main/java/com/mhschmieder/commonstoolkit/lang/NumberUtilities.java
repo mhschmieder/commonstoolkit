@@ -42,6 +42,38 @@ public final class NumberUtilities {
      */
     private NumberUtilities() {}
 
+    /**
+     * Returns {@code true} if the argument is a finite floating-point value;
+     * returns {@code false} otherwise (for NaN and infinity arguments).
+     * <p>
+     * NOTE: This is a substitute method for Float.isFinite() from Java 8, and
+     * is provided as a courtesy to those who use this library with Java 6.
+     * 
+     * @param floatValue
+     *            The {@code float} value to be tested
+     * @return {@code true} if the argument is a finite floating-point value;
+     *         {@code false} otherwise (for NaN and infinity arguments)
+     */
+    public static boolean isFinite( final float floatValue ) {
+        return !Float.isNaN( floatValue ) && !Float.isInfinite( floatValue );
+    }
+
+    /**
+     * Returns {@code true} if the argument is a finite floating-point value;
+     * returns {@code false} otherwise (for NaN and infinity arguments).
+     * <p>
+     * NOTE: This is a substitute method for Double.isFinite() from Java 8, and
+     * is provided as a courtesy to those who use this library with Java 6.
+     * 
+     * @param doubleValue
+     *            The {@code float} value to be tested
+     * @return {@code true} if the argument is a finite floating-point value;
+     *         {@code false} otherwise (for NaN and infinity arguments)
+     */
+    public static boolean isFinite( final double doubleValue ) {
+        return !Double.isNaN( doubleValue ) && !Double.isInfinite( doubleValue );
+    }
+
     // This is a null-safe replacement for auto-boxing of Integers to ints.
     public static int getIntegerAsInt( final Integer integer ) {
         return ( integer != null ) ? integer.intValue() : 0;
