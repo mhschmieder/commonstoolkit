@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.commonstoolkit.lang;
 
+import org.apache.commons.math3.util.FastMath;
+
 /**
  * Utilities for packing and unpacking bit arrays; in particular, when not
  * divisible by eight and thus not representable using ByteBuffer or byte array.
@@ -346,7 +348,7 @@ public class BitPackUtilities {
         // the sign bit as a binary value for that bit index rather than an
         // indicator for negative vs. positive total value.
         for ( int i = 0; i < 8; i++ ) {
-            final long val = ( long ) StrictMath.pow( 2, i );
+            final long val = ( long ) FastMath.pow( 2, i );
             if ( ( byteValue & val ) > 0 ) {
                 returnValue += val;
             }
