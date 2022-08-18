@@ -42,12 +42,12 @@ public final class ProxyUtilities {
 
     // Detect whether there is a proxy in effect (must set it first).
     // NOTE: Generally only "http" will be of interest, and also only if we
-    // know that we attempted to set a proxy and received a proxy selector.
+    //  know that we attempted to set a proxy and received a proxy selector.
     // NOTE: The timing of when the JavaFX-based Proxy Login is indirectly
-    // launched from the OS via the Proxy Authenticator is indeterminate, so it
-    // is safer to wrap this in a JavaFX thread so there's more chance the Proxy
-    // Login will have been engaged and dismissed and the proxy forwarding set
-    // up has completed by the time this code is invoked.
+    //  launched from the OS via the Proxy Authenticator is indeterminate,
+    //  so it is safer to wrap this in a JavaFX thread so there's more chance
+    //  the Proxy Login will have been engaged and dismissed and the proxy
+    //  forwarding set up has completed by the time this code is invoked.
     // NOTE: This method hasn't been used in years, but might be necessary?
     public static boolean hasProxy( final String protocol ) throws SecurityException {
         final ProxySelector proxySelector = ProxySelector.getDefault();
@@ -56,8 +56,8 @@ public final class ProxyUtilities {
         }
 
         // When there is a valid proxy, Proxy-Vole will generally set it to
-        // com.btr.proxy.selector.whitelist.ProxyBypassListSelector, but on the
-        // Mac there is an extra level of indirection per protocol via the
+        // com.btr.proxy.selector.whitelist.ProxyBypassListSelector, but on
+        // macOS, there is an extra level of indirection per protocol via the
         // custom ProtocolDispatchSelector container/dispatcher class.
         if ( proxySelector instanceof ProtocolDispatchSelector ) {
             final ProtocolDispatchSelector protocolDispatchSelector =
@@ -82,8 +82,8 @@ public final class ProxyUtilities {
         // try global desktop settings and finally try to detect proxy settings
         // in an environment variable.
         // NOTE: We have changed this to eliminate the Java and Browser Proxy
-        // Settings as they are not of interest in our context; only the
-        // OS-level Proxy Settings matter.
+        //  Settings as they are not of interest in our context; only the
+        //  OS-level Proxy Settings matter.
         final ProxySearch proxySearch = new ProxySearch();
         proxySearch.addStrategy( Strategy.OS_DEFAULT );
 
@@ -114,7 +114,7 @@ public final class ProxyUtilities {
 
     // Set the authentication credentials for the proxy.
     // NOTE: The proxy authenticator isn't invoked until the first time a
-    // network request is made.
+    //  network request is made.
     public static void setProxyAuthenticator( final ProxyAuthenticator proxyAuthenticator ) {
         // Some proxy servers request a login from the user before they will
         // allow any connections. Proxy-Vole has no support to handle this

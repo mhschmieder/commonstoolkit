@@ -35,18 +35,27 @@ import java.util.Locale;
 public enum SystemType {
     WINDOWS, MACOS, LINUX, UNIX, SOLARIS, OTHER;
 
+    /** Cache the detected System Type to limit property queries. */
+    @SuppressWarnings("nls") public static final SystemType DETECTED_SYSTEM_TYPE        =
+                                                                                 valueFromOsName( System
+                                                                                         .getProperty( "os.name" ) );
+
+    /** Cache the simplified version of the detected OS Name. */
+    public static final String                              DETECTED_OS_NAME_SIMPLIFIED =
+                                                                                        getSimplifiedOsName( DETECTED_SYSTEM_TYPE );
+
     public static SystemType defaultValue() {
-        return WINDOWS;
+        return DETECTED_SYSTEM_TYPE;
     }
 
     // NOTE: This method must be able to parse verbose OS Names.
     @SuppressWarnings("nls")
     public static SystemType valueFromOsName( final String osName ) {
         // NOTE: Starting with Sierra, Apple changed their naming scheme.
-        // NOTE: There are other OS names referenced by a similar Apache
-        // Commons example, but it is unlikely we will encounter them.
-        // TODO: Borrow code and ideas from Oracle's Ensemble sample app via
-        // the PlatformFeatures.java module, to cover iOS, Android, etc.?
+        // NOTE: There are other OS names referenced by a similar Apache Commons
+        // example, but it is unlikely we will encounter them.
+        // TODO: Borrow code and ideas from Oracle's Ensemble sample app via the
+        // PlatformFeatures.java module, to cover iOS, Android, etc.?
         final String osNameAdjusted = osName.toLowerCase( Locale.ENGLISH );
         if ( osNameAdjusted.contains( "win" ) ) {
             return WINDOWS;
@@ -72,6 +81,36 @@ public enum SystemType {
     }
 
     @SuppressWarnings("nls")
+    public static String getSimplifiedOsName( final SystemType systemType ) {
+        String simplifiedOsName;
+        switch ( systemType ) {
+        case WINDOWS:
+            simplifiedOsName = "windows";
+            break;
+        case MACOS:
+            simplifiedOsName = "macos";
+            break;
+        case LINUX:
+            simplifiedOsName = "linux";
+            break;
+        case UNIX:
+            simplifiedOsName = "unix";
+            break;
+        case SOLARIS:
+            simplifiedOsName = "solaris";
+            break;
+        case OTHER:
+            simplifiedOsName = "other";
+            break;
+        default:
+            simplifiedOsName = "unknown";
+            break;
+        }
+
+        return simplifiedOsName;
+    }
+
+    @SuppressWarnings("nls")
     @Override
     public final String toString() {
         // NOTE: As of Java 6, enums include the underscore in their string
@@ -84,4 +123,7 @@ public enum SystemType {
         return value.replaceAll( "_", " " );
     }
 
+    public String getSimplifiedOsName() {
+        return getSimplifiedOsName( this );
+    }
 }
