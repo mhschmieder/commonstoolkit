@@ -38,16 +38,22 @@ public enum LoginType {
     }
 
     public final String toPresentationString() {
+        String presentationString = null;
+        
         switch ( this ) {
         case SERVER:
-            return "Server"; //$NON-NLS-1$
+            presentationString = "Server"; //$NON-NLS-1$
+            break;
         case PROXY:
-            return "Proxy"; //$NON-NLS-1$
+            presentationString = "Proxy"; //$NON-NLS-1$
+            break;
         default:
             final String errMessage = "Unexpected " //$NON-NLS-1$
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
+        
+        return presentationString;
     }
 
 }

@@ -70,37 +70,53 @@ public enum ClassificationLevel {
     }
 
     public final String toAbbreviatedString() {
+        String abbreviatedString = null;
+        
         switch ( this ) {
         case UNCLASSIFIED:
-            return "unclassified"; //$NON-NLS-1$
+            abbreviatedString = "unclassified"; //$NON-NLS-1$
+            break;
         case CONFIDENTIAL:
-            return "confidential"; //$NON-NLS-1$
+            abbreviatedString = "confidential"; //$NON-NLS-1$
+            break;
         case SECRET:
-            return "secret"; //$NON-NLS-1$
+            abbreviatedString = "secret"; //$NON-NLS-1$
+            break;
         case TOP_SECRET:
-            return "top secret"; //$NON-NLS-1$
+            abbreviatedString = "top secret"; //$NON-NLS-1$
+            break;
         default:
             final String errMessage = "Unexpected " //$NON-NLS-1$
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
+        
+        return abbreviatedString;
     }
 
     public final String toPresentationString() {
+        String presentationString = null;
+        
         switch ( this ) {
         case UNCLASSIFIED:
-            return "Unclassified"; //$NON-NLS-1$
+            presentationString = "Unclassified"; //$NON-NLS-1$
+            break;
         case CONFIDENTIAL:
-            return "Confidential"; //$NON-NLS-1$
+            presentationString = "Confidential"; //$NON-NLS-1$
+            break;
         case SECRET:
-            return "Secret"; //$NON-NLS-1$
+            presentationString = "Secret"; //$NON-NLS-1$
+            break;
         case TOP_SECRET:
-            return "Top Secret"; //$NON-NLS-1$
+            presentationString = "Top Secret"; //$NON-NLS-1$
+            break;
         default:
             final String errMessage = "Unexpected " //$NON-NLS-1$
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
+        
+        return presentationString;
     }
 
 }
