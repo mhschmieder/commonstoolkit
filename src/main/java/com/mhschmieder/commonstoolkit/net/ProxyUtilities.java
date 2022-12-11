@@ -38,6 +38,7 @@ import com.github.markusbernhardt.proxy.ProxySearch.Strategy;
 import com.github.markusbernhardt.proxy.selector.direct.NoProxySelector;
 import com.github.markusbernhardt.proxy.selector.misc.ProtocolDispatchSelector;
 
+// TODO: Move this to a new proxytoolkit library.
 public final class ProxyUtilities {
 
     // Detect whether there is a proxy in effect (must set it first).
