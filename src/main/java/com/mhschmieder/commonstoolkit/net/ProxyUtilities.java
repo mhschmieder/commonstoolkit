@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ public final class ProxyUtilities {
     //  launched from the OS via the Proxy Authenticator is indeterminate,
     //  so it is safer to wrap this in a JavaFX thread so there's more chance
     //  the Proxy Login will have been engaged and dismissed and the proxy
-    //  forwarding set up has completed by the time this code is invoked.
+    //  forwarding setup has completed by the time this code is invoked.
     // NOTE: This method hasn't been used in years, but might be necessary?
     public static boolean hasProxy( final String protocol ) throws SecurityException {
         final ProxySelector proxySelector = ProxySelector.getDefault();
