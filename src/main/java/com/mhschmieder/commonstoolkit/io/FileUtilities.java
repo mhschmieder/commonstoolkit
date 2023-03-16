@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,11 @@
 package com.mhschmieder.commonstoolkit.io;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
@@ -240,6 +245,62 @@ public final class FileUtilities {
         }
     }
 
+    // Copy a file using streams (the oldest approach, but sometimes fastest).
+    // NOTE: There is no need to provide a wrapper for Java NIO Files.copy() as an
+    //  additional option, as Apache Commons IO FileUtils.copyFile() does that.
+    public static long copyFileUsingStreams( final File source, final File dest ) {
+        long totalNumberOfBytesRead = 0L;
+
+        try ( final InputStream is = new FileInputStream( source );
+              final OutputStream os = new FileOutputStream( dest ) ) {
+            totalNumberOfBytesRead = copyFileStream( is, os );
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
+        
+        return totalNumberOfBytesRead;
+    }
+    
+    // Copy a file stream using traditional Java IO.
+    public static long copyFileStream( final InputStream is, final OutputStream os ) {
+        long totalNumberOfBytesRead = 0L;
+
+        try {
+            byte[] buffer = new byte[ 8192 ];
+            int numberOfBytesRead;
+            while ( ( numberOfBytesRead = is.read( buffer ) ) > 0 ) {
+                os.write(buffer, 0, numberOfBytesRead);
+                totalNumberOfBytesRead += numberOfBytesRead;
+            }
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
+        
+        return totalNumberOfBytesRead;
+    }
+    
+    // Copy a file using channels (a somewhat newer approach, sometimes fastest).
+    // NOTE: There is no need to provide a wrapper for Java NIO Files.copy() as an
+    //  additional option, as Apache Commons IO FileUtils.copyFile() does that.
+    public static long copyFileUsingChannels( final File source, final File dest ) {
+        long totalNumberOfBytesRead = 0L;
+
+        try ( final FileInputStream sourceStream = new FileInputStream( source );
+              final FileChannel sourceChannel = sourceStream.getChannel();
+              final FileOutputStream destStream = new FileOutputStream( dest );
+              final FileChannel destChannel = destStream.getChannel() ) {
+            totalNumberOfBytesRead = destChannel.transferFrom( 
+                sourceChannel, 0L, sourceChannel.size() );
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
+        
+        return totalNumberOfBytesRead;
+    }
+    
     // Move or rename a source file to a target file (system-specific).
     public static boolean moveFile( final File sourceFile, final File targetFile ) {
         // Do not move invalid or empty source files.
@@ -268,40 +329,6 @@ public final class FileUtilities {
                 // NOTE: If we also specify to copy the attributes, we get
                 // run-time exceptions on Windows 10 due to security issues.
                 Files.move( sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING );
-            }
-            catch ( final Exception e ) {
-                e.printStackTrace();
-                return false;
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    // Move or rename a source file to a target file (system-specific).
-    public static boolean copyFile( final File sourceFile, final File targetFile ) {
-        // Do not copy invalid or empty source files.
-        if ( ( sourceFile != null ) && ( sourceFile.length() > 0 ) ) {
-            try {
-                // NOTE: File status can change suddenly, so it is best to
-                // recheck whether a target file is writable before a copy
-                // operation. We always replace an existing file, and depend on
-                // the file chooser to alert the user of overwrites.
-                final Path sourcePath = sourceFile.toPath();
-                final Path targetPath = targetFile.toPath();
-                if ( !Files.isWritable( targetPath ) ) {
-                    return false;
-                }
-
-                // TODO: Verify this doesn't throw exceptions, once this
-                // method is actually used again, as copying attributes is a
-                // problem when moving a file vs. simply copying it.
-                Files.copy( sourcePath,
-                            targetPath,
-                            StandardCopyOption.REPLACE_EXISTING,
-                            StandardCopyOption.COPY_ATTRIBUTES );
             }
             catch ( final Exception e ) {
                 e.printStackTrace();
