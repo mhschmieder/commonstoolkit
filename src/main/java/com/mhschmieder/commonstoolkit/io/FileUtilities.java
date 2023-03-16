@@ -328,6 +328,7 @@ public final class FileUtilities {
 
                 // NOTE: If we also specify to copy the attributes, we get
                 // run-time exceptions on Windows 10 due to security issues.
+                //FileUtils.moveFile( sourceFile, targetFile, StandardCopyOption.REPLACE_EXISTING );
                 Files.move( sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING );
             }
             catch ( final Exception e ) {
