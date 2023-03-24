@@ -62,6 +62,20 @@ public final class NumberFormatUtilities {
         }
     }
 
+    public static String formatLong( final long longValue, final NumberFormat numberFormat ) {
+        try {
+            final String longString = numberFormat.format( longValue );
+
+            return longString;
+        }
+        catch ( final ArithmeticException ae ) {
+            ae.printStackTrace();
+
+            // If parsing fails, just return a simple string representation.
+            return Long.toString( longValue );
+        }
+    }
+
     public static String formatFloat( final float floatValue, final NumberFormat numberFormat ) {
         if ( Float.isNaN( floatValue ) ) {
             return Float.toString( Float.NaN );
@@ -150,6 +164,42 @@ public final class NumberFormatUtilities {
 
                 // At this point, the only safe thing to return is zero.
                 return 0;
+            }
+        }
+    }
+
+    /**
+     * Parses the provided string to a long, using a number formatter.
+     *
+     * @param longString
+     *            The unconverted long value, as a String
+     * @param numberFormat
+     *            The number formatter to use for determining precision
+     * @return A long converted from the provided String
+     */
+    public static long parseLong( final String longString, final NumberFormat numberFormat ) {
+        // In case of null or empty (non-numeric) string, default to zero.
+        if ( ( longString == null ) || longString.isEmpty() ) {
+            return 0L;
+        }
+
+        try {
+            final long longValue = numberFormat.parse( longString ).longValue();
+
+            return longValue;
+        }
+        catch ( final ParseException pe ) {
+            pe.printStackTrace();
+
+            // If parsing fails, just return a simple number conversion.
+            try {
+                return Long.parseLong( longString );
+            }
+            catch ( final NumberFormatException nfe ) {
+                nfe.printStackTrace();
+
+                // At this point, the only safe thing to return is zero.
+                return 0L;
             }
         }
     }
