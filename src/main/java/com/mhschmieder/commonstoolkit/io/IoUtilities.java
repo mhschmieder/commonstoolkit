@@ -392,7 +392,7 @@ public final class IoUtilities {
                                                  final ZipOutputStream zipOutputStream ) {
         try {
             // Add a header so that WINZIP and other tools can easily identify
-            // this as a ZIP file produced from MAPP (vs. other apps).
+            // this as a ZIP file produced from a specific application.
             prepareZipForWrite( zipOutputStream, productBranding, locale );
 
             // Chain a ZipInputStream to a ByteArrayInputStream to the byte
