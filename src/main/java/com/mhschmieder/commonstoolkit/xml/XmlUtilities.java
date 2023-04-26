@@ -51,6 +51,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
+import com.mhschmieder.commonstoolkit.lang.NumberUtilities;
 import com.mhschmieder.commonstoolkit.lang.StringUtilities;
 
 /**
@@ -202,7 +203,7 @@ public class XmlUtilities {
         final Element root = domDocument.getDocumentElement();
         final Element child = ( Element ) root.getElementsByTagName( tagName ).item( 0 );
 
-        final int integerValue = Integer.parseInt( child.getTextContent() );
+        final int integerValue = NumberUtilities.parseInteger( child.getTextContent() );
 
         return integerValue;
     }
