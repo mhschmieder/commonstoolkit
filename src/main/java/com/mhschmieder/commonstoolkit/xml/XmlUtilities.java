@@ -194,7 +194,7 @@ public class XmlUtilities {
         final Element root = domDocument.getDocumentElement();
         final Element child = ( Element ) root.getElementsByTagName( tagName ).item( 0 );
 
-        final double doubleValue = Double.parseDouble( child.getTextContent() );
+        final double doubleValue = NumberUtilities.parseDouble( child.getTextContent() );
 
         return doubleValue;
     }
