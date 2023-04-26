@@ -88,6 +88,31 @@ public final class NumberUtilities {
     }
 
     /**
+     * Parses the provided string to a boolean.
+     *
+     * @param booleanString
+     *            The unconverted boolean value, as a String
+     * @return A boolean converted from the provided String
+     */
+    public static boolean parseBoolean( final String booleanString ) {
+        // In case of null or empty (non-numeric) string, default to zero.
+        if ( ( booleanString == null ) || booleanString.isEmpty() ) {
+            return false;
+        }
+
+        // Return a simple number conversion, sans formatting.
+        try {
+            return Boolean.parseBoolean( booleanString );
+        }
+        catch ( final NumberFormatException nfe ) {
+            nfe.printStackTrace();
+
+            // At this point, the only safe thing to return is false.
+            return false;
+        }
+    }
+
+    /**
      * Parses the provided string to an integer.
      *
      * @param integerString
@@ -109,6 +134,31 @@ public final class NumberUtilities {
 
             // At this point, the only safe thing to return is zero.
             return 0;
+        }
+    }
+
+    /**
+     * Parses the provided string to a long.
+     *
+     * @param longString
+     *            The unconverted long value, as a String
+     * @return A long converted from the provided String
+     */
+    public static long parseLong( final String longString ) {
+        // In case of null or empty (non-numeric) string, default to zero.
+        if ( ( longString == null ) || longString.isEmpty() ) {
+            return 0;
+        }
+
+        // Return a simple number conversion, sans formatting.
+        try {
+            return Long.parseLong( longString );
+        }
+        catch ( final NumberFormatException nfe ) {
+            nfe.printStackTrace();
+
+            // At this point, the only safe thing to return is zero.
+            return 0L;
         }
     }
 
