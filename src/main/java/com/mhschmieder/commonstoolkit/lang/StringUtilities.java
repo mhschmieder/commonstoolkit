@@ -201,4 +201,19 @@ public final class StringUtilities {
         return substituteString;
     }
 
+    /**
+     * Quote the given string; sometimes referred to as escaping the string, but
+     * that action doesn't always use the double quote character.
+     * <p>
+     * This method is most useful for outputting file names and titles to text
+     * based output files that use token separators, so that strings with spaces
+     * remain intact during parsing.
+     * 
+     * @param string The string to be quoted
+     * @return A quoted version of the given string
+     */
+    public static String quote( final String string ) {
+        final String quotedString = "\"" + string + "\"";
+        return quotedString;
+    }
 }
