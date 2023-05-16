@@ -208,6 +208,14 @@ public final class StringUtilities {
      * This method is most useful for outputting file names and titles to text
      * based output files that use token separators, so that strings with spaces
      * remain intact during parsing.
+     * <p>
+     * NOTE: The Java StringTokenizer seems to fail if there isn't a space ahead
+     * of the quotes. Usually this is the case, except at the head of a line,
+     * but as most elements on a line will have spaces or other delimiters anyway,
+     * it seems best not to prepend the space here, and to instead make clients
+     * aware that they may need to prepend one at their end if the quoted string
+     * is at the head of a line in a text file. The tokenizer gets confused for
+     * some reason otherwise; perhaps Apache's replacement version works better?
      * 
      * @param string The string to be quoted
      * @return A quoted version of the given string
