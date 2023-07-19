@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -62,7 +63,7 @@ public final class CsvUtilities {
 
     @SuppressWarnings("nls")
     public static boolean convertCsvToStringVector( final File file,
-                                                    final List< List< String > > rows ) {
+                                                    final Collection< Collection< String > > rows ) {
         final String fileName = file.getName();
         final String fileNameCaseInsensitive = fileName.toLowerCase( Locale.ENGLISH );
         if ( FilenameUtils.isExtension( fileNameCaseInsensitive, "csv" ) ) {
@@ -96,7 +97,7 @@ public final class CsvUtilities {
 
     // Load a comma-delimited stream into a data vector.
     public static boolean loadFromCsv( final BufferedReader bufferedReader,
-                                       final List< List< String > > rows ) {
+                                       final Collection< Collection< String > > rows ) {
         List< String > columns = new ArrayList<>();
         final StringBuilder buffer = new StringBuilder();
 
@@ -149,7 +150,8 @@ public final class CsvUtilities {
 
     // TODO: Find a way to report errors if not a legitimate ZIP file.
     @SuppressWarnings("nls")
-    public static boolean loadFromZip( final File file, final List< List< String > > rows ) {
+    public static boolean loadFromZip( final File file, 
+                                       final Collection< Collection< String > > rows ) {
         try ( final ZipFile zipFile = new ZipFile( file ) ) {
             final Predicate< ZipEntry > isFile = zipEntry -> !zipEntry.isDirectory();
             final Predicate< ZipEntry > isCsv = zipEntry -> FilenameUtils
