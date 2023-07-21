@@ -340,6 +340,8 @@ public final class NetworkUtilities {
                                          fileExtension );
 
         // Get the URL associated with the JAR-loaded resource.
+        // NOTE: This doesn't work well between projects and libraries, so
+        //  should be replaced by local uses of getResource() vs. calls here.
         final URL jarResourceUrl = NetworkUtilities.class.getResource( jarResourceFilename );
 
         return jarResourceUrl;
