@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -71,9 +71,18 @@ public class StringConstants {
      * easier coding, if we define a global constant for its character value.
      * <p>
      * NOTE: Commas are often used as delimiters, so it especially helps in that
-     * context, and also makes for more readable and understandable code.
+     *  context, and also makes for more readable and understandable code.
      */
     @SuppressWarnings("nls") public static final String COMMA                     = ",";
+
+    /**
+     * Semicolons are the same across all platforms, so it is safer and makes
+     * for easier coding, if we define a global constant for its character value.
+     * <p>
+     * NOTE: Semicolons are often used as delimiters, so it especially helps in
+     *  that context, and also makes for more readable and understandable code.
+     */
+    @SuppressWarnings("nls") public static final String SEMMICOLON                = ";";
 
     /**
      * Tabs are the same across all platforms, so it is safer and makes for

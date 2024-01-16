@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -307,9 +307,9 @@ public final class NumberFormatUtilities {
         final NumberFormat uniquefierNumberFormat = NumberFormat.getNumberInstance( locale );
 
         // NOTE: The choice of three digits for name uniqueness, is to allow
-        // for table row sorting in numeric order by forcing leading zeroes. Any
-        // more than three digits might cause a comma or other locale-specific
-        // delimiter to be inserted.
+        //  for table row sorting in numeric order by forcing leading zeroes. Any
+        //  more than three digits might cause a comma or other locale-specific
+        //  delimiter to be inserted.
         if ( uniquefierNumberFormat instanceof DecimalFormat ) {
             final DecimalFormat decimalFormat = ( DecimalFormat ) uniquefierNumberFormat;
             decimalFormat.applyPattern( "_000" );
@@ -325,10 +325,10 @@ public final class NumberFormatUtilities {
         // Use a decimal formatter that defaults to integers or floating point
         // when possible, determined by the supplied numeric formatter pattern.
         // NOTE: Not all locales support decimal formatting. In such cases, we
-        // also forego units as we don't want to have to defer the expensive
-        // creation of the number formatter to the callback methods, where we
-        // could alternately format the number with the unit but no localization
-        // of number representation. This should be revisited for commonality.
+        //  also forego units as we don't want to have to defer the expensive
+        //  creation of the number formatter to the callback methods, where we
+        //  could alternately format the number with the unit but no localization
+        //  of number representation. This should be revisited for commonality.
         final NumberFormat numberFormat = NumberFormat.getNumberInstance( locale );
         if ( numberFormat instanceof DecimalFormat ) {
             final DecimalFormat decimalFormat = ( DecimalFormat ) numberFormat;
