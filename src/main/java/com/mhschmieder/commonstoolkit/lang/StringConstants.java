@@ -82,7 +82,7 @@ public class StringConstants {
      * NOTE: Semicolons are often used as delimiters, so it especially helps in
      *  that context, and also makes for more readable and understandable code.
      */
-    @SuppressWarnings("nls") public static final String SEMMICOLON                = ";";
+    @SuppressWarnings("nls") public static final String SEMICOLON                 = ";";
 
     /**
      * Tabs are the same across all platforms, so it is safer and makes for
