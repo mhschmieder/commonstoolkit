@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import java.time.ZoneOffset;
 
 import com.mhschmieder.commonstoolkit.net.AuthorizationServerResponse;
 
-public final class PredictionLoginCredentials extends LoginCredentials {
+public final class ServerLoginCredentials extends LoginCredentials {
 
     // By default, the user is not authorized on the server.
     public static final boolean AUTHORIZED_ON_SERVER_DEFAULT = false;
@@ -51,16 +51,16 @@ public final class PredictionLoginCredentials extends LoginCredentials {
     private long                expirationDateEpochMs;
 
     // Fully Qualified Constructor.
-    public PredictionLoginCredentials( final String pUserName,
-                                       final String pPassword,
-                                       final boolean pAuthorizedOnServer,
-                                       final long pExpirationDate ) {
+    public ServerLoginCredentials( final String pUserName,
+                                   final String pPassword,
+                                   final boolean pAuthorizedOnServer,
+                                   final long pExpirationDate ) {
         setLoginCredentials( pUserName, pPassword, pAuthorizedOnServer, pExpirationDate );
     }
 
     // Copy Constructor; offered in place of clone() to guarantee that the
     // source object is never modified by the new target object created here.
-    public PredictionLoginCredentials( final PredictionLoginCredentials loginCredentials ) {
+    public ServerLoginCredentials( final ServerLoginCredentials loginCredentials ) {
         this( loginCredentials.getUserName(),
               loginCredentials.getPassword(),
               loginCredentials.isAuthorizedOnServer(),
@@ -105,7 +105,7 @@ public final class PredictionLoginCredentials extends LoginCredentials {
 
         // Don't forget to clear the authorized flag as well!
         // NOTE: Do not reset the expiration date, as that should still be
-        // queryable; it is often the cause of the user not being authorized
+        // queried later; it is often the cause of a user not being authorized
         // by the server!
         setAuthorizedOnServer( AUTHORIZED_ON_SERVER_DEFAULT );
     }
@@ -119,7 +119,7 @@ public final class PredictionLoginCredentials extends LoginCredentials {
         setExpirationDate( pExpirationDate );
     }
 
-    public void setLoginCredentials( final PredictionLoginCredentials loginCredentials ) {
+    public void setLoginCredentials( final ServerLoginCredentials loginCredentials ) {
         setLoginCredentials( loginCredentials.getUserName(),
                              loginCredentials.getPassword(),
                              loginCredentials.isAuthorizedOnServer(),

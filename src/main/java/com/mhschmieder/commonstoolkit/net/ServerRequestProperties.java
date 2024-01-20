@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ import java.util.Objects;
 /**
  * {@code ServerRequestProperties} is a container for request properties
  * typically sent to a server using the HTTP protocol, whether for authorization
- * of login credentials, or some sort of prediction or client/server query.
+ * of login credentials, or some sort of data or client/server query.
  */
 public class ServerRequestProperties {
 
@@ -95,7 +95,7 @@ public class ServerRequestProperties {
 
     @Override
     public int hashCode() {
-        return Objects.hash( new Integer( clientBuildId ),
+        return Objects.hash( Integer.valueOf( clientBuildId ),
                              clientType,
                              localHostName,
                              webHostName,

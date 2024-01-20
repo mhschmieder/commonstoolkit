@@ -30,63 +30,63 @@
  */
 package com.mhschmieder.commonstoolkit.net;
 
+import java.net.HttpURLConnection;
+
 /**
- * Wrapper for everything related to a server response for user authorization.
+ * Wrapper for everything related to a server response for a data request.
  * <p>
  * Ofttimes the authorization is on a different server from the database or a
  * computation engine that processes requests and computes data to serve back,
- * so this class provides several variables that detail authorization status.
+ * so this class only contains a single message to represent authorized status.
  */
-public final class AuthorizationServerResponse extends HttpServletResponse {
+public final class DataServerResponse extends HttpServletResponse {
 
-    /** Simple flag for whether user is authorized on server or not. */
-    private boolean _authorizedOnServer;
+    // Specific Unauthorized User Message inclusive of Expiration Date.
+    private String _unauthorizedUserMessage;
 
-    /** Detailed description of user authorization status. */
-    private String  _authorizationMessage;
+    // Server Response Data Stream, returned when relevant to context.
+    private byte[] _serverResponseData;
 
-    /** Long date format of user account expiration (ISO date format). */
-    private long    _expirationDate;
-
-    public AuthorizationServerResponse( final String serverStatusMessage,
-                                        final String servletErrorMessage,
-                                        final boolean authorizedOnServer,
-                                        final String authorizationMessage,
-                                        final long expirationDate,
-                                        final String httpResponse,
-                                        final int httpResponseCode ) {
+    // No-args constructor to call for an initially empty server response.
+    public DataServerResponse() {
+        this( null,
+              null,
+              null,
+              null,
+              HttpURLConnection.HTTP_UNAVAILABLE,
+              null );
+    }
+    
+    // Fully classified constructor for a data server response.
+    public DataServerResponse( final String serverStatusMessage,
+                               final String servletErrorMessage,
+                               final String unauthorizedUserMessage,
+                               final String httpResponse,
+                               final int httpResponseCode,
+                               final byte[] serverResponseData ) {
         // Always call the superclass constructor first!
         super( serverStatusMessage,
                servletErrorMessage,
                httpResponse,
                httpResponseCode );
 
-        _authorizedOnServer = authorizedOnServer;
-        _authorizationMessage = authorizationMessage;
-        _expirationDate = expirationDate;
+        _unauthorizedUserMessage = unauthorizedUserMessage;
+        _serverResponseData = serverResponseData;
     }
 
-    public boolean isAuthorizedOnServer() {
-        return _authorizedOnServer;
+    public String getUnauthorizedUserMessage() {
+        return _unauthorizedUserMessage;
     }
 
-    public void setAuthorizedOnServer( final boolean authorizedOnServer ) {
-        _authorizedOnServer = authorizedOnServer;
+    public void setUnauthorizedUserMessage( final String unauthorizedUserMessage ) {
+        _unauthorizedUserMessage = unauthorizedUserMessage;
     }
 
-    public String getAuthorizationMessage() {
-        return _authorizationMessage;
+    public byte[] getServerResponseData() {
+        return _serverResponseData;
     }
 
-    public void setAuthorizationMessage( final String authorizationMessage ) {
-        _authorizationMessage = authorizationMessage;
-    }
-
-    public long getExpirationDate() {
-        return _expirationDate;
-    }
-
-    public void setExpirationDate( final long expirationDate ) {
-        _expirationDate = expirationDate;
+    public void setServerResponseData( final byte[] serverResponseData ) {
+        _serverResponseData = serverResponseData;
     }
 }

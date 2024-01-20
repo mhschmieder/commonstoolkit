@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ import java.net.UnknownHostException;
 
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
 import com.mhschmieder.commonstoolkit.security.LoginCredentials;
-import com.mhschmieder.commonstoolkit.security.PredictionLoginCredentials;
+import com.mhschmieder.commonstoolkit.security.ServerLoginCredentials;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 public final class NetworkUtilities {
@@ -177,7 +177,7 @@ public final class NetworkUtilities {
         // could lead to annoying multiple login dialogs.
         final long expirationDate = httpURLConnection
                 .getHeaderFieldDate( "expirationDate",
-                                     PredictionLoginCredentials.EXPIRATION_DATE_DEFAULT );
+                                     ServerLoginCredentials.EXPIRATION_DATE_DEFAULT );
 
         try {
             // Get the combined HTTP Response returned by the URL Connection.
@@ -347,9 +347,9 @@ public final class NetworkUtilities {
         return jarResourceUrl;
     }
 
-    // Utility method to get a Prediction Server Response after handling its
+    // Utility method to get a Data Server Response after handling its
     // Response Code, Response Message and Header Fields.
-    public static PredictionServerResponse getPredictionServerResponse( final HttpURLConnection httpURLConnection ) {
+    public static DataServerResponse getDataServerResponse( final HttpURLConnection httpURLConnection ) {
         // Pre-load a generalized server connection error, separate from
         // detailed error and exception logging.
         String serverStatusMessage = SERVER_CONNECTION_ERROR_MESSAGE;
@@ -404,18 +404,17 @@ public final class NetworkUtilities {
         catch ( final IOException ioe ) {
             ioe.printStackTrace();
             serverStatusMessage = "Server Communication Error: Response Incomplete or Not Received." //$NON-NLS-1$
-                    + "\nUnable to extract prediction response from server."; //$NON-NLS-1$
+                    + "\nUnable to extract data response from server."; //$NON-NLS-1$
         }
 
-        // Construct a Prediction Server Response object for status/context.
-        final PredictionServerResponse predictionServerResponse =
-                                                                new PredictionServerResponse( serverStatusMessage,
-                                                                                              servletErrorMessage,
-                                                                                              unauthorizedUserMessage,
-                                                                                              httpResponse,
-                                                                                              httpResponseCode,
-                                                                                              null );
-        return predictionServerResponse;
+        // Construct a Data Server Response object for status/context.
+        final DataServerResponse dataServerResponse = new DataServerResponse( serverStatusMessage,
+                                                                              servletErrorMessage,
+                                                                              unauthorizedUserMessage,
+                                                                              httpResponse,
+                                                                              httpResponseCode,
+                                                                              null );
+        return dataServerResponse;
     }
 
     // Utility method to get a relative URL for a server file.
@@ -456,5 +455,4 @@ public final class NetworkUtilities {
             ioe.printStackTrace();
         }
     }
-
 }

@@ -28,32 +28,21 @@
  *
  * Project: https://github.com/mhschmieder/commonstoolkit
  */
-package com.mhschmieder.commonstoolkit.security;
+package com.mhschmieder.commonstoolkit.util;
 
-public enum LoginType {
-    SERVER, PROXY;
-
-    public static LoginType defaultValue() {
-        return SERVER;
-    }
-
-    public final String toPresentationString() {
-        String presentationString = null;
-        
-        switch ( this ) {
-        case SERVER:
-            presentationString = "Server"; //$NON-NLS-1$
-            break;
-        case PROXY:
-            presentationString = "Proxy"; //$NON-NLS-1$
-            break;
-        default:
-            final String errMessage = "Unexpected " //$NON-NLS-1$
-                    + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
-            throw new IllegalArgumentException( errMessage );
-        }
-        
-        return presentationString;
-    }
-
+/**
+ * Enumeration of data update types, focusing on the two most basic types.
+ * <p>
+ * In earlier times, it was common for advanced computational applications to
+ * offer Fast Mode and Accurate Mode. This began to fall away in favor of two
+ * options that vary more in speed than in accuracy: a full update vs. partial.
+ * <p>
+ * The latter is called Dynamic Update because usually it is triggered by mouse
+ * drag actions, which can be fast and furious, vs. GUI buttons for full updates.
+ * <p>
+ * Consumers of this API may have data subsets that apply to Dynamic Updates.
+ */
+public enum DataUpdateType {
+    FULL_UPDATE, 
+    DYNAMIC_UPDATE
 }
