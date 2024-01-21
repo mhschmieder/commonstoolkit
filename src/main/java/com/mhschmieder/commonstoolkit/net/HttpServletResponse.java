@@ -30,9 +30,8 @@
  */
 package com.mhschmieder.commonstoolkit.net;
 
-
 /**
- * Base class for all response categories for Servlet based server calls using HTTP.
+ * Base class for all response categories for Servlet based HTTP calls.
  */
 public class HttpServletResponse {
 

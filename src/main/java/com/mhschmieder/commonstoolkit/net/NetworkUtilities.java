@@ -59,7 +59,7 @@ public final class NetworkUtilities {
     public static void addServerRequestProperties( final HttpURLConnection httpURLConnection,
                                                    final String requestType,
                                                    final LoginCredentials loginCredentials,
-                                                   final ServerRequestProperties serverRequestProperties,
+                                                   final HttpServletRequestProperties httpServletRequestProperties,
                                                    final ClientProperties clientProperties,
                                                    final double screenWidth,
                                                    final double screenHeight ) {
@@ -82,11 +82,11 @@ public final class NetworkUtilities {
 
             httpURLConnection
                     .setRequestProperty( "buildID",
-                                         Integer.toString( serverRequestProperties.clientBuildId ) );
+                                         Integer.toString( httpServletRequestProperties.clientBuildId ) );
             httpURLConnection.setRequestProperty( "clientType",
-                                                  serverRequestProperties.clientType );
-            httpURLConnection.setRequestProperty( "client", serverRequestProperties.localHostName );
-            httpURLConnection.setRequestProperty( "server", serverRequestProperties.webHostName );
+                                                  httpServletRequestProperties.clientType );
+            httpURLConnection.setRequestProperty( "client", httpServletRequestProperties.localHostName );
+            httpURLConnection.setRequestProperty( "server", httpServletRequestProperties.webHostName );
 
             httpURLConnection.setRequestProperty( "clientOS", clientProperties.osNameVerbose );
             httpURLConnection.setRequestProperty( "screenSizeX", Double.toString( screenWidth ) );
