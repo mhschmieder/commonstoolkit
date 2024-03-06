@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,11 @@ public class ProductBranding {
     public String productVersion;
     public String productVersionProtected;
     public String revisionDate;
+    
+    // NOTE: A default blanker is provided to discourage using null references.
+    public ProductBranding() {
+        this( "", "", "", "", "" );
+    }
 
     public ProductBranding( final String pApplicationName,
                             final String pProductName,
@@ -52,5 +57,4 @@ public class ProductBranding {
         productVersionProtected = pProductVersionProtected;
         revisionDate = pRevisionDate;
     }
-
 }

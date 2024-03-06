@@ -34,6 +34,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -72,6 +73,17 @@ public class GlobalUtilities {
 
         // Return the maximum column count for the data vector.
         return maxColumn;
+    }
+
+    /**
+     * Make the Client Properties using System Properties.
+     *
+     * @return An instance of {@link ClientProperties} to avoid redundant
+     *         run-time queries
+     */
+    public static ClientProperties makeClientProperties() {
+        final Map< String, String > namedArguments = new HashMap<>();
+        return makeClientProperties( namedArguments );
     }
 
     /**
@@ -170,5 +182,4 @@ public class GlobalUtilities {
             : clientProperties.locale;
         return ResourceBundle.getBundle( bundleName, locale );
     }
-
 }
