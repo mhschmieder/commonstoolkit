@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,6 +54,7 @@ import java.util.zip.ZipFile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.file.PathUtils;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 
@@ -303,43 +304,44 @@ public final class FileUtilities {
     
     // Move or rename a source file to a target file (system-specific).
     public static boolean moveFile( final File sourceFile, final File targetFile ) {
-        // Do not move invalid or empty source files.
-        if ( ( sourceFile != null ) && ( sourceFile.length() > 0 ) ) {
-            // TODO: Verify that network drives work as the target location, as
-            // it is illegal to rename (vs. copy) a file from one system to
-            // another. Probably Java NIO2 deals with this for us.
-            try {
-                // NOTE: File status can change suddenly, so it is best to
-                // recheck whether a target file is writable before a move or
-                // rename operation. We always replace an existing file, and
-                // depend on the file chooser to alert the user of overwrites.
-                final Path sourcePath = sourceFile.toPath();
-                final Path targetPath = targetFile.toPath();
-                final boolean isTargetFile = Files.exists( targetPath, LinkOption.NOFOLLOW_LINKS )
-                        && !Files.notExists( targetPath, LinkOption.NOFOLLOW_LINKS );
-                if ( !isTargetFile ) {
-                    // If the target file doesn't exist, create it.
-                    Files.createFile( targetPath );
-                }
-
-                if ( !Files.isWritable( targetPath ) ) {
-                    return false;
-                }
-
-                // NOTE: If we also specify to copy the attributes, we get
-                // run-time exceptions on Windows 10 due to security issues.
-                //FileUtils.moveFile( sourceFile, targetFile, StandardCopyOption.REPLACE_EXISTING );
-                Files.move( sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING );
+        // TODO: Verify that network drives work as the target location, as
+        //  it is illegal to rename (vs. copy) a file from one system to
+        //  another. Probably Java NIO2 deals with this for us.
+        final Path sourcePath = sourceFile.toPath();
+        final Path targetPath = targetFile.toPath();
+        
+        try {
+            // Do not move invalid or empty source files.
+            if ( !PathUtils.isRegularFile( sourcePath, LinkOption.NOFOLLOW_LINKS ) 
+                    || PathUtils.isEmptyFile( sourcePath ) ) {
+                return false;
             }
-            catch ( final Exception e ) {
-                e.printStackTrace();
+            
+            // NOTE: File status can change suddenly, so it is best to
+            //  recheck whether a target file is writable before a move or
+            //  rename operation. We always replace an existing file, and
+            //  depend on the file chooser to alert the user of overwrites.
+            final boolean isTargetFile = Files.exists( targetPath, 
+                                                       LinkOption.NOFOLLOW_LINKS )
+                    && !Files.notExists( targetPath, LinkOption.NOFOLLOW_LINKS );
+            if ( !isTargetFile ) {
+                // If the target file doesn't exist, create it.
+                Files.createFile( targetPath );
+            }
+            if ( !Files.isWritable( targetPath ) ) {
                 return false;
             }
 
-            return true;
+            // NOTE: If we also specify to copy the attributes, we get
+            //  run-time exceptions on Windows 10 due to security issues.
+            Files.move( sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING );
+        }  
+        catch ( final Exception e ) {
+            e.printStackTrace();
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     // Get a time and version tagged file, given a fully specified path as
