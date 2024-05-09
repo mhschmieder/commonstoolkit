@@ -55,8 +55,7 @@ public class GlobalUtilities {
 
     // Pad a collection of String collections to the maximum column count.
     // NOTE: This is designed as a generic preparatory task for loading
-    // string-based data into a table or possibly a database (e.g. SQL).
-    @SuppressWarnings("nls")
+    //  string-based data into a table or possibly a database (e.g. SQL).
     public static int padStringsToMaxColumn( final Collection< Collection< String > > vector ) {
         // Figure out maximum number of columns in a line.
         int maxColumn = 0;
@@ -99,7 +98,6 @@ public class GlobalUtilities {
      * @return An instance of {@link ClientProperties} to avoid redundant
      *         run-time queries
      */
-    @SuppressWarnings("nls")
     public static ClientProperties makeClientProperties( final Map< String, String > namedArguments ) {
         // First determine whether we have command-line or JNLP arguments.
         final boolean hasNamedArguments = !namedArguments.isEmpty();
@@ -130,7 +128,7 @@ public class GlobalUtilities {
         }
 
         // TODO: Get the locale from cached User Preferences instead?
-        // final Locale locale = Locale.getDefault( Category.DISPLAY );
+        //  final Locale locale = Locale.getDefault( Category.DISPLAY );
         final Locale locale = Locale.getDefault();
 
         // Due to problems with newer file systems (Windows Vista and beyond,
@@ -173,7 +171,6 @@ public class GlobalUtilities {
      *            using the default Locale of US-English
      * @return A {@link ResourceBundle} returned by the JVM's Security Manager
      */
-    @SuppressWarnings("nls")
     public static ResourceBundle getResourceBundle( final ClientProperties clientProperties,
                                                     final String bundleName,
                                                     final boolean ignoreUserLocale ) {
