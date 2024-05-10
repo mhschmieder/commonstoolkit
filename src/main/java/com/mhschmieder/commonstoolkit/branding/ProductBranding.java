@@ -32,7 +32,11 @@ package com.mhschmieder.commonstoolkit.branding;
 
 public class ProductBranding {
 
-    // Declare the fully qualified application name.
+    /**
+     * The fully qualified application name, which can help distinguish
+     * which server a deployment is targeted for, in client/server based
+     * architectures, making it easier to compare behavior and performance.
+     */
     public String applicationName;
 
     // Declare strings for product name and version, for ongoing reference.
@@ -45,13 +49,30 @@ public class ProductBranding {
     public ProductBranding() {
         this( "", "", "", "", "" );
     }
+    
+    // Cross-constructor from {@link ProductVersion}.
+    public ProductBranding( final String pApplicationName,
+                            final ProductVersion pProductVersion ) {
+        this( pApplicationName,
+              pProductVersion.getProductName(),
+              pProductVersion.getProductReleaseName(),
+              pProductVersion.getFullProductReleaseProtectedName(),
+              pProductVersion.releaseDate );
+    }
 
+    // Fully qualified constructor.
     public ProductBranding( final String pApplicationName,
                             final String pProductName,
                             final String pProductVersion,
                             final String pProductVersionProtected,
                             final String pRevisionDate ) {
-        applicationName = pApplicationName;
+        // If the supplied Application Name is null or empty, use the regular
+        // Product Name as a fallback.
+        applicationName = ( ( pApplicationName != null ) 
+                && !pApplicationName.trim().isEmpty() ) 
+                ? pApplicationName 
+                : productName;
+        
         productName = pProductName;
         productVersion = pProductVersion;
         productVersionProtected = pProductVersionProtected;
