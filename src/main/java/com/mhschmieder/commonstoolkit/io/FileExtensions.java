@@ -42,6 +42,10 @@ public class FileExtensions {
     private FileExtensions() {}
 
     // Declare constants for file type descriptions and extensions.
+    public static final String                            ALL_DESCRIPTION             = "All Files";
+    @SuppressWarnings("nls") public static final String   ALL_EXTENSIONS              = "*.*";
+   
+    
     public static final String                            BMP_DESCRIPTION             = "BMP";                 //$NON-NLS-1$
     @SuppressWarnings("nls") public static final String[] BMP_EXTENSIONS              =
                                                                          new String[] {
