@@ -30,25 +30,15 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
-public enum FileStatus {
-    // NOTE: NOT_OPENED and NOT_SAVED are used to replace the original
-    // file status in order to avoid secondary warning dialogs if an
-    // immediate warning is needed under certain error conditions.
-    CREATED,
-    OUT_OF_MEMORY_ERROR,
-    GRAPHICS_READ_ERROR,
-    GRAPHICS_WRITE_ERROR,
-    READ_ERROR,
-    WRITE_ERROR,
-    CANCELED,
-    CLIENT_INCOMPATIBLE,
-    NOT_OPENED,
-    OPENED,
-    OPENED_FOR_RENAME,
-    LOADED,
-    NOT_SAVED,
-    SAVED,
-    IMPORTED,
-    EXPORTED
-
+/**
+ * Enumeration of the most basic file actions shared by most apps. As it is not
+ * possible to inherit enums, it seemed unclear if it was wise to make a library
+ * level enum when most apps will need to extend the set, but there are many core
+ * functionalities that work around just these core basic file actions.
+ * <p>
+ * The "Custom" File Action allows for flagging that a file action isn't found in
+ * the basic set, which may aid in hybrid architectures that add custom actions.
+ */
+public enum FileAction {
+    NEW, OPEN, RUN_BATCH, CLOSE, SAVE, SAVE_AS, EXIT, CUSTOM;
 }
