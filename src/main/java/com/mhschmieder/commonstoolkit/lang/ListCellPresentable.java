@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2023 Mark Schmieder
+ * Copyright (c) 2023, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,9 @@ package com.mhschmieder.commonstoolkit.lang;
  * This is published to the commons toolkit as it isn't GUI specific or dependent
  * on a specific toolkit, and otherwise could not be applied to data model enums.
  */
-public interface ListViewConverter {
+public interface ListCellPresentable< T > {
     
     public String toListCellText();
+    
+    public T fromListCellText( String text );
 }
