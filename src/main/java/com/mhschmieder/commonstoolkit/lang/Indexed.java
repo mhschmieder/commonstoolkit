@@ -59,7 +59,7 @@ package com.mhschmieder.commonstoolkit.lang;
  * 
  * @param <T> The object or enum type that implements this interface
  */
-public interface IndexAssignable< T > {
+public interface Indexed< T > {
     
     /**
      * Returns the integer value of the index assigned to this object.
