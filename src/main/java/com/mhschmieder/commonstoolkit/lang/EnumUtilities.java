@@ -77,7 +77,7 @@ public final class EnumUtilities {
         return labeledEnum;
     }
     
-    public static Abbreviated< ? > getAbbreviatedEnumFromLabel( 
+    public static Abbreviated< ? > getAbbreviatedEnumFromAbbreviation( 
             final String text,
             final Abbreviated< ? >[] values ) {
         // NOTE: This is a fail-safe that should never return as-is vs. throwing
@@ -108,7 +108,7 @@ public final class EnumUtilities {
         return abbreviatedEnum;
     }
     
-    public static Indexed< ? > getIndexedEnumFromLabel( 
+    public static Indexed< ? > getIndexedEnumFromIndex( 
             final String text,
             final Indexed< ? >[] values ) {
         // NOTE: This is a fail-safe that should never return as-is vs. throwing

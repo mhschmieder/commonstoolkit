@@ -86,5 +86,5 @@ public interface Abbreviated< T > {
      *        object or enum
      * @return the object assigned to the provided abbreviated label
      */
-    public T valueOfIndex( String abbreviatedLabel );
+    public T valueOfAbbreviation( String abbreviatedLabel );
 }
