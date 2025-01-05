@@ -76,4 +76,66 @@ public final class EnumUtilities {
 
         return labeledEnum;
     }
+    
+    public static Abbreviated< ? > getAbbreviatedEnumFromLabel( 
+            final String text,
+            final Abbreviated< ? >[] values ) {
+        // NOTE: This is a fail-safe that should never return as-is vs. throwing
+        //  an exception if no valid Abbreviated enum is found or there's an error.
+        Abbreviated< ? > abbreviatedEnum = null;
+        
+        boolean foundAbbreviated = false;
+        try {
+            for ( final Abbreviated< ? > abbreviated : values ) {
+                if ( Objects.equals( abbreviated.abbreviation(), text ) ) {
+                    abbreviatedEnum = abbreviated;
+                    foundAbbreviated = true;
+                    break;
+                }
+            }
+        }
+        catch ( final Exception e ) {
+            // Nothing to do here; error handling is subsumed below.
+        }
+        
+        if ( !foundAbbreviated ) {
+            // TODO: Pass the enum's classname to insert in this string, but
+            //  only if getClass().getCanonicalName() doesn't return "Enum".
+            final String message = "Unexpected value for Abbreviated enum: " + text;
+            throw new IllegalArgumentException( message );
+        }
+
+        return abbreviatedEnum;
+    }
+    
+    public static Indexed< ? > getIndexedEnumFromLabel( 
+            final String text,
+            final Indexed< ? >[] values ) {
+        // NOTE: This is a fail-safe that should never return as-is vs. throwing
+        //  an exception if no valid Indexed enum is found or there's an error.
+        Indexed< ? > indexedEnum = null;
+        
+        boolean foundIndexed = false;
+        try {
+            for ( final Indexed< ? > indexed : values ) {
+                if ( Objects.equals( indexed.index(), text ) ) {
+                    indexedEnum = indexed;
+                    foundIndexed = true;
+                    break;
+                }
+            }
+        }
+        catch ( final Exception e ) {
+            // Nothing to do here; error handling is subsumed below.
+        }
+        
+        if ( !foundIndexed ) {
+            // TODO: Pass the enum's classname to insert in this string, but
+            //  only if getClass().getCanonicalName() doesn't return "Enum".
+            final String message = "Unexpected value for Indexed enum: " + text;
+            throw new IllegalArgumentException( message );
+        }
+
+        return indexedEnum;
+    }
 }
