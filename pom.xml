@@ -10,7 +10,7 @@
 
     <name>CommonsToolkit</name>
     <url>https://github.com/mhschmieder/commonstoolkit</url>
-    <description>Utilities and custom classes for Java I/O.</description>
+    <description>Utilities and custom classes for basic Java core language concept.</description>
 
     <licenses>
         <license>
@@ -36,8 +36,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>1.8</maven.compiler.release>
+        <maven.test.skip>true</maven.test.skip>
     </properties>
-
+    
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
@@ -65,7 +67,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.12.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -79,7 +81,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <show>private</show>
                     <docfilessubdirs>true</docfilessubdirs>
@@ -97,7 +99,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
