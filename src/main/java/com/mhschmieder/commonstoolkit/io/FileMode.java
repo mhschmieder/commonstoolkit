@@ -39,6 +39,9 @@ package com.mhschmieder.commonstoolkit.io;
  *  Import and Export primarily because PDF files can be used as either category.
  *  There is also some overlap with CAD, but such files may also contain details
  *  from modeling and manufacturing realms that require domain-specific parsing.
+ * <p>
+ * TODO: Consider renaming EXPORT_DATA and EXPORT_IMAGE as EXPORT_BINARY_DATA and
+ *  EXPORT_IMAGE_DATA with possibly an EXPORT_TEXT_DATA (plus related imports). 
  */
 public enum FileMode {
     NEW, 
@@ -53,6 +56,7 @@ public enum FileMode {
     SAVE, 
     SAVE_CONVERTED, 
     SAVE_LOG,
+    SAVE_REPORT,
     SAVE_SERVER_REQUEST,
     SAVE_SERVER_RESPONSE,
     EXPORT_DATA,
