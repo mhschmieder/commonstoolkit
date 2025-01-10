@@ -30,25 +30,35 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
-public enum FileStatus {
-    // NOTE: NOT_OPENED and NOT_SAVED are used to replace the original
-    //  file status in order to avoid secondary warning dialogs if an
-    //  immediate warning is needed under certain error conditions.
-    CREATED,
-    OUT_OF_MEMORY_ERROR,
-    GRAPHICS_READ_ERROR,
-    GRAPHICS_WRITE_ERROR,
-    READ_ERROR,
-    WRITE_ERROR,
-    CANCELED,
-    CLIENT_INCOMPATIBLE,
-    NOT_OPENED,
-    OPENED,
-    OPENED_FOR_RENAME,
-    LOADED,
-    NOT_SAVED,
-    SAVED,
-    IMPORTED,
-    EXPORTED
-
+/**
+ * Enumeration of common file modes when handling File Menu actions. The "other"
+ * instance marks the mode as needing extension by downstream clients, as we
+ * can't inherit enums so we must supplement with an app-specific enum or class.
+ * <p>
+ * NOTE: Raster Graphics and Vector Graphics are given separate instances for
+ *  Import and Export primarily because PDF files can be used as either category.
+ *  There is also some overlap with CAD, but such files may also contain details
+ *  from modeling and manufacturing realms that require domain-specific parsing.
+ */
+public enum FileMode {
+    NEW, 
+    OPEN,
+    IMPORT_DATA,
+    IMPORT_IMAGE,
+    IMPORT_RASTER_GRAPHICS, 
+    IMPORT_VECTOR_GRAPHICS,
+    IMPORT_CAD,
+    LOAD, 
+    CLOSE, 
+    SAVE, 
+    SAVE_CONVERTED, 
+    SAVE_LOG,
+    SAVE_SERVER_REQUEST,
+    SAVE_SERVER_RESPONSE,
+    EXPORT_DATA,
+    EXPORT_IMAGE,
+    EXPORT_RASTER_GRAPHICS,
+    EXPORT_VECTOR_GRAPHICS,
+    EXPORT_CAD,
+    OTHER
 }
