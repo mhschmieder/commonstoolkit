@@ -33,8 +33,8 @@ package com.mhschmieder.commonstoolkit.util;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.Collection;
-import java.util.Locale;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 

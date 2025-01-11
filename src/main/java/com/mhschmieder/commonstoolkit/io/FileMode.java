@@ -40,16 +40,22 @@ package com.mhschmieder.commonstoolkit.io;
  *  There is also some overlap with CAD, but such files may also contain details
  *  from modeling and manufacturing realms that require domain-specific parsing.
  * <p>
- * TODO: Consider renaming EXPORT_DATA and EXPORT_IMAGE as EXPORT_BINARY_DATA and
- *  EXPORT_IMAGE_DATA with possibly an EXPORT_TEXT_DATA (plus related imports). 
+ * NOTE: The Table Data category is for CSV as it isn't as detailed or flexible
+ *  as Spreadsheet Data and is likely to be used in a narrow scope vs. app-level.
+ * <p>
+ * TODO: Flesh out the general File Menu and sub-menus to capture all enums.
  */
 public enum FileMode {
     NEW, 
     OPEN,
-    IMPORT_DATA,
-    IMPORT_IMAGE,
+    IMPORT_TEXT_DATA,
+    IMPORT_TABLE_DATA,
+    IMPORT_SPREADSHEET_DATA,
+    IMPORT_BINARY_DATA,
+    IMPORT_IMAGE_DATA,
     IMPORT_RASTER_GRAPHICS, 
     IMPORT_VECTOR_GRAPHICS,
+    IMPORT_RENDERED_GRAPHICS,
     IMPORT_CAD,
     LOAD, 
     CLOSE, 
@@ -59,10 +65,14 @@ public enum FileMode {
     SAVE_REPORT,
     SAVE_SERVER_REQUEST,
     SAVE_SERVER_RESPONSE,
-    EXPORT_DATA,
-    EXPORT_IMAGE,
+    EXPORT_TEXT_DATA,
+    EXPORT_TABLE_DATA,
+    EXPORT_SPREADSHEET_DATA,
+    EXPORT_BINARY_DATA,
+    EXPORT_IMAGE_DATA,
     EXPORT_RASTER_GRAPHICS,
     EXPORT_VECTOR_GRAPHICS,
+    EXPORT_RENDERED_GRAPHICS,
     EXPORT_CAD,
     OTHER
 }
