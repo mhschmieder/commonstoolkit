@@ -225,6 +225,77 @@ public final class FileUtilities {
     public static String removeExtension( final String filename ) {
         return FilenameUtils.removeExtension( filename );
     }
+    
+    /**
+     * Returns an adjusted file extension, set to the preferred variant.
+     * <p>
+     * Many file formats have multiple file extensions in use, but there is
+     * usually one that has become dominant or preferred over time, and in
+     * some cases enforcing a specific extension can also force downstream
+     * behavior to assume modern standards are met by the associated file. 
+     * For example, ".pptx" signifies the current XML format for PowerPoint.
+     * 
+     * @param fileExtension The original file extension
+     * @return an adjusted file extension, set to the preferred variant
+     */
+    public static String adjustFileExtension( final String fileExtension ) {
+        String fileExtensionAdjusted = fileExtension;
+        
+        switch ( fileExtension ) {
+        case "bmp":
+        case "dib":
+            fileExtensionAdjusted = "bmp";
+            break;
+        case "eps":
+        case "epsf":
+            fileExtensionAdjusted = "eps";
+            break;
+        case "jpg":
+        case "jpeg":
+        case "jpe":
+            fileExtensionAdjusted = "jpg";
+            break;
+        case "pptx":
+        case "ppt":
+            fileExtensionAdjusted = "pptx";
+            break;
+        case "tif":
+        case "tiff":
+            fileExtensionAdjusted = "tiff";
+            break;
+        case "wbm":
+        case "wbmp":
+            fileExtensionAdjusted = "wbmp";
+            break;
+        case "gif":
+        case "pdf":
+        case "png":
+        case "pnm":
+        case "svg":
+        default:
+            // For these formats, use the file extension as-is; no variants.
+            break;
+        }
+        
+        return fileExtensionAdjusted;
+    }
+    
+    /**
+     * Returns an adjusted file extension, set to the preferred variant.
+     * <p>
+     * Many file formats have multiple file extensions in use, but there is
+     * usually one that has become dominant or preferred over time, and in
+     * some cases enforcing a specific extension can also force downstream
+     * behavior to assume modern standards are met by the associated file. 
+     * For example, ".pptx" signifies the current XML format for PowerPoint.
+     * 
+     * @param file The file whose extension may need adjustment
+     * @return an adjusted file extension, set to the preferred variant
+     */
+    public static String getAdjustedFileExtension( final File file ) {
+        final String fileExtension = FileUtilities.getExtension( file );
+        return adjustFileExtension( fileExtension );
+    }
 
     public static StringBuilder getFileNameWithNewSuffix( final File file,
                                                           final String fileSuffix ) {
