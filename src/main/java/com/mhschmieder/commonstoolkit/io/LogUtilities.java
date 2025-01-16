@@ -30,8 +30,11 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -42,6 +45,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.mhschmieder.commonstoolkit.branding.ProductBranding;
+import com.mhschmieder.commonstoolkit.lang.StringConstants;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 public final class LogUtilities {
@@ -181,4 +185,37 @@ public final class LogUtilities {
         }
     }
 
+    // Load the current Session Log from its on-disc file cache.
+    public static String loadSessionLogFromCache( final String sessionLogFilename ) {
+        // For efficiency and downstream flexibility, use a string builder.
+        final StringBuilder sessionLogStringBuilder = new StringBuilder();
+
+        // Chain a BufferedReader to an InputStreamReader to a FileInputStream,
+        // for better performance.
+        //
+        // NOTE: Using the Logger API causes deadlock on second use, so it is
+        //  commented out until we adopt a full Logging Framework. For now, we
+        //  simply redirect to a file in the user's default temporary directory.
+        // try ( final LogOutputStream sessionLogOutputStream = new
+        // LogOutputStream() ) {
+        try ( final FileInputStream fileInputStream 
+                        = new FileInputStream( sessionLogFilename );
+                final InputStreamReader inputStreamReader
+                        = new InputStreamReader( fileInputStream );
+                final BufferedReader bufferedReader 
+                        = new BufferedReader( inputStreamReader ) ) {
+            String line;
+            while ( ( line = bufferedReader.readLine() ) != null ) {
+                // NOTE: Need the new line character as it gets discarded by
+                //  the buffered reader.
+                sessionLogStringBuilder.append( line );
+                sessionLogStringBuilder.append( StringConstants.LINE_SEPARATOR );
+            }
+        }
+        catch ( final NullPointerException | IOException e ) {
+            e.printStackTrace();
+        }
+
+        return sessionLogStringBuilder.toString();
+    }
 }
