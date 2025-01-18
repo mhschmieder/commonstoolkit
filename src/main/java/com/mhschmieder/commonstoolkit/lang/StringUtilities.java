@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -210,18 +210,28 @@ public final class StringUtilities {
      * remain intact during parsing.
      * <p>
      * NOTE: The Java StringTokenizer seems to fail if there isn't a space ahead
-     * of the quotes. Usually this is the case, except at the head of a line,
-     * but as most elements on a line will have spaces or other delimiters anyway,
-     * it seems best not to prepend the space here, and to instead make clients
-     * aware that they may need to prepend one at their end if the quoted string
-     * is at the head of a line in a text file. The tokenizer gets confused for
-     * some reason otherwise; perhaps Apache's replacement version works better?
+     *  of the quotes. Usually this is the case, except at the head of a line,
+     *  but as most elements on a line will have spaces or other delimiters anyway,
+     *  it seems best not to prepend the space here, and to instead make clients
+     *  aware that they may need to prepend one at their end if the quoted string
+     *  is at the head of a line in a text file. The tokenizer gets confused for
+     *  some reason otherwise; perhaps Apache's replacement version works better?
+     * <p>
+     * NOTE: We adjust for null strings by substituting a single-blank string, as
+     *  we otherwise just return a single quote vs an empty quote-enclosed string.
+     *  An empty string doesn't work, as StringTokenizer then skips past the
+     *  closing quotes and is forever out-of-sync for the remainder of the line.
+     *  This is only partially successful, as StringTokenizer still skips past the
+     *  end quotes and gets out of whack, but at least this approach should work
+     *  well with safer parsers such as Apache CsvParser (with space as delimiter).
      * 
-     * @param string The string to be quoted
+     * @param unquotedString The string to be quoted
      * @return A quoted version of the given string
      */
-    public static String quote( final String string ) {
-        final String quotedString = "\"" + string + "\"";
-        return quotedString;
+    public static String quote( final String unquotedString ) {
+        final String safeString = ( unquotedString != null ) 
+                ? unquotedString 
+                : " ";
+        return "\"" + safeString + "\"";
     }
 }
