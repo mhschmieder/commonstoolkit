@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -121,7 +121,7 @@ public final class FileUtilities {
     // Load the Default Directory from User Preferences.
     public static File loadDefaultDirectoryPreferences( final Preferences preferences ) {
         // NOTE: The current User Home Directory is simply the default in case
-        // the preferred default directory hasn't been set as a preference yet.
+        //  the preferred default directory hasn't been set as a preference yet.
         try {
             final String userHomeDirectoryPath = FileUtils.getUserDirectoryPath();
             final String defaultDirectoryPath = preferences.get( "defaultDirectory", //$NON-NLS-1$
@@ -163,9 +163,9 @@ public final class FileUtilities {
     public static String getSavedFrom( final ProductBranding productBranding,
                                        final Locale locale ) {
         final StringBuilder savedFrom = new StringBuilder();
-        savedFrom.append( "Saved from " ); //$NON-NLS-1$
+        savedFrom.append( "Saved from " );
         savedFrom.append( productBranding.productVersionProtected );
-        savedFrom.append( "; Locale = " ); //$NON-NLS-1$
+        savedFrom.append( "; Locale = " );
         savedFrom.append( locale.getDisplayName() );
 
         return savedFrom.toString();
@@ -457,7 +457,6 @@ public final class FileUtilities {
 
     // Get a unique revision tagged file, given a fully specified path as the
     // file name candidate.
-    @SuppressWarnings("nls")
     public static File getUniqueRevisionTaggedFile( final StringBuilder fileNameCandidate ) {
         File uniqueFile = null;
 
@@ -499,11 +498,11 @@ public final class FileUtilities {
 
         // Make sure the supplied version string doesn't contain directory
         // indirection markers; use dashes in place of dots for version string.
-        String versionTag = "_v" + version; //$NON-NLS-1$
+        String versionTag = "_v" + version;
         versionTag = versionTag.replace( '.', '_' );
 
         // Append the modified version string to the file name candidate.
-        final int fileSuffixIndex = fileNameCandidate.lastIndexOf( "." ); //$NON-NLS-1$
+        final int fileSuffixIndex = fileNameCandidate.lastIndexOf( "." );
         final StringBuilder versionTaggedFileNameCandidate = ( fileSuffixIndex != -1 )
             ? fileNameCandidate.insert( fileSuffixIndex, versionTag )
             : fileNameCandidate.append( versionTag );
@@ -562,5 +561,4 @@ public final class FileUtilities {
 
         return optionalZipEntry;
     }
-
 }
