@@ -40,7 +40,7 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 /**
  * A fairly complete set of methods for checking, getting, or enforcing (and
- * otherwise managing) unique labels in a collection of {@link LabeledObject}.
+ * otherwise managing) unique labels in a collection of {@code LabeledObject}.
  * <p>
  * For most clients, the most common entry points will be the uniquefyLabel()
  * methods. Four variants are provided, for flexibility in integration. These
