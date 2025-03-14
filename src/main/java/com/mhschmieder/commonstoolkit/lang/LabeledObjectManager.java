@@ -40,13 +40,13 @@ import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 /**
  * A fairly complete set of methods for checking, getting, or enforcing (and
- * otherwise managing) unique labels in a collection of {@link LabelObject}.
+ * otherwise managing) unique labels in a collection of {@link LabeledObject}.
  * <p>
  * For most clients, the most common entry points will be the uniquefyLabel()
  * methods. Four variants are provided, for flexibility in integration. These
  * methods perform an in-place modification of a label, if non-unique.
  * <p>
- * The general approach is to append an underscore and a multiu-digit integer.
+ * The general approach is to append an underscore and a multi-digit integer.
  * This is partially accomplished by providing a helper method in TextUtilities
  * for creating a {@link NumberFormat} object, and another for appending an int.
  */
