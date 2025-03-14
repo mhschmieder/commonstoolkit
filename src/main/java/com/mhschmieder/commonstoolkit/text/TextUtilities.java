@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -230,17 +230,15 @@ public class TextUtilities {
         return signStrippedNumberString;
     }
 
-    @SuppressWarnings("nls")
     public static String getUniquefierAppendix( final int uniquefierNumber,
                                                 final NumberFormat uniquefierNumberFormat ) {
         // Ignore numbers less than one, as that is the only way -- in a
         // recursive algorithm -- to easily distinguish initial conditions where
         // the original label should be used as-is (when unique) vs. cases where
         // an appendix is always required.
-        final String uniquefierAppendix = ( uniquefierNumber > 0 )
+        return ( uniquefierNumber > 0 )
             ? uniquefierNumberFormat.format( uniquefierNumber )
             : "";
-        return uniquefierAppendix;
     }
 
 }
