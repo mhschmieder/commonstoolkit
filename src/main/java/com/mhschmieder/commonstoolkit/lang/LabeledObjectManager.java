@@ -282,7 +282,9 @@ public class LabeledObjectManager {
                                          final NumberFormat uniquefierNumberFormat ) {
         // Recursively search for (and enforce) uniqueness of the supplied
         // label candidate and uniquefier number.
-        final String uniquefierAppendix = TextUtilities
+        // NOTE: We loop from the start of the collection, to allow reuse of 
+        //  deleted names and to minimize or eliminate holes in the numbering.
+       final String uniquefierAppendix = TextUtilities
                 .getUniquefierAppendix( uniquefierNumber, uniquefierNumberFormat );
         String uniqueLabel = labelCandidate + uniquefierAppendix;
         for ( final LabeledObject labeledObject : labeledObjects ) {
