@@ -46,17 +46,27 @@ public final class EnumUtilities {
      */
     private EnumUtilities() {}
     
-    public static Labeled< ? > getLabeledEnumFromLabel( 
-            final String text,
-            final Labeled< ? >[] values ) {
+    public static Labeled< ? > getLabeledEnumFromLabel( final String text,
+                                                        final Labeled< ? >[] values ) {
+        // Exit early if there's nothing to compare.
+        if ( text == null ) {
+            return null;
+        }
+   
         // NOTE: This is a fail-safe that should never return as-is vs. throwing
         //  an exception if no valid Labeled enum is found or there's an error.
         Labeled< ? > labeledEnum = null;
-        
+   
         boolean foundLabeled = false;
         try {
             for ( final Labeled< ? > labeled : values ) {
-                if ( Objects.equals( labeled.label(), text ) ) {
+                // Trim leading spaces, as sometimes labels are used to pair
+                // with other strings (such as a measurement unit following a
+                // value) but when selecting in a drop-list, these are stripped.
+                // Usually, values() returns with leading spaces and the passed
+                // text value is trimmed and comes from a GUI drop-list.
+                if ( Objects.equals( labeled.label().trim(), 
+                                     text.trim() ) ) {
                     labeledEnum = labeled;
                     foundLabeled = true;
                     break;
@@ -66,7 +76,7 @@ public final class EnumUtilities {
         catch ( final Exception e ) {
             // Nothing to do here; error handling is subsumed below.
         }
-        
+   
         if ( !foundLabeled ) {
             // TODO: Pass the enum's classname to insert in this string, but
             //  only if getClass().getCanonicalName() doesn't return "Enum".
@@ -80,6 +90,11 @@ public final class EnumUtilities {
     public static Abbreviated< ? > getAbbreviatedEnumFromAbbreviation( 
             final String text,
             final Abbreviated< ? >[] values ) {
+        // Exit early if there's nothing to compare.
+        if ( text == null ) {
+            return null;
+        }
+   
         // NOTE: This is a fail-safe that should never return as-is vs. throwing
         //  an exception if no valid Abbreviated enum is found or there's an error.
         Abbreviated< ? > abbreviatedEnum = null;
@@ -87,7 +102,13 @@ public final class EnumUtilities {
         boolean foundAbbreviated = false;
         try {
             for ( final Abbreviated< ? > abbreviated : values ) {
-                if ( Objects.equals( abbreviated.abbreviation(), text ) ) {
+                // Trim leading spaces, as sometimes labels are used to pair
+                // with other strings (such as a measurement unit following a
+                // value) but when selecting in a drop-list, these are stripped.
+                // Usually, values() returns with leading spaces and the passed
+                // text value is trimmed and comes from a GUI drop-list.
+                if ( Objects.equals( abbreviated.abbreviation().trim(), 
+                                     text.trim() ) ) {
                     abbreviatedEnum = abbreviated;
                     foundAbbreviated = true;
                     break;
@@ -109,7 +130,7 @@ public final class EnumUtilities {
     }
     
     public static Indexed< ? > getIndexedEnumFromIndex( 
-            final String text,
+            final int index,
             final Indexed< ? >[] values ) {
         // NOTE: This is a fail-safe that should never return as-is vs. throwing
         //  an exception if no valid Indexed enum is found or there's an error.
@@ -118,7 +139,7 @@ public final class EnumUtilities {
         boolean foundIndexed = false;
         try {
             for ( final Indexed< ? > indexed : values ) {
-                if ( Objects.equals( indexed.index(), text ) ) {
+                if ( indexed.index() == index ) {
                     indexedEnum = indexed;
                     foundIndexed = true;
                     break;
@@ -132,7 +153,7 @@ public final class EnumUtilities {
         if ( !foundIndexed ) {
             // TODO: Pass the enum's classname to insert in this string, but
             //  only if getClass().getCanonicalName() doesn't return "Enum".
-            final String message = "Unexpected value for Indexed enum: " + text;
+            final String message = "Unexpected value for Indexed enum: " + index;
             throw new IllegalArgumentException( message );
         }
 
