@@ -24,7 +24,7 @@
  * This file is part of the CommonsToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * CommonsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * CommonsToolkit Library. If not, see https://opensource.org/licenses/MIT.
  *
  * Project: https://github.com/mhschmieder/commonstoolkit
  */
@@ -66,11 +66,19 @@ import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 public final class FileUtilities {
 
     /**
+     * Cache the current user's Working Directory path, to avoid expensive
+     * redundant calls and to enforce a consistent path that persists throughout
+     * a session, unlike "." for the Current Directory. This also corresponds in
+     * many cases to Application Launch Path, which helps encapsulate app files.
+     */
+    public static final String WORKING_DIRECTORY_PATH = System.getProperty( "user.dir" );
+
+    /**
      * The MRU cache size is generally limited to in-line menu items using
      * numeric mnemonics from 1-9, as extending to letters gets confusing and
      * blocks those shortcuts from use with common File commands in menus.
      */
-    public static final int MRU_CACHE_SIZE = 9;
+    public static final int    MRU_CACHE_SIZE         = 9;
 
     /**
      * The default constructor is disabled, as this is a static utilities class
@@ -79,16 +87,14 @@ public final class FileUtilities {
 
     // Get a package path from a jar-resident class instance, to use as a file
     // prefix when supplying only the file name.
-    @SuppressWarnings("nls")
     public static String getPackagePath( @SuppressWarnings("rawtypes") final Class classInstance ) {
         final String packagePath = "/"
-                + classInstance.getClass().getPackage().getName().replaceAll( "\\.", "/" );
+                + classInstance.getClass().getPackage().getName().replaceAll( ".", "/" );
         return packagePath;
     }
 
     // Load the MRU Filename Cache from User Preferences.
     // TODO: Use the same collection or array type for load and save.
-    @SuppressWarnings("nls")
     public static String[] loadMruPreferences( final Preferences preferences ) {
         final int maximumNumberOfMruFiles = MRU_CACHE_SIZE;
         final String[] mruFilenames = new String[ maximumNumberOfMruFiles ];
@@ -105,7 +111,6 @@ public final class FileUtilities {
 
     // Save the MRU Filename Cache to User Preferences.
     // TODO: Use the same collection or array type for load and save.
-    @SuppressWarnings("nls")
     public static void saveMruPreferences( final List< String > mruFilenames,
                                            final Preferences preferences ) {
         final int maximumNumberOfMruFiles = Math.min( MRU_CACHE_SIZE, mruFilenames.size() );
@@ -118,45 +123,66 @@ public final class FileUtilities {
         }
     }
 
-    // Load the Default Directory from User Preferences.
-    public static File loadDefaultDirectoryPreferences( final Preferences preferences ) {
-        // NOTE: The current User Home Directory is simply the default in case
+    // Load a specified Directory from User Preferences.
+    public static File loadDirectoryPreference( final Preferences preferences,
+                                                final String directoryKey ) {
+        // Use the current user's Home Directory as the ultimate fallback.
+        // This gets used if the preferred directory is malformed or doesn't
+        // exist, or if an exception is thrown during preferences handling.
+        File directory = FileUtils.getUserDirectory();
+
+        // NOTE: The current user's Working Directory is set as the default if
         //  the preferred default directory hasn't been set as a preference yet.
+        //  This often corresponds to the application installation directory and
+        //  is a more convenient starting point for a Directory Chooser than the
+        //  top of the file system or the current user's Home Directory.
+        final String workingDirectoryPath = WORKING_DIRECTORY_PATH;
         try {
-            final String userHomeDirectoryPath = FileUtils.getUserDirectoryPath();
-            final String defaultDirectoryPath = preferences.get( "defaultDirectory", //$NON-NLS-1$
-                                                                 userHomeDirectoryPath );
-            if ( ( defaultDirectoryPath != null ) && !defaultDirectoryPath.trim().isEmpty() ) {
-                final File defaultDirectory = new File( defaultDirectoryPath );
-                if ( Files.isDirectory( defaultDirectory.toPath() ) ) {
-                    return defaultDirectory;
+            final String preferredDirectoryPath = preferences.get( directoryKey,
+                                                                   workingDirectoryPath );
+            if ( ( preferredDirectoryPath != null ) && !preferredDirectoryPath.trim().isEmpty() ) {
+                final File preferredDirectory = new File( preferredDirectoryPath );
+                if ( Files.isDirectory( preferredDirectory.toPath() ) ) {
+                    // If the preferred directory exists and is valid, set it.
+                    directory = preferredDirectory;
                 }
             }
-
-            // If the Default Directory is malformed or doesn't exist, return
-            // the User Home Directory instead.
-            final File userHomeDirectory = FileUtils.getUserDirectory();
-            return userHomeDirectory;
         }
         catch ( final Exception e ) {
             e.printStackTrace();
         }
 
-        return null;
+        return directory;
+    }
+
+    // Load the Default Directory from User Preferences.
+    public static File loadDefaultDirectoryPreference( final Preferences preferences ) {
+        return loadDirectoryPreference( preferences, "defaultDirectory" );
+    }
+
+    // Save a specified Directory to User Preferences.
+    public static void saveDirectoryPreference( final File preferredDirectory,
+                                                final Preferences preferences,
+                                                final String directoryKey ) {
+        if ( preferredDirectory == null ) {
+            return;
+        }
+
+        try {
+            if ( Files.isDirectory( preferredDirectory.toPath() ) ) {
+                // If the preferred directory exists and is valid, save it.
+                preferences.put( directoryKey, preferredDirectory.getCanonicalPath() );
+            }
+        }
+        catch ( final Exception e ) {
+            e.printStackTrace();
+        }
     }
 
     // Save the Default Directory to User Preferences.
-    public static void saveDefaultDirectoryPreferences( final File defaultDirectory,
-                                                        final Preferences preferences ) {
-        if ( defaultDirectory != null ) {
-            try {
-                preferences.put( "defaultDirectory", //$NON-NLS-1$
-                                 defaultDirectory.getCanonicalPath() );
-            }
-            catch ( final Exception e ) {
-                e.printStackTrace();
-            }
-        }
+    public static void saveDefaultDirectoryPreference( final File defaultDirectory,
+                                                       final Preferences preferences ) {
+        saveDirectoryPreference( defaultDirectory, preferences, "defaultDirectory" );
     }
 
     // Generic method to get the "saved from" text for a document.
@@ -225,22 +251,23 @@ public final class FileUtilities {
     public static String removeExtension( final String filename ) {
         return FilenameUtils.removeExtension( filename );
     }
-    
+
     /**
      * Returns an adjusted file extension, set to the preferred variant.
      * <p>
      * Many file formats have multiple file extensions in use, but there is
      * usually one that has become dominant or preferred over time, and in
      * some cases enforcing a specific extension can also force downstream
-     * behavior to assume modern standards are met by the associated file. 
+     * behavior to assume modern standards are met by the associated file.
      * For example, ".pptx" signifies the current XML format for PowerPoint.
-     * 
-     * @param fileExtension The original file extension
+     *
+     * @param fileExtension
+     *            The original file extension
      * @return an adjusted file extension, set to the preferred variant
      */
     public static String adjustFileExtension( final String fileExtension ) {
         String fileExtensionAdjusted = fileExtension;
-        
+
         switch ( fileExtension ) {
         case "bmp":
         case "dib":
@@ -276,20 +303,21 @@ public final class FileUtilities {
             // For these formats, use the file extension as-is; no variants.
             break;
         }
-        
+
         return fileExtensionAdjusted;
     }
-    
+
     /**
      * Returns an adjusted file extension, set to the preferred variant.
      * <p>
      * Many file formats have multiple file extensions in use, but there is
      * usually one that has become dominant or preferred over time, and in
      * some cases enforcing a specific extension can also force downstream
-     * behavior to assume modern standards are met by the associated file. 
+     * behavior to assume modern standards are met by the associated file.
      * For example, ".pptx" signifies the current XML format for PowerPoint.
-     * 
-     * @param file The file whose extension may need adjustment
+     *
+     * @param file
+     *            The file whose extension may need adjustment
      * @return an adjusted file extension, set to the preferred variant
      */
     public static String getAdjustedFileExtension( final File file ) {
@@ -318,22 +346,22 @@ public final class FileUtilities {
     }
 
     // Copy a file using streams (the oldest approach, but sometimes fastest).
-    // NOTE: There is no need to provide a wrapper for Java NIO Files.copy() as an
-    //  additional option, as Apache Commons IO FileUtils.copyFile() does that.
+    // NOTE: There is no need to provide a wrapper for Java NIO Files.copy() as
+    //  an additional option, as Apache Commons IO FileUtils.copyFile() does that.
     public static long copyFileUsingStreams( final File source, final File dest ) {
         long totalNumberOfBytesRead = 0L;
 
         try ( final InputStream is = new FileInputStream( source );
-              final OutputStream os = new FileOutputStream( dest ) ) {
+                final OutputStream os = new FileOutputStream( dest ) ) {
             totalNumberOfBytesRead = copyFileStream( is, os );
         }
         catch ( final Exception e ) {
             e.printStackTrace();
         }
-        
+
         return totalNumberOfBytesRead;
     }
-    
+
     // Copy a file stream using traditional Java IO.
     public static long copyFileStream( final InputStream is, final OutputStream os ) {
         long totalNumberOfBytesRead = 0L;
@@ -342,37 +370,38 @@ public final class FileUtilities {
             byte[] buffer = new byte[ 8192 ];
             int numberOfBytesRead;
             while ( ( numberOfBytesRead = is.read( buffer ) ) > 0 ) {
-                os.write(buffer, 0, numberOfBytesRead);
+                os.write( buffer, 0, numberOfBytesRead );
                 totalNumberOfBytesRead += numberOfBytesRead;
             }
         }
         catch ( final Exception e ) {
             e.printStackTrace();
         }
-        
+
         return totalNumberOfBytesRead;
     }
-    
-    // Copy a file using channels (a somewhat newer approach, sometimes fastest).
-    // NOTE: There is no need to provide a wrapper for Java NIO Files.copy() as an
-    //  additional option, as Apache Commons IO FileUtils.copyFile() does that.
+
+    // Copy a file using channels (a somewhat newer approach, sometimes
+    // fastest).
+    // NOTE: There is no need to provide a wrapper for Java NIO Files.copy() as
+    //  an additional option, as Apache Commons IO FileUtils.copyFile() does that.
     public static long copyFileUsingChannels( final File source, final File dest ) {
         long totalNumberOfBytesRead = 0L;
 
         try ( final FileInputStream sourceStream = new FileInputStream( source );
-              final FileChannel sourceChannel = sourceStream.getChannel();
-              final FileOutputStream destStream = new FileOutputStream( dest );
-              final FileChannel destChannel = destStream.getChannel() ) {
-            totalNumberOfBytesRead = destChannel.transferFrom( 
-                sourceChannel, 0L, sourceChannel.size() );
+                final FileChannel sourceChannel = sourceStream.getChannel();
+                final FileOutputStream destStream = new FileOutputStream( dest );
+                final FileChannel destChannel = destStream.getChannel() ) {
+            totalNumberOfBytesRead = destChannel
+                    .transferFrom( sourceChannel, 0L, sourceChannel.size() );
         }
         catch ( final Exception e ) {
             e.printStackTrace();
         }
-        
+
         return totalNumberOfBytesRead;
     }
-    
+
     // Move or rename a source file to a target file (system-specific).
     public static boolean moveFile( final File sourceFile, final File targetFile ) {
         // TODO: Verify that network drives work as the target location, as
@@ -380,20 +409,19 @@ public final class FileUtilities {
         //  another. Probably Java NIO2 deals with this for us.
         final Path sourcePath = sourceFile.toPath();
         final Path targetPath = targetFile.toPath();
-        
+
         try {
             // Do not move invalid or empty source files.
-            if ( !PathUtils.isRegularFile( sourcePath, LinkOption.NOFOLLOW_LINKS ) 
+            if ( !PathUtils.isRegularFile( sourcePath, LinkOption.NOFOLLOW_LINKS )
                     || PathUtils.isEmptyFile( sourcePath ) ) {
                 return false;
             }
-            
+
             // NOTE: File status can change suddenly, so it is best to
-            //  recheck whether a target file is writable before a move or
+            //  re-check whether a target file is writable before a move or
             //  rename operation. We always replace an existing file, and
             //  depend on the file chooser to alert the user of overwrites.
-            final boolean isTargetFile = Files.exists( targetPath, 
-                                                       LinkOption.NOFOLLOW_LINKS )
+            final boolean isTargetFile = Files.exists( targetPath, LinkOption.NOFOLLOW_LINKS )
                     && !Files.notExists( targetPath, LinkOption.NOFOLLOW_LINKS );
             if ( !isTargetFile ) {
                 // If the target file doesn't exist, create it.
@@ -406,7 +434,7 @@ public final class FileUtilities {
             // NOTE: If we also specify to copy the attributes, we get
             //  run-time exceptions on Windows 10 due to security issues.
             Files.move( sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING );
-        }  
+        }
         catch ( final Exception e ) {
             e.printStackTrace();
             return false;
@@ -417,7 +445,6 @@ public final class FileUtilities {
 
     // Get a time and version tagged file, given a fully specified path as
     // candidate, alongside a client-supplied version string.
-    @SuppressWarnings("nls")
     public static File getTimeAndVersionTaggedFile( final StringBuilder fileNameCandidate,
                                                     final String version ) {
         // Get the initial version tagged file name candidate.
