@@ -89,7 +89,7 @@ public final class FileUtilities {
     // prefix when supplying only the file name.
     public static String getPackagePath( @SuppressWarnings("rawtypes") final Class classInstance ) {
         final String packagePath = "/"
-                + classInstance.getClass().getPackage().getName().replaceAll( ".", "/" );
+                + classInstance.getClass().getPackage().getName().replaceAll( "\\.", "/" );
         return packagePath;
     }
 
