@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,6 +58,9 @@ public class ProductVersion {
     /** The revision of the product release, usually for emergency bugfixes */
     public int revision;
     
+    /** Additional character to distinguish quick updates; usually a letter */
+    public char update;
+    
     /** 
      * The Build ID of the product release, which generally gets bumped for 
      * unreleased builds and nightly interim internal releases. The ID is also
@@ -113,7 +116,7 @@ public class ProductVersion {
     }
     
     /**
-     * Returns an instance of {@code ProductVersion} fully specified.
+     * Returns an instance of {@code ProductVersion} nearly fully specified.
      * 
      * @param pProductOwner The optional owner of the associated application
      * @param pProductBaseName The Product Base Name of the application
@@ -132,7 +135,50 @@ public class ProductVersion {
                            final String pProtection,
                            final int pVersionMajor,
                            final int pVersionMinor,
-                           final int pRevision ,
+                           final int pRevision,
+                           final long pBuildId,
+                           final String pBuildDate,
+                           final String pReleaseDate ) {
+        this( pProductOwner,
+              pProductBaseName,
+              pProductLevel,
+              pProtection,
+              pVersionMajor,
+              pVersionMinor,
+              pRevision,
+              ' ',
+              pBuildId,
+              pBuildDate,
+              pReleaseDate );
+    }
+    
+    /**
+     * Returns an instance of {@code ProductVersion} fully specified.
+     * <p>
+     * This slightly expanded constructor pulls in the new optional field
+     * for distinguishing quick builds and patches for a revision, which
+     * usually is represented by a single lower-case letter from a to z.
+     * 
+     * @param pProductOwner The optional owner of the associated application
+     * @param pProductBaseName The Product Base Name of the application
+     * @param pProductLevel The optional Product Level of the application
+     * @param pProtection The optional protection of the application
+     * @param pVersionMajor The major version of the product release
+     * @param pVersionMinor The minor version of the product release
+     * @param pRevision The revision of the product release
+     * @param pUpdate The update of the revision, usually a letter (a..z)
+     * @param pBuildId The optional Build ID of the baseline for the release
+     * @param pBuildDate The optional build date of the code for the release
+     * @param pReleaseDate The published date of the product release
+     */
+    public ProductVersion( final String pProductOwner,
+                           final String pProductBaseName,
+                           final String pProductLevel,
+                           final String pProtection,
+                           final int pVersionMajor,
+                           final int pVersionMinor,
+                           final int pRevision,
+                           final char pUpdate,
                            final long pBuildId,
                            final String pBuildDate,
                            final String pReleaseDate ) {
@@ -144,14 +190,11 @@ public class ProductVersion {
         versionMajor = pVersionMajor;
         versionMinor = pVersionMinor;
         revision = pRevision;
+        update = pUpdate;
         
         buildId = pBuildId;
         buildDate = pBuildDate;
         releaseDate = pReleaseDate;
-    }
-    
-    public ProductVersion() {
-        // NOTE Auto-generated constructor stub
     }
     
     /**
@@ -160,7 +203,15 @@ public class ProductVersion {
      * @return the full aggregated parts of the product version as a string
      */
     public String getVersionNumber() {
-        return versionMajor + "." + versionMinor + "." + revision;
+        final StringBuilder versionNumber = new StringBuilder();
+        versionNumber.append( versionMajor );
+        versionNumber.append( "." );
+        versionNumber.append( versionMinor );
+        versionNumber.append( "." );
+        if ( update != ' ' ) {
+            versionNumber.append( update );
+        }
+        return versionNumber.toString().trim();
     }
 
     public String getProductName() {
