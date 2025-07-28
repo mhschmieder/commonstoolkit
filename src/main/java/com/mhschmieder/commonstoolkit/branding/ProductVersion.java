@@ -208,6 +208,7 @@ public class ProductVersion {
         versionNumber.append( "." );
         versionNumber.append( versionMinor );
         versionNumber.append( "." );
+        versionNumber.append( revision );
         if ( update != ' ' ) {
             versionNumber.append( update );
         }
