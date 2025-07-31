@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.commonstoolkit.lang;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * {@code StringUtilities} is a static utilities class for common string
  * manipulation functionality.
@@ -125,9 +127,9 @@ public final class StringUtilities {
     }
 
     // This method strips the "-" sign, when unnecessary due to absolute zero.
-    @SuppressWarnings("nls")
     public static String stripNegativeSign( final String numberString ) {
-        final String signStrippedNumberString = numberString.replaceAll( "^-(?=0(\\.0*)?$)", "" );
+        final String signStrippedNumberString = numberString.replaceAll( 
+                "^-(?=0(\\.0*)?$)", "" );
 
         return signStrippedNumberString;
     }
@@ -211,27 +213,75 @@ public final class StringUtilities {
      * <p>
      * NOTE: The Java StringTokenizer seems to fail if there isn't a space ahead
      *  of the quotes. Usually this is the case, except at the head of a line,
-     *  but as most elements on a line will have spaces or other delimiters anyway,
-     *  it seems best not to prepend the space here, and to instead make clients
-     *  aware that they may need to prepend one at their end if the quoted string
-     *  is at the head of a line in a text file. The tokenizer gets confused for
-     *  some reason otherwise; perhaps Apache's replacement version works better?
+     *  but as most elements on a line will have spaces or other delimiters 
+     *  anyway, it seems best not to prepend the space here, and to instead make
+     *  clients aware that they may need to prepend one (or a numeric field) at
+     *  their end if the quoted string is at the head of a line in a text file.
+     *  The tokenizer gets confused for some reason otherwise, but Apache's 
+     *  StringUtils in their Commons Lang library has similar issues.
      * <p>
-     * NOTE: We adjust for null strings by substituting a single-blank string, as
-     *  we otherwise just return a single quote vs an empty quote-enclosed string.
-     *  An empty string doesn't work, as StringTokenizer then skips past the
-     *  closing quotes and is forever out-of-sync for the remainder of the line.
-     *  This is only partially successful, as StringTokenizer still skips past the
-     *  end quotes and gets out of whack, but at least this approach should work
-     *  well with safer parsers such as Apache CsvParser (with space as delimiter).
+     * NOTE: We adjust for null strings by substituting a single-blank string,
+     *  as we otherwise just return a single quote vs an empty quote-enclosed
+     *  string. An empty string doesn't work, as StringTokenizer then skips past
+     *  the closing quotes and is forever out-of-sync for the remainder of the 
+     *  line. This is only partially successful, as StringTokenizer still skips
+     *  past the end quotes and gets out of whack, but at least this approach
+     *  should work well with safer parsers such as Apache CsvParser (with space
+     *  as the delimiter).
      * 
      * @param unquotedString The string to be quoted
-     * @return A quoted version of the given string
+     * @return A quoted version of the given unqouted string
      */
     public static String quote( final String unquotedString ) {
-        final String safeString = ( unquotedString != null ) 
-                ? unquotedString 
-                : " ";
-        return "\"" + safeString + "\"";
+        if ( unquotedString == null ) {
+            return StringConstants.SPACE;
+        }
+        
+        final String quotedString = StringConstants.QUOTE 
+                + unquotedString  
+                + StringConstants.QUOTE;
+        return quotedString;
+    }
+
+    /**
+     * Unquote the given string; sometimes referred to as unescaping the string, 
+     * but that action doesn't always use the double quote character.
+     * <p>
+     * This method is most useful for inputting file names and titles to text
+     * based output files that use token separators, so that strings with spaces
+     * remain intact during parsing.
+     * <p>
+     * NOTE: The Java StringTokenizer seems to fail if there isn't a space ahead
+     *  of the quotes. Usually this is the case, except at the head of a line,
+     *  but as most elements on a line will have spaces or other delimiters 
+     *  anyway, it seems best not to overly complicate this method to account 
+     *  for no leading space at the head of a line, and to instead make clients 
+     *  aware that they may need to prepend one (or a numeric field) at their
+     *  end if the quoted string is at the head of a line in a text file. The 
+     *  tokenizer gets confused for some reason otherwise, but Apache's string
+     *  replacement (used here) in Commons Lang has similar issues.
+     * <p>
+     * NOTE: We adjust for null strings by substituting a single-blank string,
+     *  as we otherwise just return a single quote vs an empty quote-enclosed
+     *  string. An empty string doesn't work, as StringTokenizer then skips past
+     *  the closing quotes and is forever out-of-sync for the remainder of the 
+     *  line. This is only partially successful, as StringTokenizer still skips 
+     *  past the end quotes and gets out of whack, but at least this approach 
+     *  should work well with safer parsers such as Apache CsvParser (with space
+     *  as the delimiter).
+     * 
+     * @param quotedString The string to be unquoted
+     * @return An unquoted version of the given quoted string
+     */
+    public static String unquote( final String quotedString ) {
+        if ( quotedString == null ) {
+            return StringConstants.EMPTY;
+        }
+        
+        String unquotedString = StringUtils.removeStart( quotedString, 
+                                                         StringConstants.QUOTE );
+        unquotedString = StringUtils.removeEnd( unquotedString, 
+                                                StringConstants.QUOTE );
+        return unquotedString;
     }
 }
