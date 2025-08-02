@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,6 @@
 package com.mhschmieder.commonstoolkit.io;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -45,20 +44,12 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.Charsets;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.SwappedDataInputStream;
 
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
+import com.mhschmieder.commonstoolkit.lang.StringConstants;
 
 /**
  * {@code IoUtilities} is a static utilities class for common I/O functionality
@@ -70,14 +61,21 @@ import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 public final class IoUtilities {
 
     // NOTE: We might need to switch this to UTF-8 encoding.
-    @SuppressWarnings("nls") public static final String LATIN_1 = "ISO-8859-1";
+    public static final String LATIN_1 = "ISO-8859-1";
+    /**
+     * Cache the current user's Working Directory path, to avoid expensive
+     * redundant calls and to enforce a consistent path that persists throughout
+     * a session, unlike "." for the Current Directory. This also corresponds in
+     * many cases to Application Launch Path, which helps encapsulate app files.
+     */
+    public static final String WORKING_DIRECTORY_PATH = System.getProperty( 
+            "user.dir" );
 
     /**
      * The default constructor is disabled, as this is a static utilities class
      */
     private IoUtilities() {}
 
-    @SuppressWarnings("nls")
     public static String getJarResourceFilename( final String jarRelativePackagePath,
                                                  final String resourceNameUnqualified,
                                                  final String fileExtension ) {
@@ -85,12 +83,10 @@ public final class IoUtilities {
 
         jarResourceFilenameStringBuilder.append( jarRelativePackagePath );
         jarResourceFilenameStringBuilder.append( resourceNameUnqualified );
-        jarResourceFilenameStringBuilder.append( "." );
+        jarResourceFilenameStringBuilder.append( StringConstants.PERIOD );
         jarResourceFilenameStringBuilder.append( fileExtension );
 
-        final String jarResourceFilename = jarResourceFilenameStringBuilder.toString();
-
-        return jarResourceFilename;
+        return jarResourceFilenameStringBuilder.toString();
     }
 
     // Generic method to fetch the contents of a named resource to a string.
@@ -151,7 +147,6 @@ public final class IoUtilities {
     }
 
     // Generic method to load the contents of a reader into a string builder.
-    @SuppressWarnings("nls")
     public static boolean loadIntoStringBuilder( final BufferedReader bufferedReader,
                                                  final StringBuilder fileContent ) {
         try {
@@ -193,48 +188,6 @@ public final class IoUtilities {
                                                                                  LATIN_1 );
                 final BufferedReader bufferedReader = new BufferedReader( inputStreamReader ) ) {
             final boolean fileOpened = loadIntoStringBuilder( bufferedReader, fileContent );
-            return fileOpened;
-        }
-        catch ( final Exception e ) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Generic method to load the contents of a zip file entry of a specified
-    // content type into a string builder.
-    // TODO: Write another version of this method that takes a specific zip
-    // entry name vs. content type, as in some cases there may be more than one
-    // entry of the same type and unlike in this case the name of the zip entry
-    // of interest may be known.
-    // TODO: Find a way to report errors if not a legitimate ZIP file.
-    public static boolean loadFromZipIntoStringBuilder( final File file,
-                                                        final StringBuilder fileContent,
-                                                        final String contentType ) {
-        // NOTE: If the file is not a valid ZIP file (whether or not it has a
-        // ".zip" extension), an exception will be caught, so it is up to the
-        // caller whether to check in advance for file type validity.
-        try ( final ZipFile zipFile = new ZipFile( file ) ) {
-            final Predicate< ZipEntry > isFile = zipEntry -> !zipEntry.isDirectory();
-            final Predicate< ZipEntry > isXml = zipEntry -> FilenameUtils
-                    .isExtension( zipEntry.getName().toLowerCase( Locale.ENGLISH ), contentType );
-
-            final Optional< ? extends ZipEntry > optionalXmlEntry = zipFile.stream()
-                    .filter( isFile.and( isXml ) ).findFirst();
-
-            // There must be a valid entry of the specified content type, in
-            // order for this ZIP file to be considered valid.
-            if ( !optionalXmlEntry.isPresent() ) {
-                return false;
-            }
-
-            // Read in the relevant zip entry as an in-memory stream.
-            boolean fileOpened = false;
-            try ( final InputStream inputStream =
-                                                zipFile.getInputStream( optionalXmlEntry.get() ) ) {
-                fileOpened = loadIntoStringBuilder( inputStream, fileContent );
-            }
-
             return fileOpened;
         }
         catch ( final Exception e ) {
@@ -378,71 +331,10 @@ public final class IoUtilities {
         // byte array stream, preserving byte order so that floating-point
         // interpretation (Little Endian/Big Endian) can be deferred to a
         // downstream filter.
-        try ( final InputStream bufferedInputStream =
-                                                    IOUtils.toBufferedInputStream( inputStream ) ) {
+        try ( final InputStream bufferedInputStream = IOUtils.toBufferedInputStream( 
+                inputStream ) ) {
             final byte[] byteArray = IOUtils.toByteArray( bufferedInputStream );
             return byteArray;
         }
     }
-
-    // Function to export a byte array to a ZIP file with product signature.
-    public static FileStatus saveByteArrayToZip( final byte[] byteArray,
-                                                 final ProductBranding productBranding,
-                                                 final Locale locale,
-                                                 final ZipOutputStream zipOutputStream ) {
-        try {
-            // Add a header so that WINZIP and other tools can easily identify
-            // this as a ZIP file produced from a specific application.
-            prepareZipForWrite( zipOutputStream, productBranding, locale );
-
-            // Chain a ZipInputStream to a ByteArrayInputStream to the byte
-            // array, to inflate the ZIP entries.
-            try ( final ByteArrayInputStream byteArrayInputStream =
-                                                                  new ByteArrayInputStream( byteArray );
-                    final ZipInputStream zipInputStream =
-                                                        new ZipInputStream( byteArrayInputStream ) ) {
-                ZipEntry zipEntry = null;
-                while ( ( zipEntry = zipInputStream.getNextEntry() ) != null ) {
-                    // Echo the current ZIP entry to the saved ZIP file (this
-                    // should also preserve the original server time/date
-                    // stamp).
-                    zipOutputStream.putNextEntry( zipEntry );
-
-                    // Copy the current ZIP entry from the byte array directly
-                    // to the new ZIP output file.
-                    // NOTE: We don't care about the returned data size; if it
-                    // was "-1", it simply means it was too large to fit in an
-                    // int.
-                    IOUtils.copy( zipInputStream, zipOutputStream );
-
-                    // Close the current ZIP input entry to prepare to read the
-                    // next entry.
-                    zipInputStream.closeEntry();
-
-                    // Close the current ZIP output entry (copy) to prevent
-                    // further modification.
-                    zipOutputStream.closeEntry();
-                }
-            }
-        }
-        catch ( final Exception e ) {
-            e.printStackTrace();
-            return FileStatus.WRITE_ERROR;
-        }
-
-        return FileStatus.SAVED;
-    }
-
-    // Utility to prepare a ZIP output stream for write operations (i.e. adding
-    // entries). This means adding a comment, setting the deflation method and
-    // the compression level.
-    public static void prepareZipForWrite( final ZipOutputStream zipOutputStream,
-                                           final ProductBranding productBranding,
-                                           final Locale locale ) {
-        final String savedFrom = FileUtilities.getSavedFrom( productBranding, locale );
-        zipOutputStream.setComment( savedFrom );
-        zipOutputStream.setMethod( ZipOutputStream.DEFLATED );
-        zipOutputStream.setLevel( 9 );
-    }
-
 }

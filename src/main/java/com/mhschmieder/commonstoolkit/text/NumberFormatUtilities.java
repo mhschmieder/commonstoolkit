@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,8 @@ public final class NumberFormatUtilities {
      */
     private NumberFormatUtilities() {}
 
-    public static String formatInteger( final int integerValue, final NumberFormat numberFormat ) {
+    public static String formatInteger( final int integerValue, 
+                                        final NumberFormat numberFormat ) {
         try {
             final String integerString = numberFormat.format( integerValue );
 
@@ -62,7 +63,8 @@ public final class NumberFormatUtilities {
         }
     }
 
-    public static String formatLong( final long longValue, final NumberFormat numberFormat ) {
+    public static String formatLong( final long longValue, 
+                                     final NumberFormat numberFormat ) {
         try {
             final String longString = numberFormat.format( longValue );
 
@@ -76,7 +78,8 @@ public final class NumberFormatUtilities {
         }
     }
 
-    public static String formatFloat( final float floatValue, final NumberFormat numberFormat ) {
+    public static String formatFloat( final float floatValue, 
+                                      final NumberFormat numberFormat ) {
         if ( Float.isNaN( floatValue ) ) {
             return Float.toString( Float.NaN );
         }
@@ -104,7 +107,8 @@ public final class NumberFormatUtilities {
         }
     }
 
-    public static String formatDouble( final double doubleValue, final NumberFormat numberFormat ) {
+    public static String formatDouble( final double doubleValue, 
+                                       final NumberFormat numberFormat ) {
         if ( Double.isNaN( doubleValue ) ) {
             return Double.toString( Float.NaN );
         }
@@ -127,7 +131,7 @@ public final class NumberFormatUtilities {
 
             // If parsing fails, just return a simple string representation.
             // NOTE: This theoretically only happens if rounding mode was set to
-            // unnecessary and then rounding was requested.
+            //  unnecessary and then rounding was requested.
             return Double.toString( doubleValue );
         }
     }
@@ -141,7 +145,8 @@ public final class NumberFormatUtilities {
      *            The number formatter to use for determining precision
      * @return An integer converted from the provided String
      */
-    public static int parseInteger( final String integerString, final NumberFormat numberFormat ) {
+    public static int parseInteger( final String integerString, 
+                                    final NumberFormat numberFormat ) {
         // In case of null or empty (non-numeric) string, default to zero.
         if ( ( integerString == null ) || integerString.isEmpty() ) {
             return 0;
@@ -177,7 +182,8 @@ public final class NumberFormatUtilities {
      *            The number formatter to use for determining precision
      * @return A long converted from the provided String
      */
-    public static long parseLong( final String longString, final NumberFormat numberFormat ) {
+    public static long parseLong( final String longString, 
+                                  final NumberFormat numberFormat ) {
         // In case of null or empty (non-numeric) string, default to zero.
         if ( ( longString == null ) || longString.isEmpty() ) {
             return 0L;
@@ -214,7 +220,8 @@ public final class NumberFormatUtilities {
      *            The number formatter to use for determining precision
      * @return The converted single-precision value, as a float, or zero
      */
-    public static float parseFloat( final String floatString, final NumberFormat numberFormat ) {
+    public static float parseFloat( final String floatString, 
+                                    final NumberFormat numberFormat ) {
         // In case of null or empty (non-numeric) string, default to zero.
         if ( ( floatString == null ) || floatString.isEmpty() ) {
             return 0.0f;
@@ -263,7 +270,8 @@ public final class NumberFormatUtilities {
      *            The number formatter to use for determining precision
      * @return The converted double-precision value, as a double, or zero
      */
-    public static double parseDouble( final String doubleString, final NumberFormat numberFormat ) {
+    public static double parseDouble( final String doubleString, 
+                                      final NumberFormat numberFormat ) {
         // In case of null or empty (non-numeric) string, default to zero.
         if ( ( doubleString == null ) || doubleString.isEmpty() ) {
             return 0.0d;
@@ -302,7 +310,6 @@ public final class NumberFormatUtilities {
         }
     }
 
-    @SuppressWarnings("nls")
     public static NumberFormat getUniquefierNumberFormat( final Locale locale ) {
         final NumberFormat uniquefierNumberFormat = NumberFormat.getNumberInstance( locale );
 
@@ -342,5 +349,4 @@ public final class NumberFormatUtilities {
 
         return numberFormat;
     }
-
 }

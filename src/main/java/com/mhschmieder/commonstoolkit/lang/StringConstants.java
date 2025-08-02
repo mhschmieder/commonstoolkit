@@ -72,6 +72,15 @@ public class StringConstants {
     public static final String QUOTE = "\"";
 
     /**
+     * Periods are the same across all platforms, so it is safer and makes for
+     * easier coding, if we define a global constant for its character value.
+     * <p>
+     * NOTE: Periods (aka decimal point) and commas invert their purpose in some
+     *  locales, when it comes to number representation.
+     */
+    public static final String PERIOD = ".";
+
+    /**
      * Commas are the same across all platforms, so it is safer and makes for
      * easier coding, if we define a global constant for its character value.
      * <p>

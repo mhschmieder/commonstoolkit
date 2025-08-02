@@ -51,6 +51,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
 import com.mhschmieder.commonstoolkit.io.IoUtilities;
+import com.mhschmieder.commonstoolkit.io.ZipUtilities;
 import com.mhschmieder.commonstoolkit.lang.NumberUtilities;
 import com.mhschmieder.commonstoolkit.lang.StringUtilities;
 
@@ -238,8 +239,8 @@ public class XmlUtilities {
             // Load the XML data from a ZIP file. Send the file vs. a
             // ZipInputStream, due to the need to cycle twice, and due to
             // problems with ZipInputStream.
-            final boolean fileOpened = IoUtilities
-                    .loadFromZipIntoStringBuilder( file, fileContent, "xml" );
+            final boolean fileOpened = ZipUtilities
+                    .loadZipToStringBuilder( file, fileContent, "xml" );
             if ( !fileOpened ) {
                 return false;
             }
