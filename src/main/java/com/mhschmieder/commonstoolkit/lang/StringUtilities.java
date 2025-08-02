@@ -230,15 +230,16 @@ public final class StringUtilities {
      *  as the delimiter).
      * 
      * @param unquotedString The string to be quoted
-     * @return A quoted version of the given unqouted string
+     * @return A quoted version of the given unquoted string
      */
     public static String quote( final String unquotedString ) {
-        if ( unquotedString == null ) {
-            return StringConstants.SPACE;
-        }
+        final String safeString = ( ( unquotedString != null )
+                && !unquotedString.isEmpty() )
+                ? unquotedString
+                : StringConstants.SPACE;
         
         final String quotedString = StringConstants.QUOTE 
-                + unquotedString  
+                + safeString  
                 + StringConstants.QUOTE;
         return quotedString;
     }
@@ -260,21 +261,12 @@ public final class StringUtilities {
      *  end if the quoted string is at the head of a line in a text file. The 
      *  tokenizer gets confused for some reason otherwise, but Apache's string
      *  replacement (used here) in Commons Lang has similar issues.
-     * <p>
-     * NOTE: We adjust for null strings by substituting a single-blank string,
-     *  as we otherwise just return a single quote vs an empty quote-enclosed
-     *  string. An empty string doesn't work, as StringTokenizer then skips past
-     *  the closing quotes and is forever out-of-sync for the remainder of the 
-     *  line. This is only partially successful, as StringTokenizer still skips 
-     *  past the end quotes and gets out of whack, but at least this approach 
-     *  should work well with safer parsers such as Apache CsvParser (with space
-     *  as the delimiter).
      * 
      * @param quotedString The string to be unquoted
      * @return An unquoted version of the given quoted string
      */
     public static String unquote( final String quotedString ) {
-        if ( quotedString == null ) {
+        if ( ( quotedString == null ) || quotedString.isEmpty() ) {
             return StringConstants.EMPTY;
         }
         

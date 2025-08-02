@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -64,15 +64,14 @@ public final class StringTokenizerUtilities {
         // and setting the token delimiter back to the full default set.
         // NOTE: If two double-quotes surround an empty or blank string, the
         //  tokenizer skips beyond it, even if just to a blank delimiter, which
-        //  isn't what we want, but it doesn't even help if the quotes enclose
+        //  isn't what we want, but it doesn't always help if the quotes enclose
         //  a single blank character (a space) vs. being empty, so there's no
         //  real workaround and therefore content producers should avoid making
         //  blank strings. It doesn't help to skip the second call either! Of
         //  course, we still skip past the token delimiters after that.
-        t.nextToken( "\"" );
-        final String extractedString = t.nextToken( "\"" );
+        t.nextToken( StringConstants.QUOTE );
+        final String extractedString = t.nextToken( StringConstants.QUOTE );
         t.nextToken( TOKEN_DELIMITERS );
         return extractedString;
     }
-
 }
