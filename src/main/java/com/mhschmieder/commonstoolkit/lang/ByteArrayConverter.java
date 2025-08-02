@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,17 +32,12 @@ package com.mhschmieder.commonstoolkit.lang;
 
 /**
  * NOTE: This was originally written as a tool to use with another toolkit
- * that was produced in Spain, so I wrote it in Spanish to be consistent.
- * TODO: Break out the enum or make it and this class a higher level.
- * TODO: Alternatively, replace with Endian utilities in Apache Commons I/O.
+ *  that was produced in Spain, so some of the code remains in Spanish.
+ * TODO: Replace with Endian utilities in Apache Commons I/O?
  */
-public class Endianness {
+public class ByteArrayConverter {
 
-    public enum OrdenEndian {
-        BIG_ENDIAN, LITTLE_ENDIAN
-    }
-
-    private static final int MASCARA_BYTE = 0xFF;
+    private static final int BYTE_MASK = 0xFF;
 
     /**
      * Convierte un array de bytes a un float respetando el orden asignado
@@ -53,7 +48,7 @@ public class Endianness {
      *            orden a utilizar en la conversion
      * @return valor equivalente despues de la conversion
      */
-    public static float byteArrayToFloat( final byte[] valor, final OrdenEndian endianness ) {
+    public static float byteArrayToFloat( final byte[] valor, final EndianOrder endianness ) {
         final int enteroEquivalente = byteArrayToInt( valor, endianness );
         return Float.intBitsToFloat( enteroEquivalente );
     }
@@ -67,22 +62,22 @@ public class Endianness {
      *            orden a utilizar en la conversion
      * @return valor equivalente despues de la conversion
      */
-    public static int byteArrayToInt( final byte[] valor, final OrdenEndian endianness ) {
+    public static int byteArrayToInt( final byte[] valor, final EndianOrder endianness ) {
         if ( valor.length < 4 ) {
             throw new ArrayIndexOutOfBoundsException( valor.length );
         }
         int a, b, c, d;
-        if ( endianness == OrdenEndian.BIG_ENDIAN ) {
-            a = ( valor[ 0 ] & MASCARA_BYTE ) << 24;
-            b = ( valor[ 1 ] & MASCARA_BYTE ) << 16;
-            c = ( valor[ 2 ] & MASCARA_BYTE ) << 8;
-            d = valor[ 3 ] & MASCARA_BYTE;
+        if ( endianness == EndianOrder.BIG_ENDIAN ) {
+            a = ( valor[ 0 ] & BYTE_MASK ) << 24;
+            b = ( valor[ 1 ] & BYTE_MASK ) << 16;
+            c = ( valor[ 2 ] & BYTE_MASK ) << 8;
+            d = valor[ 3 ] & BYTE_MASK;
         }
         else {
-            a = ( valor[ 3 ] & MASCARA_BYTE ) << 24;
-            b = ( valor[ 2 ] & MASCARA_BYTE ) << 16;
-            c = ( valor[ 1 ] & MASCARA_BYTE ) << 8;
-            d = valor[ 0 ] & MASCARA_BYTE;
+            a = ( valor[ 3 ] & BYTE_MASK ) << 24;
+            b = ( valor[ 2 ] & BYTE_MASK ) << 16;
+            c = ( valor[ 1 ] & BYTE_MASK ) << 8;
+            d = valor[ 0 ] & BYTE_MASK;
         }
         return a | b | c | d;
     }
@@ -96,30 +91,30 @@ public class Endianness {
      *            orden a utilizar en la conversion
      * @return valor equivalente despues de la conversion
      */
-    public static long byteArrayToLong( final byte[] valor, final OrdenEndian endianness ) {
+    public static long byteArrayToLong( final byte[] valor, final EndianOrder endianness ) {
         if ( valor.length < 8 ) {
             throw new ArrayIndexOutOfBoundsException( valor.length );
         }
         long a, b, c, d, e, f, g, h;
-        if ( endianness == OrdenEndian.BIG_ENDIAN ) {
-            a = ( long ) ( valor[ 0 ] & MASCARA_BYTE ) << 56;
-            b = ( long ) ( valor[ 1 ] & MASCARA_BYTE ) << 48;
-            c = ( long ) ( valor[ 2 ] & MASCARA_BYTE ) << 40;
-            d = ( long ) ( valor[ 3 ] & MASCARA_BYTE ) << 32;
-            e = ( long ) ( valor[ 4 ] & MASCARA_BYTE ) << 24;
-            f = ( long ) ( valor[ 5 ] & MASCARA_BYTE ) << 16;
-            g = ( long ) ( valor[ 6 ] & MASCARA_BYTE ) << 8;
-            h = valor[ 7 ] & MASCARA_BYTE;
+        if ( endianness == EndianOrder.BIG_ENDIAN ) {
+            a = ( long ) ( valor[ 0 ] & BYTE_MASK ) << 56;
+            b = ( long ) ( valor[ 1 ] & BYTE_MASK ) << 48;
+            c = ( long ) ( valor[ 2 ] & BYTE_MASK ) << 40;
+            d = ( long ) ( valor[ 3 ] & BYTE_MASK ) << 32;
+            e = ( long ) ( valor[ 4 ] & BYTE_MASK ) << 24;
+            f = ( long ) ( valor[ 5 ] & BYTE_MASK ) << 16;
+            g = ( long ) ( valor[ 6 ] & BYTE_MASK ) << 8;
+            h = valor[ 7 ] & BYTE_MASK;
         }
         else {
-            a = ( long ) ( valor[ 7 ] & MASCARA_BYTE ) << 56;
-            b = ( long ) ( valor[ 6 ] & MASCARA_BYTE ) << 48;
-            c = ( long ) ( valor[ 5 ] & MASCARA_BYTE ) << 40;
-            d = ( long ) ( valor[ 4 ] & MASCARA_BYTE ) << 32;
-            e = ( long ) ( valor[ 3 ] & MASCARA_BYTE ) << 24;
-            f = ( long ) ( valor[ 2 ] & MASCARA_BYTE ) << 16;
-            g = ( long ) ( valor[ 1 ] & MASCARA_BYTE ) << 8;
-            h = valor[ 0 ] & MASCARA_BYTE;
+            a = ( long ) ( valor[ 7 ] & BYTE_MASK ) << 56;
+            b = ( long ) ( valor[ 6 ] & BYTE_MASK ) << 48;
+            c = ( long ) ( valor[ 5 ] & BYTE_MASK ) << 40;
+            d = ( long ) ( valor[ 4 ] & BYTE_MASK ) << 32;
+            e = ( long ) ( valor[ 3 ] & BYTE_MASK ) << 24;
+            f = ( long ) ( valor[ 2 ] & BYTE_MASK ) << 16;
+            g = ( long ) ( valor[ 1 ] & BYTE_MASK ) << 8;
+            h = valor[ 0 ] & BYTE_MASK;
         }
         return a | b | c | d | e | f | g | h;
     }
@@ -133,18 +128,18 @@ public class Endianness {
      *            orden a utilizar en la conversion
      * @return valor equivalente despues de la conversion
      */
-    public static short byteArrayToShort( final byte[] valor, final OrdenEndian endianness ) {
+    public static short byteArrayToShort( final byte[] valor, final EndianOrder endianness ) {
         if ( valor.length < 2 ) {
             throw new ArrayIndexOutOfBoundsException( valor.length );
         }
         short a, b;
-        if ( endianness == OrdenEndian.BIG_ENDIAN ) {
-            a = ( short ) ( ( valor[ 0 ] & MASCARA_BYTE ) << 8 );
-            b = ( short ) ( valor[ 1 ] & MASCARA_BYTE );
+        if ( endianness == EndianOrder.BIG_ENDIAN ) {
+            a = ( short ) ( ( valor[ 0 ] & BYTE_MASK ) << 8 );
+            b = ( short ) ( valor[ 1 ] & BYTE_MASK );
         }
         else {
-            a = ( short ) ( ( valor[ 1 ] & MASCARA_BYTE ) << 8 );
-            b = ( short ) ( valor[ 0 ] & MASCARA_BYTE );
+            a = ( short ) ( ( valor[ 1 ] & BYTE_MASK ) << 8 );
+            b = ( short ) ( valor[ 0 ] & BYTE_MASK );
         }
         return ( short ) ( a | b );
     }
@@ -158,7 +153,7 @@ public class Endianness {
      *            orden a utilizar en la conversion
      * @return array de bytes equivalentes a valor
      */
-    public static byte[] doubleToByteArray( final double valor, final OrdenEndian endianness ) {
+    public static byte[] doubleToByteArray( final double valor, final EndianOrder endianness ) {
         final long longEquivalente = Double.doubleToLongBits( valor );
         return longToByteArray( longEquivalente, endianness );
     }
@@ -172,7 +167,7 @@ public class Endianness {
      *            orden a utilizar en la conversion
      * @return array de bytes equivalentes a valor
      */
-    public static byte[] floatToByteArray( final float valor, final OrdenEndian endianness ) {
+    public static byte[] floatToByteArray( final float valor, final EndianOrder endianness ) {
         final int enteroEquivalente = Float.floatToIntBits( valor );
         return intToByteArray( enteroEquivalente, endianness );
     }
@@ -186,13 +181,13 @@ public class Endianness {
      *            orden a utilizar en la conversion
      * @return array de bytes equivalentes a valor
      */
-    public static byte[] intToByteArray( final int valor, final OrdenEndian endianness ) {
+    public static byte[] intToByteArray( final int valor, final EndianOrder endianness ) {
         byte[] resultado;
-        final byte b3 = ( byte ) ( ( valor >> 24 ) & MASCARA_BYTE );
-        final byte b2 = ( byte ) ( ( valor >> 16 ) & MASCARA_BYTE );
-        final byte b1 = ( byte ) ( ( valor >> 8 ) & MASCARA_BYTE );
-        final byte b0 = ( byte ) ( valor & MASCARA_BYTE );
-        if ( endianness == OrdenEndian.BIG_ENDIAN ) {
+        final byte b3 = ( byte ) ( ( valor >> 24 ) & BYTE_MASK );
+        final byte b2 = ( byte ) ( ( valor >> 16 ) & BYTE_MASK );
+        final byte b1 = ( byte ) ( ( valor >> 8 ) & BYTE_MASK );
+        final byte b0 = ( byte ) ( valor & BYTE_MASK );
+        if ( endianness == EndianOrder.BIG_ENDIAN ) {
             resultado = new byte[] { b3, b2, b1, b0 };
         }
         else {
@@ -210,17 +205,17 @@ public class Endianness {
      *            orden a utilizar en la conversion
      * @return array de bytes equivalentes a valor
      */
-    public static byte[] longToByteArray( final long valor, final OrdenEndian endianness ) {
+    public static byte[] longToByteArray( final long valor, final EndianOrder endianness ) {
         byte[] resultado;
-        final byte b7 = ( byte ) ( ( valor >> 56 ) & MASCARA_BYTE );
-        final byte b6 = ( byte ) ( ( valor >> 48 ) & MASCARA_BYTE );
-        final byte b5 = ( byte ) ( ( valor >> 40 ) & MASCARA_BYTE );
-        final byte b4 = ( byte ) ( ( valor >> 32 ) & MASCARA_BYTE );
-        final byte b3 = ( byte ) ( ( valor >> 24 ) & MASCARA_BYTE );
-        final byte b2 = ( byte ) ( ( valor >> 16 ) & MASCARA_BYTE );
-        final byte b1 = ( byte ) ( ( valor >> 8 ) & MASCARA_BYTE );
-        final byte b0 = ( byte ) ( valor & MASCARA_BYTE );
-        if ( endianness == OrdenEndian.BIG_ENDIAN ) {
+        final byte b7 = ( byte ) ( ( valor >> 56 ) & BYTE_MASK );
+        final byte b6 = ( byte ) ( ( valor >> 48 ) & BYTE_MASK );
+        final byte b5 = ( byte ) ( ( valor >> 40 ) & BYTE_MASK );
+        final byte b4 = ( byte ) ( ( valor >> 32 ) & BYTE_MASK );
+        final byte b3 = ( byte ) ( ( valor >> 24 ) & BYTE_MASK );
+        final byte b2 = ( byte ) ( ( valor >> 16 ) & BYTE_MASK );
+        final byte b1 = ( byte ) ( ( valor >> 8 ) & BYTE_MASK );
+        final byte b0 = ( byte ) ( valor & BYTE_MASK );
+        if ( endianness == EndianOrder.BIG_ENDIAN ) {
             resultado = new byte[] { b7, b6, b5, b4, b3, b2, b1, b0 };
         }
         else {
@@ -238,11 +233,11 @@ public class Endianness {
      *            orden a utilizar en la conversion
      * @return array de bytes equivalentes a valor
      */
-    public static byte[] shortToByteArray( final short valor, final OrdenEndian endianness ) {
+    public static byte[] shortToByteArray( final short valor, final EndianOrder endianness ) {
         byte[] resultado;
-        final byte b1 = ( byte ) ( ( valor >> 8 ) & MASCARA_BYTE );
-        final byte b0 = ( byte ) ( valor & MASCARA_BYTE );
-        if ( endianness == OrdenEndian.BIG_ENDIAN ) {
+        final byte b1 = ( byte ) ( ( valor >> 8 ) & BYTE_MASK );
+        final byte b0 = ( byte ) ( valor & BYTE_MASK );
+        if ( endianness == EndianOrder.BIG_ENDIAN ) {
             resultado = new byte[] { b1, b0 };
         }
         else {
@@ -260,7 +255,7 @@ public class Endianness {
      *            orden a utilizar en la conversion
      * @return valor equivalente despues de la conversion
      */
-    public double byteArrayToDouble( final byte[] valor, final OrdenEndian endianness ) {
+    public double byteArrayToDouble( final byte[] valor, final EndianOrder endianness ) {
         final long longEquivalente = byteArrayToLong( valor, endianness );
         return Double.longBitsToDouble( longEquivalente );
     }
