@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,30 +30,31 @@
  */
 package com.mhschmieder.commonstoolkit.security;
 
-public enum LoginType {
-    SERVER, PROXY;
+import com.mhschmieder.commonstoolkit.lang.EnumUtilities;
+import com.mhschmieder.commonstoolkit.lang.Labeled;
+
+public enum LoginType implements Labeled< LoginType > {
+    SERVER( "Server" ), 
+    PROXY( "Proxy" );
+    
+    private String label;
+    
+    LoginType( final String pLabel ) {
+        label = pLabel;
+    }
+
+    @Override
+    public final String label() {
+        return label;
+    }
+
+    @Override
+    public LoginType valueOfLabel( final String text ) {
+        return ( LoginType ) EnumUtilities.getLabeledEnumFromLabel(
+                text, values() );
+    }
 
     public static LoginType defaultValue() {
         return SERVER;
     }
-
-    public final String toPresentationString() {
-        String presentationString = null;
-        
-        switch ( this ) {
-        case SERVER:
-            presentationString = "Server"; //$NON-NLS-1$
-            break;
-        case PROXY:
-            presentationString = "Proxy"; //$NON-NLS-1$
-            break;
-        default:
-            final String errMessage = "Unexpected " //$NON-NLS-1$
-                    + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
-            throw new IllegalArgumentException( errMessage );
-        }
-        
-        return presentationString;
-    }
-
 }

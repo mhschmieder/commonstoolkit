@@ -88,16 +88,9 @@ public enum ClassificationLevel implements Labeled< ClassificationLevel >,
     }
 
     @Override
-    public final String toString() {
-        // NOTE: As of Java 6, enums include the underscore in their string
-        //  representation, which is a problem for backward-compatibility with
-        //  XML parsers. Thus, we need to strip the underscores and replace
-        //  them with spaces, to behave like Java 5, for legacy file handling.
-        // TODO: Determine whether this is still necessary from Java 8 onwards,
-        //  as well as whether it should be used for newer enums like this one
-        //  and whether current default string conversion called by Java core
-        //  could cause downstream problems if not "corrected" in this override.
-        final String value = super.toString();
-        return value.replaceAll( "_", " " );
+    public String toString() {
+        // NOTE: This override takes care of displaying the current choice in
+        //  its custom label form when a Combo Box is hosted by a Table Cell.
+        return label();
     }
 }

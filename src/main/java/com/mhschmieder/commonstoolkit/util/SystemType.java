@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,12 @@ package com.mhschmieder.commonstoolkit.util;
 import java.util.Locale;
 
 public enum SystemType {
-    WINDOWS, MACOS, LINUX, UNIX, SOLARIS, OTHER;
+    WINDOWS, 
+    MACOS, 
+    LINUX, 
+    UNIX, 
+    SOLARIS, 
+    OTHER;
 
     /** Cache the detected System Type to limit property queries. */
     @SuppressWarnings("nls") public static final SystemType DETECTED_SYSTEM_TYPE        =
@@ -43,13 +48,12 @@ public enum SystemType {
     /** Cache the simplified version of the detected OS Name. */
     public static final String                              DETECTED_OS_NAME_SIMPLIFIED =
                                                                                         getSimplifiedOsName( DETECTED_SYSTEM_TYPE );
-
+    
     public static SystemType defaultValue() {
         return DETECTED_SYSTEM_TYPE;
     }
 
     // NOTE: This method must be able to parse verbose OS Names.
-    @SuppressWarnings("nls")
     public static SystemType valueFromOsName( final String osName ) {
         // NOTE: Starting with Sierra, Apple changed their naming scheme.
         // NOTE: There are other OS names referenced by a similar Apache Commons
@@ -80,7 +84,6 @@ public enum SystemType {
         return OTHER;
     }
 
-    @SuppressWarnings("nls")
     public static String getSimplifiedOsName( final SystemType systemType ) {
         String simplifiedOsName;
         switch ( systemType ) {
@@ -108,19 +111,6 @@ public enum SystemType {
         }
 
         return simplifiedOsName;
-    }
-
-    @SuppressWarnings("nls")
-    @Override
-    public final String toString() {
-        // NOTE: As of Java 6, enums include the underscore in their string
-        // representation, which is a problem for backward-compatibility with
-        // XML parsers. Thus, we need to strip the underscores and replace them
-        // with spaces, to behave like Java 5.
-        // TODO: Review whether this is could mess up any database interaction
-        // or tracking, as we disabled this code in most or all other enums.
-        final String value = super.toString();
-        return value.replaceAll( "_", " " );
     }
 
     public String getSimplifiedOsName() {
