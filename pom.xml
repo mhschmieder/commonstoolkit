@@ -8,7 +8,7 @@
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>CommonsToolkit</name>
+    <name>commonstoolkit</name>
     <url>https://github.com/mhschmieder/commonstoolkit</url>
     <description>Utilities and custom classes for basic Java core language concept.</description>
 
