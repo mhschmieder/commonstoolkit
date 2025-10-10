@@ -30,16 +30,15 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import com.mhschmieder.commonstoolkit.lang.StringConstants;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.file.PathUtils;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.file.PathUtils;
-
-import com.mhschmieder.commonstoolkit.lang.StringConstants;
 
 /**
  * Facilities for moving files safely.

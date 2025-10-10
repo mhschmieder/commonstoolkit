@@ -30,6 +30,11 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import com.mhschmieder.commonstoolkit.lang.StringConstants;
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.SwappedDataInputStream;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -44,12 +49,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.SwappedDataInputStream;
-
-import com.mhschmieder.commonstoolkit.lang.StringConstants;
 
 /**
  * {@code IoUtilities} is a static utilities class for common I/O functionality

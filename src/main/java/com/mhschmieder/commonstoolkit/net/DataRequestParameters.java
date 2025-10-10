@@ -30,10 +30,10 @@
  */
 package com.mhschmieder.commonstoolkit.net;
 
-import java.net.HttpURLConnection;
-
 import com.mhschmieder.commonstoolkit.security.LoginCredentials;
 import com.mhschmieder.commonstoolkit.util.DataUpdateType;
+
+import java.net.HttpURLConnection;
 
 /**
  * Base class for parameters common to all data update requests to data servers.

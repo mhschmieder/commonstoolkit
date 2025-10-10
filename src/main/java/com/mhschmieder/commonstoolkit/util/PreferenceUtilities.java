@@ -30,14 +30,13 @@
  */
 package com.mhschmieder.commonstoolkit.util;
 
+import com.mhschmieder.commonstoolkit.io.IoUtilities;
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.prefs.Preferences;
-
-import org.apache.commons.io.FileUtils;
-
-import com.mhschmieder.commonstoolkit.io.IoUtilities;
 
 /**
  * Utilities for managing preferences for common shared application attributes,

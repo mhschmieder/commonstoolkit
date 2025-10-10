@@ -30,13 +30,13 @@
  */
 package com.mhschmieder.commonstoolkit.lang;
 
-import java.text.NumberFormat;
-import java.util.Collection;
-import java.util.Locale;
-
 import com.mhschmieder.commonstoolkit.text.NumberFormatUtilities;
 import com.mhschmieder.commonstoolkit.text.TextUtilities;
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
+
+import java.text.NumberFormat;
+import java.util.Collection;
+import java.util.Locale;
 
 /**
  * A fairly complete set of methods for checking, getting, or enforcing (and

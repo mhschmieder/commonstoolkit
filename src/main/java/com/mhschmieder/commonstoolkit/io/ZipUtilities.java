@@ -30,6 +30,11 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import com.mhschmieder.commonstoolkit.branding.BrandingUtilities;
+import com.mhschmieder.commonstoolkit.branding.ProductBranding;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
@@ -41,12 +46,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
-
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-
-import com.mhschmieder.commonstoolkit.branding.BrandingUtilities;
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
 
 /**
  * Utilities for working with ZIP files.

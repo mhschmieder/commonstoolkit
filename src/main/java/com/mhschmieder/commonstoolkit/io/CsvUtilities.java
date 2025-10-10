@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -44,8 +46,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.apache.commons.io.FilenameUtils;
 
 /**
  * {@code CsvUtilities} is a utilities class for handling the CSV format.

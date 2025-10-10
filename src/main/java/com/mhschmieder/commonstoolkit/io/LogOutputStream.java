@@ -30,11 +30,11 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import com.mhschmieder.commonstoolkit.lang.StringConstants;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Logger;
-
-import com.mhschmieder.commonstoolkit.lang.StringConstants;
 
 /**
  * This class is a workaround for legacy code that uses System.out and

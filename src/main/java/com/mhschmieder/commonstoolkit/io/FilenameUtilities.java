@@ -30,15 +30,14 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import com.mhschmieder.commonstoolkit.lang.StringConstants;
+import com.mhschmieder.commonstoolkit.util.SystemType;
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import org.apache.commons.io.FilenameUtils;
-
-import com.mhschmieder.commonstoolkit.lang.StringConstants;
-import com.mhschmieder.commonstoolkit.util.SystemType;
 
 /**
  * Utilities for working with filenames, such as making a filename unique.

@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.commonstoolkit.util;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.util.Collection;
@@ -37,8 +39,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import org.apache.commons.io.FileUtils;
 
 /**
  * {@code GlobalUtilities} is a utility class for global methods that are

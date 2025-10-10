@@ -30,14 +30,14 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
-
-import org.apache.commons.io.FileUtils;
 
 /**
  * Facilities for copying files safely.

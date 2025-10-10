@@ -30,6 +30,11 @@
  */
 package com.mhschmieder.commonstoolkit.net;
 
+import com.mhschmieder.commonstoolkit.io.IoUtilities;
+import com.mhschmieder.commonstoolkit.security.LoginCredentials;
+import com.mhschmieder.commonstoolkit.security.ServerLoginCredentials;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
@@ -40,11 +45,6 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
-
-import com.mhschmieder.commonstoolkit.io.IoUtilities;
-import com.mhschmieder.commonstoolkit.security.LoginCredentials;
-import com.mhschmieder.commonstoolkit.security.ServerLoginCredentials;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 public final class NetworkUtilities {
 

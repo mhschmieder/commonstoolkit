@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.commonstoolkit.text;
 
-import java.text.NumberFormat;
-
 import com.mhschmieder.commonstoolkit.lang.StringUtilities;
+
+import java.text.NumberFormat;
 
 /**
  * {@code TextUtilities} is a static utilities class for common string

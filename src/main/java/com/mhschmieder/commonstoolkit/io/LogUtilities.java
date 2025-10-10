@@ -30,6 +30,10 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import com.mhschmieder.commonstoolkit.branding.ProductBranding;
+import com.mhschmieder.commonstoolkit.lang.StringConstants;
+import com.mhschmieder.commonstoolkit.util.ClientProperties;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -43,10 +47,6 @@ import java.util.Formatter;
 import java.util.IllegalFormatException;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.mhschmieder.commonstoolkit.branding.ProductBranding;
-import com.mhschmieder.commonstoolkit.lang.StringConstants;
-import com.mhschmieder.commonstoolkit.util.ClientProperties;
 
 public final class LogUtilities {
 

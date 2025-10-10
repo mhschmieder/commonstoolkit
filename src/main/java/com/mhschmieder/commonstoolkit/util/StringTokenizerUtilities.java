@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.commonstoolkit.util;
 
-import java.util.StringTokenizer;
-
 import com.mhschmieder.commonstoolkit.lang.StringConstants;
+
+import java.util.StringTokenizer;
 
 /**
  * {@code StringTokenizerUtilities} is a static utilities class for common

@@ -30,6 +30,10 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
+import javax.swing.JEditorPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.EditorKit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -37,11 +41,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-
-import javax.swing.JEditorPane;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.EditorKit;
 
 /**
  * {@code RtfUtilities} is a utilities class for handling the RTF format, and

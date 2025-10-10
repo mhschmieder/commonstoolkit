@@ -30,10 +30,10 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
-import java.nio.ByteOrder;
-
 import com.mhschmieder.commonstoolkit.lang.EnumUtilities;
 import com.mhschmieder.commonstoolkit.lang.Labeled;
+
+import java.nio.ByteOrder;
 
 /**
  * An enumeration of Endianness that includes a deferral of setting it by

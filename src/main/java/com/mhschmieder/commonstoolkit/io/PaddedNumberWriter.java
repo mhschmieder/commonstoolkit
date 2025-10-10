@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.commonstoolkit.io;
 
-import java.io.PrintWriter;
-
 import com.mhschmieder.commonstoolkit.lang.StringConstants;
+
+import java.io.PrintWriter;
 
 /**
  * Facilities for writing padded numbers to character streams via PrintWriter.

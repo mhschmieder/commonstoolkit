@@ -30,10 +30,10 @@
  */
 package com.mhschmieder.commonstoolkit.security;
 
+import com.mhschmieder.commonstoolkit.net.AuthorizationServerResponse;
+
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-
-import com.mhschmieder.commonstoolkit.net.AuthorizationServerResponse;
 
 public final class ServerLoginCredentials extends LoginCredentials {
 

@@ -30,11 +30,14 @@
  */
 package com.mhschmieder.commonstoolkit.xml;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Locale;
+import com.mhschmieder.commonstoolkit.io.IoUtilities;
+import com.mhschmieder.commonstoolkit.io.ZipUtilities;
+import com.mhschmieder.commonstoolkit.lang.NumberUtilities;
+import com.mhschmieder.commonstoolkit.lang.StringUtilities;
+import org.apache.commons.io.FilenameUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -44,16 +47,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import org.apache.commons.io.FilenameUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
-
-import com.mhschmieder.commonstoolkit.io.IoUtilities;
-import com.mhschmieder.commonstoolkit.io.ZipUtilities;
-import com.mhschmieder.commonstoolkit.lang.NumberUtilities;
-import com.mhschmieder.commonstoolkit.lang.StringUtilities;
+import java.io.File;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.Locale;
 
 /**
  * {@code XmlUtilities} is a static utilities class for common XML functionality
