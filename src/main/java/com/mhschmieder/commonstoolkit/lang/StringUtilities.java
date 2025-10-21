@@ -162,17 +162,14 @@ public final class StringUtilities {
             signStrippedNumericStringBuilder.deleteCharAt( 0 );
         }
 
-        final String signStrippedNumericString = signStrippedNumericStringBuilder.toString();
-
-        return signStrippedNumericString;
+        return signStrippedNumericStringBuilder.toString();
     }
 
     /**
      * Replace all occurrences of <i>pattern</i> in the specified string with
      * <i>replacement</i>. Note that the pattern is NOT a regular expression,
      * and that relative to the String.replaceAll() method in jdk1.4, this
-     * method is extremely slow. This method does not work well with back
-     * slashes.
+     * method is extremely slow. This method does not work well with backslashes.
      *
      * @param string
      *            The string to edit.
@@ -237,11 +234,10 @@ public final class StringUtilities {
                 && !unquotedString.isEmpty() )
                 ? unquotedString
                 : StringConstants.SPACE;
-        
-        final String quotedString = StringConstants.QUOTE 
-                + safeString  
+
+        return StringConstants.QUOTE
+                + safeString
                 + StringConstants.QUOTE;
-        return quotedString;
     }
 
     /**
