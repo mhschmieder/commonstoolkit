@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mhschmieder</groupId>
-    <artifactId>commonstoolkit</artifactId>
+    <artifactId>jcommons</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>commonstoolkit</name>
-    <url>https://github.com/mhschmieder/commonstoolkit</url>
+    <name>jcommons</name>
+    <url>https://github.com/mhschmieder/jcommons</url>
     <description>Utilities and custom classes for basic Java core language concept.</description>
 
     <licenses>
@@ -21,9 +21,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/mhschmieder/commonstoolkit</url>
-        <connection>scm:git:git://github.com/mhschmieder/commonstoolkit.git</connection>
-        <developerConnection>scm:git:git@github.com:mhschmieder/commonstoolkit.git</developerConnection>
+        <url>https://github.com/mhschmieder/jcommons</url>
+        <connection>scm:git:git://github.com/mhschmieder/jcommons.git</connection>
+        <developerConnection>scm:git:git@github.com:mhschmieder/jcommons.git</developerConnection>
     </scm>
 
     <developers>
